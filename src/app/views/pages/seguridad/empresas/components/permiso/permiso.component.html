@@ -1,0 +1,81 @@
+<div class="row d-flex justify-content-around">
+
+  <div class="col-6 permiso-content scroll-no-color">
+
+    <div class="col-12 p-0 pb-4 cw-center-all">
+      <app-filtros-consulta class="w-100 search-bar" [emitChangeDinamic]="true"
+        (arrayFilter)="obtenerTextoPredictivo($event)">
+      </app-filtros-consulta>
+    </div>
+
+    <mat-accordion class="cw-panel-perfil">
+
+      <mat-expansion-panel (click)="validarPanel(pagina)" [disabled]="estadoModificacionPermisos" *ngFor="let pagina of arrayPaginasFiltered" [hideToggle]="!!!pagina.hijosFiltered"
+        (closed)="cerrarPanel(pagina)" (opened)="seleccionarPagina(pagina)"
+        [expanded]="paginaSeleccionada?.checked && (pagina.id === paginaSeleccionada?.id || paginaSeleccionada?.idPaginaPadre === pagina.id)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{pagina.nombre}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-selection-list #children [multiple]="false" *ngIf="!!pagina.hijosFiltered">
+          <mat-list-option *ngFor="let paginaHijo of pagina?.hijosFiltered" (click)="seleccionarPagina(paginaHijo)"
+            [selected]="paginaSeleccionada?.checked && (paginaHijo.id === paginaSeleccionada?.id)">
+            <div class="row d-flex flex-row">
+              <mat-icon matListItemIcon>remove
+              </mat-icon>
+              <span class="col-8 title" #tooltip matTooltipClass="tooltip-arrow tooltip-arrow-disabled"
+                matTooltipPosition="below">
+                {{paginaHijo.nombre}}
+              </span>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <mat-divider [vertical]="true"></mat-divider>
+
+  <div [class]="'col-5 permiso-content' + ( !!!paginaSeleccionada? ' cw-center-all' : '')">
+
+    <ng-container *ngIf="!!!paginaSeleccionada; then empty; else noEmpty">
+    </ng-container>
+
+    <ng-template #noEmpty>
+      <ng-container *ngIf="!!paginaSeleccionada?.hijosFiltered; then plantilla; else lista_permisos">
+      </ng-container>
+    </ng-template>
+
+    <ng-template #empty>
+      <div class="row p-3">
+        <div class="col-12 cw-center-all">
+          <mat-icon svgIcon="43" class="large-icon"></mat-icon>
+        </div>
+        <div class="col-12 cw-center-all">
+          <p class="tx-18 m-0"><b>{{'TITULOS.NO_RESULTADOS' | translate}}</b></p>
+        </div>
+        <div class="col-12 cw-center-all">
+          <p class="tx-18 text-center">{{'MENSAJES.SELECCIONA_PARAMETRIZACION' | translate}}</p>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #plantilla>
+      <div>
+        Plantilla...
+      </div>
+    </ng-template>
+
+    <ng-template #lista_permisos>
+      <div *ngIf="!!!paginaSeleccionada?.hijosFiltered && !!paginaSeleccionada">
+        <app-listar-permiso [arrayPermisos]="arrayPermisosEnviar" [nombrePagina]="paginaSeleccionada.nombre"
+          (arrayPermisosEnviar)="recibirPermiso($event)" (estadoModificacion)="estadoModificacionPermisos = $event"></app-listar-permiso>
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>

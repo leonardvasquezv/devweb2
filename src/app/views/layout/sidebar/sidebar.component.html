@@ -1,0 +1,71 @@
+<nav aria-label="Site menu" class="sidebar">
+  <div class="sidebar-header cw-p">
+    <!--- Logo -->
+    <a class="sidebar-brand">
+      <img class="cw-sidebar-logo" *ngIf="mostrarLogoGrande" src="assets/images/logo.png" alt="SOLDICOM"> 
+      <mat-icon svgIcon="41" *ngIf="!mostrarLogoGrande" class="cw-size-xl"></mat-icon>
+    </a>
+  </div>
+  <div  id="sidebar2" class="sidebar-body cw-overflow-sidebar" [style]="styleMenu" >
+
+    <!--- Sidemenu start -->
+    <ul class="sidebar-nav pl-0 pr-0" id="sidebar-menu" #sidebarMenu id="sidebarMenu">
+      <ng-container *ngFor="let item of menuItems">
+        <li class="nav-item" *ngIf="!item.isTitle">
+
+          <div class="cw-prueba">
+
+            <a class="nav-link" *ngIf="hasItems(item)"  href="javascript:void(0);" (click)="correccionMetisMenu(item)">
+              <em class="link-icon mr-2 cw-text-size-16" *ngIf="item.icon"><span class="{{item.icon}}"></span></em>
+              <span class="link-title cw-text-size-15 cw-secundary-black"> {{ item.label }}</span>
+              <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span>
+            </a>
+
+            <a class="nav-link nav-link-ref" id="{{item.id}}" [routerLink]="item.link" *ngIf="!hasItems(item)" [attr.data-parent]="item.parentId" (click)="guardarIdPagina(item.id)">
+              <em class="link-icon mr-2 cw-text-size-16" *ngIf="item.icon"><span class="{{item.icon}}"></span></em>
+              <span class="link-title cw-text-size-15 cw-secundary-black"> {{ item.label }}</span>
+              <span class="badge badge-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text}}</span>
+            </a>
+
+          </div>
+
+          <!-- menu  -->
+          <ul class="sidebar-nav sub-menu nav-second-level pl-0" *ngIf="hasItems(item)" aria-expanded="false">
+            <li class="nav-item" *ngFor="let subitem of item.subItems" [ngClass]="{'side-nav-item': hasItems(subitem)}">
+              <a class="nav-link side-nav-link-a-ref" *ngIf="hasItems(subitem)" href="javascript:void(0);">
+                <em class="link-icon mr-2 cw-text-size-16" *ngIf="subitem.icon"><span class="{{subitem.icon}}"></span></em>
+                <span class="link-title cw-text-size-15 cw-secundary-black"> {{ subitem.label }}</span>
+                <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span>
+              </a>
+
+              <a class="nav-link nav-link-ref" id="{{subitem.id}}" [routerLink]="subitem.link" *ngIf="!hasItems(subitem)" [attr.data-parent]="subitem.parentId" (click)="guardarIdPagina(subitem.id)">
+                <em class="link-icon mr-2 cw-text-size-16" *ngIf="subitem.icon"><span class="{{subitem.icon}}"></span></em>
+                <span class="link-title cw-text-size-15">{{ subitem.label }}</span>
+              </a>
+
+              <!-- sub menu  -->
+              <ul class="sidebar-nav sub-menu nav-third-level pl-0" *ngIf="hasItems(subitem)" aria-expanded="false">
+
+                <li class="nav-item" *ngFor="let subSubitem of subitem.subItems">
+
+                  <a class="nav-link nav-link-ref" id="{{subSubitem.id}}" [routerLink]="subSubitem.link" [routerLinkActive]="['active']" [attr.data-parent]="subSubitem.parentId" (click)="guardarIdPagina(subitem.id)">
+                    <em class="link-icon mr-2 cw-text-size-16" *ngIf="subSubitem.icon"><span class="{{subSubitem.icon}}"></span></em>
+                    <span class="cw-text-size-15 cw-secundary-black">{{ subSubitem.label }}</span>
+                  </a>
+
+                </li>
+
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+    <div class="navigation-icon-sidebar"  >
+<!-- {{menuItems[3].subItems|json}} -->
+<a>
+        <mat-icon (click)="OpenCloseSidebar()" svgIcon="46" [ngClass]="{'transform-sidebar-icon': !banderaSidebar}" class="cw-size-xxl-p"></mat-icon>
+      </a>
+    </div>
+  </div>
+</nav>

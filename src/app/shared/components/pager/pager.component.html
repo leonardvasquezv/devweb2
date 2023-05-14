@@ -1,0 +1,27 @@
+<ul class="pager">
+  <li [class.disabled]="!canPrevious()">
+    <a href="javascript:void(0)" (click)="selectPage(1)">
+      <em class="datatable-icon-prev"></em>
+    </a>
+  </li>
+  <li [class.disabled]="!canPrevious()">
+    <a href="javascript:void(0)" (click)="prevPage()">
+      <em class="datatable-icon-left"></em>
+    </a>
+  </li>
+  <li class="pages" *ngFor="let pg of pages" [class.active]="pg.number === page">
+    <a href="javascript:void(0)" (click)="selectPage(pg.number)">
+      {{pg.text}}
+    </a>
+  </li>
+  <li [class.disabled]="!canNext()">
+    <a href="javascript:void(0)" (click)="nextPage()">
+      <em class="datatable-icon-right"></em>
+    </a>
+  </li>
+  <li [class.disabled]="!canNext()">
+    <a href="javascript:void(0)" (click)="selectPage(totalPages)">
+      <em class="datatable-icon-skip"></em>
+    </a>
+  </li>
+</ul>

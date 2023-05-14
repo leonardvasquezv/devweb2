@@ -1,0 +1,15 @@
+<div class="filtro-direccion">
+    <form autocomplete="off">
+        <mat-form-field [floatLabel]="'never'" class="w-100">
+            <input type="text" placeholder="Buscar" matInput [matAutocomplete]="auto" (input)="teclaPresionada()"
+                name="direccion" [(ngModel)]="direccion">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let direccion of prediccionDirecciones" [value]="direccion.description"
+                    (click)="emitirCoordenadas(direccion.place_id)"
+                    (onSelectionChange)="emitirCoordenadas(direccion.place_id)">
+                    {{direccion.description}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</div>

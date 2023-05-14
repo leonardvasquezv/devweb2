@@ -1,0 +1,9 @@
+//Sobreescritura de estilos de NgxDatatable
+
+.datatable-footer{
+    .datatable-footer-inner{
+        .datatable-pager{
+            display: inline-block !important;
+        }
+    }
+}

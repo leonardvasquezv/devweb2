@@ -1,0 +1,74 @@
+<div class="row cw-filtros-tabla">
+  <div class="col-sm-12 col-md-10 col-lg-10 col-xl-10">
+    <form [formGroup]="formGroupFiltros" autocomplete="off">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <mat-form-field class="cw-box-input-search" [floatLabel]="'never'" *ngIf="!banderaTextoPredictivo">
+              <input matInput (keydown.enter)="filtroBasico($event)" placeholder="{{ placeholderPredictivo }}"
+                formControlName="textoPredictivo" />
+              <a *ngIf="!!formGroupFiltros.get('textoPredictivo').value" matSuffix class="pr-3"
+                (click)="formGroupFiltros.get('textoPredictivo').setValue('')">
+                <mat-icon svgIcon="5"></mat-icon>
+              </a>
+            </mat-form-field>
+            <mat-form-field class="cw-box-input-search" [floatLabel]="'never'" *ngIf="banderaTextoPredictivo">
+              <input matInput (keydown.enter)="updateFilter(1)" placeholder="{{ placeholderPredictivo }}"
+                formControlName="textoPredictivo" />
+              <a *ngIf="!!formGroupFiltros.get('textoPredictivo').value" matSuffix class="pr-3"
+                (click)="formGroupFiltros.get('textoPredictivo').setValue('')">
+                <mat-icon svgIcon="5"></mat-icon>
+              </a>
+            </mat-form-field>
+            <a *ngIf="verFiltroCategoria" [matMenuTriggerFor]="menu_filtros" type="button"
+              class="cw-box-input cw-center-all filtro-categorias">
+              <div class="row">
+                <div class="input-group cw-center-all">
+                  <mat-icon class="mr-2">filter_list</mat-icon>
+                  <span>{{'PALABRAS.FILTRAR'| translate}}</span>
+                </div>
+              </div>
+            </a>
+            <mat-form-field class="cw-box-input cw-center-all cantidad-filas" *ngIf="banderaCantidadFilas">
+              <mat-select (selectionChange)="PageSizeSeleccionChange($event)"  formControlName="pageSize" class="text-center">
+                <mat-option *ngFor="let option of pageSizeOptions" [value]="option">
+                  {{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="verFiltroCategoria" class="row mt-3">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <mat-chip-list #chipList aria-label="Filtros">
+            <mat-chip *ngFor="let item of arrayChips" [selectable]="selectable" [removable]="removable"
+              (removed)="remover(item)" matTooltip="{{ item.cadena }}" matTooltipPosition="above">
+              <div class="cw-text-Filter">
+                {{ item.cadena }}
+              </div>
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <div *ngIf="masFiltros > 0">
+              <div class="cw-numberFilter">+ {{ masFiltros }}</div>
+            </div>
+          </mat-chip-list>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<mat-menu #menu_filtros="matMenu" value="line">
+  <ng-container *ngFor="let item of arrayMenu">
+    <button mat-menu-item [matMenuTriggerFor]="sub_menu">
+      {{ item.nombre }}
+    </button>
+    <mat-menu #sub_menu="matMenu">
+      <div *ngFor="let subItem of item.subItems" class="cw-subItem-filter">
+        <mat-checkbox class="cw-input-checkbox" (click)="$event.stopPropagation()" [(ngModel)]="subItem.seleccionado"
+          (change)="cambiaCriterios(item, subItem)">{{
+          subItem.nombreSubItem }}</mat-checkbox>
+      </div>
+    </mat-menu>
+  </ng-container>
+</mat-menu>

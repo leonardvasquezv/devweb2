@@ -1,0 +1,62 @@
+<fieldset class="mb-0px mt-15px card-border">
+  <legend class="float-none w-auto legend legendPosition">
+    {{ 'TITULOS.EMPRESA_ASOCIADA' | translate }}
+  </legend>
+  <form autocomplete="off" class=" cw-forms crearEdsForms" [formGroup]="formEmpresaAsociadaEDS">
+
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'FORMULARIOS.TIPO_DOCUMENTO' | translate }}
+      </mat-label>
+      <mat-select matInput formControlName="idTipoDeDocumento"  (selectionChange)="validarNumeroDocumento()" required>
+        <mat-option *ngFor="let tipoDeDocumento of tiposDeDocumentos" [value]="tipoDeDocumento.idTipoDetalle">
+          <span>
+            {{ tipoDeDocumento.nombre}}
+          </span>
+        </mat-option>
+      </mat-select>
+
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.NUMERO_DOCUMENTO' | translate }}</mat-label>
+      <input matInput formControlName="numeroDocumento" required  (keyup)="validarNumeroDocumento()"/>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.NOMBRE_RESPONSABLE' | translate }}</mat-label>
+      <input matInput formControlName="nombreRepresentante" required />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CORREO_ELECTRONICO' | translate }}</mat-label>
+      <input matInput appRestrictInput="email" formControlName="correoElectronicoRepresentante" required />
+      <mat-error *ngIf="
+                        formEmpresaAsociadaEDS
+                            .get('correoElectronicoRepresentante')
+                            .hasError('pattern')
+                        ">
+        {{'FORMULARIOS.VALIDACION.CORREO_INVALIDO' | translate}}</mat-error>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.TELEFONO' | translate }}</mat-label>
+      <input matInput maxlength="13" appRestrictInput="integer" formControlName="telefonoRepresentante" required />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</fieldset>

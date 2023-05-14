@@ -1,0 +1,95 @@
+<div class="card shadow-none-card">
+
+  <div class="card-body ">
+
+    <div class="cw-forms">
+      <!-- Filtro Tipo de Paranetrizacion -->
+      <mat-form-field class="w-25" appearance="fill">
+        <mat-label>{{'TITULOS.TIPO_PARAMETRIZACION' | translate}}</mat-label>
+        <mat-select matInput (selectionChange)="obtenerParametrizacionesPorTipo($event.value)"
+          [ngModel]="tipoParametrizacion">
+          <mat-option *ngFor="let tipoParametrizacion of listaTipoParametrizacion"
+            [value]="tipoParametrizacion.idTipoDetalle">
+            <span>{{tipoParametrizacion.nombre}}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+    <div *ngIf="!!tipoParametrizacion">
+      <div class="row my-filtros">
+        <div class="col-9">
+          <app-filtros [objFiltros]="arrayFiltros" (enviaFiltros)="recibeFiltrosDinamico($event)"
+            (pageSize)="obtenerParametrizacionesPorTipo(this.tipoParametrizacion, null, $event)">
+          </app-filtros>
+        </div>
+        <!-- Boton Crear EDS -->
+        <div class="col-3 d-flex flex-row-reverse h-44px">
+          <button class="btn btn-primary" (click)="abrirModalCrearParametrizacion()">
+            {{'TITULOS.CREAR_PARAMETRIZACION' | translate}}
+          </button>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+            <!-- Tabla de Parametrizaciones -->
+            <ngx-datatable [rows]="listaParametrizaciones" class="bootstrap" [columnMode]="ColumnMode.force"
+              [externalPaging]="true" [footerHeight]="50" [offset]="pageTable.pageNumber" [rowHeight]="'auto'"
+              [limit]="pageTable.size" [count]="pageTable.totalElements"
+              (page)="obtenerParametrizacionesPorTipo(this.tipoParametrizacion, $event)">
+              <ngx-datatable-column name="{{'TITULOS.CODIGO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.nomenclatura }}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="{{'TITULOS.NOMBRE' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row?.nombre }}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="{{'TITULOS.ESTADO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                [sortable]="false">
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div class="cw-custom-switches">
+                    <ui-switch [checked]="row.checked" (valueChange)="abrirModalCambiarEstado(row, $event)">
+                    </ui-switch>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [sortable]="false" [resizeable]="false" [draggable]="false"
+                [flexGrow]="2" [minWidth]="130" [sortable]="false">
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                    <button type="button" mat-menu-item (click)="editarParametrizacion(row)">
+                      <mat-icon svgIcon="4" class="colorBlack"></mat-icon>
+                      <span>{{ 'BOTONES.CONSULTAR' | translate }}</span>
+                    </button>
+                  </mat-menu>
+                </ng-template>
+
+              </ngx-datatable-column>
+
+            </ngx-datatable>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

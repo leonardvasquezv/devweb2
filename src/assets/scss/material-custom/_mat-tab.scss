@@ -1,0 +1,586 @@
+.mat-tab-label-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.mat-tab-label-content img {
+    height: 20px;
+    width: 20px;
+}
+
+.mat-tab-label-content span {
+    padding: 10px;
+}
+
+.mat-checkbox-layout {
+    margin: 0px;
+    display: inline !important;
+}
+
+.mat-tab-label .mat-tab-label-content {
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    height: 18px;
+    font-family: $fontMontserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 15px;
+    @media  (max-width: 991px) {
+        font-size: 12px !important;
+      }
+    .mat-icon {
+        margin-right: 8px;
+    }
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: $clGreen !important;
+    height: 4px;
+}
+
+/* Ocultar active bar  agregando class = "mat-tab-hide-bar"*/
+
+.mat-tab-group.mat-tab-hide-bar {
+    .mat-ink-bar {
+        display: none !important;
+    }
+}
+
+/*Quitar borde del tab header agregando "border-tab-header-none" en el tab group*/
+.mat-tab-group.border-tab-header-none {
+    .mat-tab-header {
+        border: none;
+    }
+}
+
+/*Estilo diagonal tab  header*/
+.diagonal-style-tab {
+    > .mat-tab-header {
+        .mat-tab-label-container {
+            .mat-tab-list {
+                .mat-tab-label {
+                    background-color: $cwContainerTotal;
+                    border-radius: 8px 0px 0px 0px;
+                    color: $cwGrisBoton;
+                    overflow: visible;
+                    padding: 0px !important;
+                    min-width: 50px !important;
+                    padding-left: 20px !important;
+                    padding-right: 2px !important;
+                    margin-right: 15px;
+                    position: relative;
+                    width: auto;
+
+                    .mat-icon {
+                        color: $cwGrisBoton;
+                        height: 18px;
+                        width: 18px;
+                    }
+
+                    .mat-icon.mat-stroke {
+                        stroke: $cwGrisBoton;
+                    }
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        right: -15px;
+                        bottom: 0px;
+                        width: 0px;
+                        height: 0px;
+                        border-radius: 50px 50px 0px 0px;
+                        border-left: 20px solid $cwContainerTotal;
+                        border-top: 70px solid transparent;
+                        border-bottom: 0px solid transparent;
+                    }
+                }
+
+                .mat-tab-label.mat-tab-label-active {
+                    background-color: $clWhite;
+                    color: $primary-blue;
+
+                    .mat-icon {
+                        color: $cwBueColor;
+                    }
+
+                    .mat-icon.mat-stroke {
+                        stroke: $cwBueColor;
+                    }
+
+                    &:after {
+                        border-left: 20px solid $clWhite;
+                    }
+                }
+
+                .mat-tab-label.mat-tab-label-active:focus {
+                    background-color: $clWhite !important;
+                }
+            }
+        }
+    }
+
+    /*Quitar borde del tab header agregando "border-labels-tab-none" en el tab group*/
+    .border-labels-tab-none {
+        .mat-tab-header {
+            border: none;
+        }
+    }
+}
+
+.button-style-tab {
+    > .mat-tab-header {
+        margin-left: 15px;
+
+        .mat-tab-label-container {
+            height: 30px;
+
+            .mat-tab-list {
+                height: 30px;
+
+                .mat-tab-label {
+                    background-color: $clWhite;
+                    color: $cwGrisBoton;
+                    border: 1px solid $cwContainerTotal;
+                    box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important;
+                    height: 30px;
+                    min-width: 80px;
+                    border-radius: 50px;
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                    margin-right: 5px;
+
+                    .mat-icon {
+                        display: none;
+                    }
+                }
+
+                .mat-tab-label.mat-tab-label-active {
+                    background-color: #d2faea;
+                    border: 1px solid #1dbe72;
+                    color: $black;
+                }
+            }
+        }
+    }
+}
+
+.diagonal-style-tab-modal {
+    .mat-tab-label {
+        margin: 0px;
+        height: 48px;
+        display: flex;
+        overflow: visible;
+        margin-right: 25px;
+        background-color: $cwContainerTotal;
+        min-width: 50px !important;
+        padding: 0px !important;
+        padding-left: 20px !important;
+        border-radius: 8px 0px 0px 0px;
+
+        .mat-icon {
+            color: $cwGrisBoton;
+            height: 18px;
+            width: 18px;
+        }
+    }
+
+    .tab-shape-diagonal {
+        background-color: $cwContainerTotal;
+        position: absolute;
+        left: 96%;
+        top: -1px;
+        z-index: -1;
+        padding: 0px;
+        width: 24px;
+        height: 49px;
+        transform: skew(20deg);
+        -moz-transform: skew(20deg);
+        -o-transform: skew(20deg);
+        border-radius: 0px 10px 0px 0px;
+
+        @media (max-width: 795px) {
+            left: 85%;
+        }
+    }
+
+    /*Quitar borde del tab header agregando "border-labels-tab-none" en el tab group*/
+    .border-labels-tab-none {
+        .mat-tab-header {
+            border: none;
+        }
+    }
+
+    .mat-tab-label.mat-tab-label-active {
+        background-color: $clWhite;
+        border: 1px solid #c9d4d8;
+        border-right: none;
+        color: $black;
+
+        .mat-icon {
+            color: $cwGreenButton;
+        }
+
+        .tab-shape-diagonal {
+            background-color: $clWhite;
+            border: 1px solid #c9d4d8;
+            border-left: none;
+        }
+    }
+
+    .mat-tab-label.mat-tab-label-active:focus {
+        background-color: $clWhite !important;
+    }
+}
+
+.mat-tab-body-content {
+    background-color: $clWhite;
+    height: 100%;
+    border-radius: 0px 8px 8px 8px;
+    overflow: hidden !important;
+}
+
+.mat-tab-label {
+    opacity: 1 !important;
+}
+
+.mat-tab-group {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+/* Accordeon Mat-tab expansion panel */
+.cw-expansion-panel {
+
+    .mat-expansion-panel-content{
+        overflow: auto;
+        max-height: 300px;
+    }
+
+    .mat-expansion-panel-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .mat-expansion-panel-content::-webkit-scrollbar-track {
+        color: #D0D7DD;
+    }
+
+    .mat-expansion-panel-content::-webkit-scrollbar-thumb {
+        background-color: #B2B2B2;
+        border-radius: 8px 8px 8px 8px;
+    }
+
+
+    .mat-expansion-panel {
+        box-shadow: none;
+        border: 1px solid #d2dadd;
+        border-radius: 4px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+        box-shadow: none !important;
+    }
+
+    .mat-expansion-indicator::after {
+        color: #1dbe72;
+    }
+
+    .mat-expansion-panel-header {
+        &.mat-expanded:focus,
+        &.mat-expanded:hover,
+        &.mat-expanded {
+            border-bottom: 1px solid $cwBlancoClaro;
+        }
+
+        &.mat-expanded:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+    }
+
+    .mat-expansion-panel-header.mat-expanded,
+    .mat-expansion-panel-header {
+        height: 41px;
+    }
+
+    .mat-expansion-panel-header-title,
+    .mat-expansion-panel-header-description {
+        font-family: $fontMontserrat !important;
+        font-weight: 500;
+    }
+}
+
+
+
+.ml-tab-label {
+    .mat-tab-labels {
+        margin-left: 20px !important;
+    }
+}
+
+.btn-add-tab {
+    background-color: transparent;
+    margin-bottom: 25px;
+    padding: 0px !important;
+    padding-right: 5px !important;
+    @media (max-width: 769px) {
+        padding-right: 0px !important;
+    }
+
+    display: flex !important;
+    position: relative;
+    top: 13px;
+
+    border: none;
+    transition: all 0.2s ease-in-out;
+
+    :hover {
+        stroke: $cwBueColor !important;
+    }
+
+    &:disabled :hover {
+        stroke: $cwGrisBoton !important;
+
+    }
+
+
+}
+
+.btn-add-tab.agregar-servicio{
+    stroke: $primary-blue;
+
+    &:disabled{
+        stroke: $cwGrisBoton !important;
+    }
+}
+
+
+.mat-tab-label.mat-tab-disabled {
+    .mat-icon {
+        height: 30px !important;
+        width: 30px !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        color: transparent;
+        fill: none;
+        stroke: $cwGrisBoton !important;
+        stroke-opacity: 1 !important;
+    }
+}
+
+.mat-icon-close {
+    height: 14px !important;
+    width: 14px !important;
+    position: relative;
+    top: -2px;
+    margin-left: 5px;
+}
+
+@media (max-width: 578px) {
+    .mat-tab-label {
+        padding: 0 8px !important;
+    }
+}
+
+.p-tab-modal {
+    padding: 10px 5px !important;
+
+    @media (max-width: 1014px) {
+        padding: 10px 4px !important;
+        font-size: 13px !important;
+    }
+
+    @media (max-width: 961px) {
+        font-size: 12px !important;
+    }
+
+    @media (max-width: 915px) {
+        font-size: 11px !important;
+    }
+
+    @media (max-width: 870px) {
+        padding: 10px 0px !important;
+        font-size: 10px !important;
+    }
+
+    @media (max-width: 795px) {
+        display: none;
+    }
+}
+
+.p-tab-span {
+    padding: 10px 5px !important;
+
+    @media (max-width: 1050px) {
+        padding: 10px 4px !important;
+        font-size: 13px !important;
+    }
+
+    @media (max-width: 992px) {
+        padding: 10px 4px !important;
+        font-size: 13px !important;
+    }
+
+    @media (max-width: 800px) {
+        font-size: 12px !important;
+    }
+
+    @media (max-width: 680px) {
+        display: none;
+    }
+}
+
+//TODO: MQ - Revisar estas clases no utliza mat-tabs
+.cw-tabs-folder {
+    > .nav {
+        &.nav-tabs {
+            border: 0px;
+
+            .nav-item {
+                .nav-link {
+                    padding: 15px 15px 10px 30px;
+                    border-bottom: 0;
+                    border-right: 0;
+                    border: none;
+                    color: $primary-gray;
+                    background-color: $background-color-disabled;
+                    margin-right: 25px;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        margin-left: 15px;
+                        border-bottom: 46px solid $background-color-disabled;
+                        border-right: 25px solid transparent;
+                        margin-top: -14px;
+                    }
+
+                    &.active {
+                        img {
+                            color: $dodger-blue;
+                        }
+
+                        background-color: $primary-white;
+                        border-radius: 0px !important;
+
+                        &::after {
+                            border-bottom: 50px solid $bgWhite;
+                        }
+
+                        mat-icon {
+                            color: blue;
+                        }
+
+                        span {
+                            color: $black;
+                        }
+                    }
+                }
+
+                &:last-child {
+                    .nav-link {
+                        border-right: 1px solid $border-color;
+                        border-radius: 8px 0px 0px 0px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        background-color: $bgWhite;
+        margin-top: 2px;
+        border-radius: 0px 8px 8px 8px;
+
+        &.border {
+            border: none;
+        }
+    }
+}
+
+.cw-tabs-buttons {
+    > .nav {
+        &.nav-tabs {
+            border: 0px;
+
+            .nav-item {
+                padding: 15px 5px;
+                border-radius: 25px;
+
+                .nav-link {
+                    display: flex;
+                    align-items: center;
+                    background-color: $background-color-disabled;
+                    border-radius: $button-border-radius;
+                    opacity: $opacity;
+                    height: $button-height-tab;
+                    color: $primary-blue;
+                    letter-spacing: $letter-spacing;
+                    font: normal normal normal 17px/24px;
+                    padding: $padding-tab-buttons;
+
+                    &.active {
+                        background-color: $primary-blue;
+                        color: $primary-white;
+                    }
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        background-color: $bgWhite;
+        margin-top: 2px;
+
+        &.border {
+            border: none;
+        }
+    }
+}
+
+.cw-tabs-underline {
+    > .nav {
+        &.nav-tabs {
+            border: 0px;
+
+            .nav-item {
+                padding: 15px 0px 15px 0px;
+                background-color: $cwGrisClaro;
+
+                .nav-link {
+                    display: flex;
+                    align-items: center;
+                    height: $button-height;
+                    color: $primary-gray;
+                    letter-spacing: $letter-spacing;
+                    font: normal normal normal 17px/24px;
+                    padding: $padding-tab-buttons;
+                    background-color: #f3f6f9;
+                    border: none;
+                    border-bottom: 3px solid $secundary-gray;
+
+                    span {
+                        margin-left: 90px;
+                        margin-right: 90px;
+                    }
+
+                    &.active {
+                        border-bottom: 3px solid $primary-blue;
+                        color: $primary-blue;
+                    }
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        margin-top: 2px;
+
+        &.border {
+            border: none;
+        }
+    }
+}

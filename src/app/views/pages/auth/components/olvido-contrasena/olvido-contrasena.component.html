@@ -1,0 +1,140 @@
+<mat-dialog-content class="mat-typography cw-login">
+
+  <div class="modal-header row pb-md-1 pb-0">
+    <div class="d-flex justify-content-end cw-100-w pt-0 pr-3">
+      <mat-icon mat-dialog-close svgIcon="148" class="cw-size-xs"></mat-icon>
+    </div>
+  </div>
+
+  <div class="cw-modal">
+    <div class="row">
+      <div class="col-12 pl-md-5 pr-md-5 pt-3 pb-3">
+        <form [formGroup]="formGroupRestablecerContrasena" autocomplete="off">
+
+          <!--previo de obtener codigo-->
+          <div *ngIf="!codigoIsValid">
+            <div class="row" *ngIf="pageModal !==2 && pageModal !==3">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="cw-EncodeSans cw-title">{{'BOTONES.OLVIDO_CONTRASENA' | translate}}</p>
+              </div>
+            </div>
+            <div class="row" *ngIf="pageModal===1">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-md-5 mt-md-0 pt-0 mt-2 ">
+                <mat-form-field class="cw-mat-full-with">
+                  <input matInput placeholder="Usuario" formControlName="username" maxlength="250">
+                  <mat-error *ngIf="formGroupRestablecerContrasena.get('username').hasError('required')">
+                    {{'FORMULARIOS.INPUT_REQUERIDO' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-md-5">
+                <p class="cw-EncodeSans cw-p">{{'FORMULARIOS.MEDIO_RECUPERACION' | translate}}</p>
+                <div class="row d-flex justify-content-around p-md-4 p-3">
+                  <button type="button"
+                    class="col-md-5 col-xl-5 col-sm-10 btn btn-outline-primary cw-center-all cw-100-w"
+                    (click)="generarCodigoVerificacion(false, tiposMensajeCodigo.sms)">
+                    <mat-icon svgIcon="146" style="width: 20px; height: 20px;"></mat-icon>
+                    <span class="ml-2">{{'BOTONES.CELULAR' | translate}}</span>
+                  </button>
+                  <button type="button" class="col-md-5 col-xl-5 col-sm-10 btn btn-primary cw-center-all cw-100-w mt-md-0 mt-3"
+                    (click)="generarCodigoVerificacion(false, tiposMensajeCodigo.correo)">
+                    <mat-icon svgIcon="147" style="width: 20px; height: 20px;"></mat-icon>
+                    <span class="ml-2">{{'BOTONES.CORREO' | translate}}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!--formulario codigo  -->
+            <div class="row cw-container-inputTel" *ngIf="pageModal===2 && !codigoIsValid">
+
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h2 class="cw-EncodeSans cw-recuperar-contra-textos">
+                  {{ 'PARRAFOS.INGRESAR_CODIGO_1'| translate}} {{ (tipoMensajeCodigoSeleccionado ==
+                  tiposMensajeCodigo.sms? 'BOTONES.CELULAR': 'BOTONES.CORREO') | translate | lowercase}} {{
+                  'PARRAFOS.INGRESAR_CODIGO_2' | translate}}</h2>
+                <p class="cw-EncodeSans cw-title cw-recuperar-contra-textos">{{resultadoOpcionSeleccionada | HidePasswordOrEmail}}</p>
+              </div>
+
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <app-codigo-input [codeSize]="6" #codigoInput (codigoEmit)="recibeCodigo($event)"></app-codigo-input>
+              </div>
+
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="cw-EncodeSans cw-p">{{ activateButtonSend === true ? ('TITULOS.CODIGO_VENCE' | translate) : ('TITULOS.CODIGO_VENCIDO' | translate)}}</p>
+                <p class="cw-EncodeSans cw-title">
+                  <countdown #countdown [config]="{leftTime:segValidarCodigoSms}" (event)="handleEvent($event)">
+                  </countdown>
+                </p>
+              </div>
+
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="row contenedor-botones">
+                  <button type="button" class="btn btn-outline-primary cw-center-all pl-4 pr-4 pt-3 pb-3 mr-md-3"
+                    (click)="validarCodigo()" [disabled]="!activateButtonSend">
+                    {{'BOTONES.ENVIAR_SOLICITUD' | translate}}
+                  </button>
+                  <button type="button" class="btn btn-primary cw-center-all pl-4 pr-4 pt-3 pb-3 mt-md-0 mt-3"
+                    (click)="generarCodigoVerificacion(true)" [disabled]="activateButtonSend">
+                    {{'BOTONES.SOLICITAR_NUEVO_CODIGO' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--si el codigo es correcto-->
+          <div *ngIf="pageModal===3 && codigoIsValid">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="cw-EncodeSans cw-title">{{'TITULOS.RESTABLECER_CONTRASENA' | translate}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-4">
+                <mat-form-field class="cw-mat-full-with">
+                  <input [type]="hideNueva ? 'password' : 'text'" matInput placeholder="Nueva Contraseña" 
+                    formControlName="passwordNew" maxlength="250" autocomplete="off" (keyup)="validarContrasena()">
+                  <mat-icon *ngIf="formGroupRestablecerContrasena.get('passwordNew').value.length !== 0" matSuffix 
+                    (click)="hideNueva = !hideNueva" class="cursor-pointer cw-secundary-gray">{{hideNueva ?
+                    'visibility_off' : 'visibility'}}</mat-icon>
+                  <mat-error *ngIf="formGroupRestablecerContrasena.get('passwordNew').hasError('required')">{{'FORMULARIOS.INPUT_REQUERIDO' | translate}}</mat-error>
+                  <mat-error *ngIf="passwordNew.hasError('noTieneMayuscula')">{{'FORMULARIOS.VALIDAR_MAYUSCULA' | translate}}*</mat-error>
+                  <mat-error *ngIf="passwordNew.hasError('noTieneMinuscula')">{{'FORMULARIOS.VALIDAR_MINUSCULA' | translate}}*</mat-error>
+                  <mat-error *ngIf="passwordNew.hasError('noTieneNumero')">{{'FORMULARIOS.VALIDAR_NUMERO' | translate}}*</mat-error>
+                  <mat-error *ngIf="passwordNew.hasError('noTieneCaracter')">{{'FORMULARIOS.VALIDAR_CARACTER_ESPECIAL' | translate}}*</mat-error>
+                  <mat-error *ngIf="passwordNew.hasError('noTieneLongitud')">{{'FORMULARIOS.VALIDAR_NUMERO_CARACTERES' | translate}}*</mat-error>
+
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-3">
+                <mat-form-field class="cw-mat-full-with">
+                  <input [type]="hideConfirmar ? 'password' : 'text'" matInput placeholder="Confirmar nueva contraseña"
+                    formControlName="passwordNewConfirm" maxlength="250" autocomplete="off"
+                    (keyup)="validarConfirmContrasena()">
+                  <mat-icon *ngIf="formGroupRestablecerContrasena.get('passwordNewConfirm').value.length !== 0"
+                    matSuffix (click)="hideConfirmar = !hideConfirmar" class="cursor-pointer cw-secundary-gray">
+                    {{hideConfirmar ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  <mat-error *ngIf="formGroupRestablecerContrasena.get('passwordNewConfirm').hasError('empty')">
+                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                  <mat-error *ngIf="formGroupRestablecerContrasena.get('passwordNewConfirm').hasError('invalidPass')">
+                    {{ 'TITULOS.NO_COINCIDE_CONTRASENA' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-5">
+                <div class="row">
+                  <button type="button" class="btn btn-outline-primary cw-center-all pl-4 pr-4 pt-3 pb-3 mr-3"
+                    (click)="cambiarContrasena()">
+                    {{'BOTONES.GUARDAR' | translate}}
+                  </button>
+                  <button type="button" class="btn btn-primary cw-center-all pl-4 pr-4 pt-3 pb-3 mr-3" mat-dialog-close>
+                    {{'BOTONES.CANCELAR' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

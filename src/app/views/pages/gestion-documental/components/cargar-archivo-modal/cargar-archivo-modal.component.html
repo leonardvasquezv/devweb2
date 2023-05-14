@@ -1,0 +1,196 @@
+<mat-dialog-content>
+  <div class="modal-header d-flex cw-modal-estadoregistro-header p-0px bd-b-0">
+    <span class="ml-2 pt-5px cw-center-all cw-font-semi-bold titleGrisOscuro font-size-19px">
+      {{ "BOTONES.CARGAR_ARCHIVO" | translate }}
+    </span>
+    <div class="row d-flex flex-row-reverse pr-3 ml-10px">
+      <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-4 cw-pr0 cw-pl0 colorGrisIcon">
+      </mat-icon>
+    </div>
+  </div>
+
+  <ng-container *ngIf="data.aplicaVencimiento">
+    <ng-container *ngTemplateOutlet="aplicaVencimiento"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!data.aplicaVencimiento">
+    <ng-container *ngTemplateOutlet="noAplicaVencimiento"></ng-container>
+  </ng-container>
+
+  <ng-template #noAplicaVencimiento>
+    <div class="row mt-mb-20px">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ml-12">
+            <ng-container *ngTemplateOutlet="subirArchivo"></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #aplicaVencimiento>
+    <div class="cw-center-all w-100 mt-mb-20px">Notificaciones</div>
+    <div>
+      <form [formGroup]="formGroupCargarArchivo">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+            <div class="row">
+              <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="{{ 'TITULOS.FECHA_VENCIMIENTO' | translate }}" [matDatepicker]="picker"
+                    formControlName="fechaVencimiento" autocomplete="off">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="formGroupCargarArchivo.get('fechaVencimiento').hasError('required')">{{
+                    "FORMULARIOS.INPUT_REQUERIDO" | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                <mat-form-field class="w-100">
+                  <mat-select placeholder="{{'FORMULARIOS.PERIODICIDAD' | translate }}" matInput
+                    (selectionChange)="bloquearDia($event.value)" formControlName="idPeriodicidadNotificacion">
+                    <mat-option *ngFor="let periodicidad of arrayPeriodicidad" [value]="periodicidad.idTipoDetalle">
+                      <span>{{ periodicidad.nombre }}</span>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroupCargarArchivo.get('idPeriodicidadNotificacion').hasError('required')">{{
+                    "FORMULARIOS.INPUT_REQUERIDO" | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <mat-form-field class="w-100"
+                  [ngClass]="{disabled: formGroupCargarArchivo.get('idPeriodicidadNotificacion').value !== ETipoDetalle.semanal}">
+                  <mat-select placeholder="{{'FORMULARIOS.DIA' | translate }}" matInput
+                    formControlName="idDiaNotificacion">
+                    <mat-option *ngFor="let dias of arrayDiaSemana" [value]="dias.idTipoDetalle">
+                      <span>{{ dias.nombre }}</span>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formGroupCargarArchivo.get('idDiaNotificacion').hasError('required')">{{
+                    "FORMULARIOS.INPUT_REQUERIDO" | translate }}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mt-mb-20px">
+              <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                <div class="row">
+                  <div class="col-9 text-initial cw-font-bold font-size-19px cw-txt-azul-oscuro">{{ "TITULOS.ALERTAS" |
+                    translate }}</div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="pr-0">
+                      <mat-form-field class="cw-mat-full-with color-especial-form-field">
+
+                        <div class=" d-flex">
+                          <button class="cw-button-transparent" #tooltip="matTooltip" matTooltip="Crear color"
+                            matTooltipClass="tooltip-bg" matTooltipHideDelay="10000">
+                            <mat-icon [(colorPicker)]="colorSelected" class="bg-g" svgIcon="30"
+                              (colorPickerSelect)="seleccionarColor($event)"></mat-icon>
+                          </button>
+                          &nbsp;&nbsp;
+                          <div *ngIf="!!colorSelected" class="bgcolor" (click)="borrarColor()"
+                            [style.background]="colorSelected"></div>
+                        </div>
+                        <mat-error *ngIf="formGroupCargarArchivo.get('color').hasError('required')">
+                          {{ "FORMULARIOS.INPUT_REQUERIDO" | translate }}
+                        </mat-error>
+                        <input matInput hidden value="{{ colorSelected }}" formControlName="color" />
+                      </mat-form-field>
+                    </div>
+                    <input hidden value="{{ colorSelected }}" formControlName="idAlertaDocumento" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 cw-center-v">
+                <mat-form-field class="w-100">
+                  <input matInput placeholder="{{ 'FORMULARIOS.TIEMPO_MESES' | translate }}" appRestrictInput="integer"
+                    formControlName="tiempoMeses" autocomplete="off">
+                  <mat-error *ngIf="formGroupCargarArchivo.get('tiempoMeses').hasError('required')">{{
+                    "FORMULARIOS.INPUT_REQUERIDO" |
+                    translate }}</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 cw-center-v">
+                <button class="btn cw-boton-azul-claro w-100" (click)="agregarAlertas()">
+                  {{ (banderaEditarAlerta ? "TITULOS.EDITAR_ALERTA" : "TITULOS.AGREGAR_ALERTA" ) | translate }}
+                </button>
+              </div>
+              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 ">
+                <ng-container *ngTemplateOutlet="subirArchivo"></ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- LISTAR ALERTAS -->
+    <div class="row">
+      <div class="col">
+        <mat-accordion multi class="cw-expansion-panel">
+          <mat-expansion-panel [expanded]="panelExpandido">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ "TITULOS.ALERTAS" | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-listar-alertas [arrayAlertas]="alertas" (eventEditar)="editarAlerta($event)"
+              (eventEliminar)="eliminarAlerta($event)"></app-listar-alertas>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #subirArchivo>
+    <div class="row">
+      <div class="col-12"><span class="tx-11 cw-txt-gris-claro">Adjuntar archivo</span></div>
+
+      <div class="col-12 mt-5px" *ngIf="!!!fileName">
+        <div class="boton-archivo cw-center-all" (click)="fileUpload.click()">
+          <div class="row justify-content-center">
+            <mat-icon class="cw-size-xs-6" svgIcon="35"></mat-icon> &nbsp; &nbsp;
+            {{ "FORMULARIOS.AÑADIR_ARCHIVO" | translate }}
+          </div>
+        </div>
+        <input #fileUpload hidden type="file" class="file-upload" (change)="cargarArchivo($event)" />
+      </div>
+
+      <div class="col-12 mt-5px" *ngIf="!!fileName">
+        <div class="boton-documento-cargado cw-center-all">
+          <div class="row justify-content-center">
+            <div class="">
+              <span class="tx-10" #tooltip   matTooltip="{{fileName}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below" [matTooltipDisabled]="!(fileName?.length > 10)">
+                {{ fileName?.length > 10 ? (fileName.slice(0, 10) + '...' ) : fileName }}
+              </span>
+              <span class="tx-10 colorGrisIcon">({{tamanoDocumento}} kb)</span>&nbsp;
+              <mat-icon class="cw-size-xs-6" svgIcon="37" (click)="descargarArchivo()"></mat-icon>&nbsp;&nbsp;
+              <mat-icon class="cw-size-xs" svgIcon="36" (click)="borrarArchivo()"></mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+
+
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button class="btn cw-btn-outline-cancel mt-mb-15px" (click)="lanzarModalConfirmacion(false)">
+    {{ "BOTONES.CANCELAR" | translate }}
+  </button>
+  <button class="btn cw-boton-azul-claro cw-size-110-38 text-center ml-3 mt-mb-15px" cdkFocusInitial
+    (click)="lanzarModalConfirmacion(true)">
+    {{ "BOTONES.GUARDAR" | translate }}
+  </button>
+
+</mat-dialog-actions>

@@ -1,0 +1,16 @@
+:host ::ng-deep .color-especial-form-field {
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-label {
+    color: #B8C7D3 !important;
+ }
+}
+
+
+:host ::ng-deep .cw-expansion-panel
+  .mat-expansion-indicator::after {
+  color: #00ADC6;
+  margin-top: -7px;
+}

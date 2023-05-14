@@ -1,0 +1,90 @@
+<div class="row d-flex justify-content-between mx-2" mat-dialog-title>
+    <span class="fs-16 titulosAzul"><strong>{{'BOTONES.REGISTRAR' |
+            translate}}</strong>
+    </span>
+    <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-6 cw-pr0 cw-pl0 colorGrisIcon"></mat-icon>
+</div>
+<div class="d-flex flex-column justify-content-between">
+    <div mat-dialog-content>
+
+        <form [formGroup]="formularioRegistroIndicadores" class="cw-forms" autocomplete="off">
+            <div class="row">
+                <div class="col-md-6 col-xl-7 mt-5">
+                    <mat-form-field class="col-6" appearance="fill">
+                        <mat-label>{{'FORMULARIOS.RESPONSABLE' | translate}}</mat-label>
+                        <input matInput class="text-left" required formControlName="responsable" />
+                        <mat-error>
+                            {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+
+                    <mat-form-field class="col-6 icon-fecha-evidencia" appearance="fill" disabled="true">
+                        <mat-label>{{'FORMULARIOS.FECHA' | translate}}</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fechaEvidencia" required (click)="picker.open()">
+                        <mat-error>
+                            {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                        </mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>today</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12 text-area-modal-registrar textarea-label-modal-registrar " appearance="fill">
+                        <mat-label>{{'FORMULARIOS.RECURSOS' | translate}}</mat-label>
+                        <textarea matInput formControlName="recurso"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6 col-xl-5 mt-4">
+                    <label class="cw-label-upload" [for]="'imgFile'">
+                        {{'FORMULARIOS.ADJUNTAR_ARCHIVO' | translate}}
+                    </label>
+                    <div class="cw-upload-file">
+                        <input type="file" #imgFile [id]="'imgFile'"
+                            (change)="agregarArchivoEvidencia(imgFile.files)" />
+                        <label class="cw-cursor-pointer cloudUpload mb-0px" [for]="'imgFile'">
+                            <ng-container>
+                                <mat-icon class="mr-2">cloud_upload</mat-icon>
+                                <span>{{'FORMULARIOS.ADJUNTAR_ARCHIVO' | translate}}</span>
+                            </ng-container>
+                        </label>
+                    </div>
+
+                    <div *ngIf="listaArchivosEvidencia?.length > 0" class="mt-1 lista-archivos-adjuntos">
+                        <ul>
+                            <li *ngFor="let archivo of archivosActivos(); let i = index">
+                                <div class="img-info-space">
+                                    <div>
+                                        <a [ngbTooltip]="archivo.nombreArchivo">{{archivo.nombreArchivo.length > 20 ? archivo.nombreArchivo.substring(0,20) + '...' : archivo.nombreArchivo}} ({{archivo.tamanoArchivo}} mb)</a> 
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <a [href]="archivo.urlArchivo" download target="_blank">
+                                            <mat-icon svgIcon="29" class="descargar-icon"></mat-icon>
+                                        </a>
+                                        <mat-icon svgIcon="14" class="cerrar-icon"
+                                            (click)="inactivarArchivoEvidencia(i)">
+                                        </mat-icon>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <mat-dialog-actions class="d-flex flex-row-reverse mt-4">
+        <button class="btn cw-btn-blue inside text-center" (click)="_abrirModalConfirmacionGuardar()">
+            {{'BOTONES.GUARDAR' | translate}}
+        </button>
+        <button class="btn cw-btn-outline-cancel mr-2 mb-0" mat-dialog-close>
+            {{'BOTONES.CANCELAR' | translate}}
+        </button>
+    </mat-dialog-actions>
+</div>

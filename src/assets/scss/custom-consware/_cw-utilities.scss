@@ -1,0 +1,328 @@
+// Tamaños de iconos e imagenes
+.cw-size-xxs {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.cw-size-xs {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.cw-size-xs-2 {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.cw-size-xs-4 {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.cw-size-xs-5 {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.cw-size-xs-6 {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.cw-size-xs-8 {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.cw-size-sm {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.cw-size-sm-2 {
+  width: 22px;
+  height: 22px;
+}
+
+.cw-size-sm-4 {
+  width: 24px;
+  height: 24px;
+}
+
+.cw-size-sm-6 {
+  width: 26px;
+  height: 26px;
+}
+
+.cw-size-sm-8 {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.cw-size-sm-10 {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.cw-size-sm-12 {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.cw-size-md {
+  width: 30px;
+  height: 30px;
+}
+
+.cw-size-md-2 {
+  width: 32px;
+  height: 32px;
+}
+
+.cw-size-md-4 {
+  width: 34px;
+  height: 34px;
+}
+
+.cw-size-md-6 {
+  width: 36px;
+  height: 36px;
+}
+
+.cw-size-md-8 {
+  width: 38px;
+  height: 38px;
+}
+
+.cw-size-lg {
+  width: 40px;
+  height: 40px;
+}
+
+.cw-size-lg-2 {
+  width: 42px;
+  height: 42px;
+}
+
+.cw-size-lg-4 {
+  width: 44px;
+  height: 44px;
+}
+
+.cw-size-lg-6 {
+  width: 46px;
+  height: 46px;
+}
+
+.cw-size-lg-8 {
+  width: 48px;
+  height: 48px;
+}
+
+.cw-size-xl {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.cw-size-xl-2 {
+  width: 52px;
+  height: 52px;
+}
+
+.cw-size-xl-4 {
+  width: 54px !important;
+  height: 54px !important;
+}
+
+.cw-size-xl-6 {
+  width: 56px;
+  height: 56px;
+}
+
+.cw-size-xl-8 {
+  width: 58px;
+  height: 58px;
+}
+
+.cw-size-xxl {
+  width: 60px;
+  height: 60px;
+}
+
+.cw-size-xxl-p {
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.cw-size-xxl-2 {
+  width: 70px;
+  height: 70px;
+}
+
+.cw-size-xxl-4 {
+  width: 80px;
+  height: 80px;
+}
+
+.cw-size-xxl-6 {
+  width: 90px;
+  height: 90px;
+}
+
+.cw-size-xxl-8 {
+  width: 100px;
+  height: 100px;
+}
+
+.cw-size-110-38 {
+  width: 110px;
+  height: 38px;
+}
+
+.cw-center-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.cw-center-v {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.cw-center-h {
+  display: flex;
+  justify-content: center;
+}
+
+.cw-start-flex {
+  display: flex;
+  justify-content: start;
+}
+
+.padding-20px {
+  padding: 20px !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.cw-border-radius-50 {
+  border-radius: 50%;
+}
+
+.margin-l-r-12px {
+  margin: 12px 0;
+}
+
+.cw-background-white {
+  background-color: $primary-white;
+}
+
+.cw-background-primary-dark-green {
+  background-color: $primary-dark-green;
+}
+
+.ht-100vh {
+  height: 100vh !important;
+}
+
+.cw-100-h {
+  height: 100% !important;
+}
+
+.cw-100-w {
+  width: 100% !important;
+}
+
+.cw-text-weight-bold {
+  font-weight: bold;
+}
+
+.cw-text-weight-semibold {
+  font-weight: 500;
+}
+
+.cw-text-weight-light {
+  font-weight: 200;
+}
+
+.cw-max-width-400px {
+  max-width: 400px;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.cw-transform-0-8 {
+  transform: scale(0.8);
+}
+
+.cw-text-size-16 {
+  font-size: 16px !important;
+}
+
+.cw-text-size-20 {
+  font-size: 20px !important;
+}
+
+.cw-text-size-22 {
+  font-size: 22px !important;
+}
+
+
+.cw-text-size-25 {
+  font-size: 25px !important;
+}
+
+.cw-primary-green {
+  color: $primary-green !important;
+}
+
+.cw-primary-red {
+  color: $primary-red !important;
+}
+
+.cw-chip-activo {
+  background-color: $cwBlancoClaro;
+  color: $cwBueColor;
+  width: auto;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.cw-chip-inactivo {
+  background-color: $bgWhite;
+  color: $clTextoAzulClaro;
+  width: auto;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1px solid $cwBlancoClaro;
+}
+
+.cw-float-left {
+  float: left;
+}
+
+.cw-position-absolute {
+  position: absolute;
+}
+
+.cw-overflow-y-auto {
+  overflow-y: auto;
+}
+
+.cw-45vh {
+  height: 45vh !important;
+}

@@ -1,0 +1,67 @@
+<div class="contenedor-pagina">
+  <mat-tab-group class="mat-tab-hide-bar diagonal-style-tab border-tab-header-none br-custom-1 overflow-auto" disableRipple
+    [formGroup]="formGroupEmpresa" [(selectedIndex)]="selectedIndex">
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <em class="link-icon cw-text-size-22"><span class="mdi mdi-cube-outline"></span></em>
+        <span class="cw-text-size-16">{{ 'TITULOS.INFORMACION_EMPRESA' | translate }}</span>
+      </ng-template>
+      <app-formulario-informacion-empresa formGroupName="formGroupInformacionEmpresa"
+        [codigoSicom]="codigoSicom"></app-formulario-informacion-empresa>
+      <div class="footerbtn mb-2">
+        <div *ngIf="tipoOperacion === ETiposOperacion.consultar">
+          <button type="button" class="btn btn-outline-primary mr-2" (click)="editarEmpresa()">
+            {{'BOTONES.EDITAR' | translate}}
+          </button>
+          <button type="button" (click)="goToBack()" class="btn btn-primary mr-2">
+            {{'BOTONES.FINALIZAR_CONSULTA' | translate}}
+          </button>
+        </div>
+        <div *ngIf="tipoOperacion !== ETiposOperacion.consultar">
+          <button type="button" class="btn btn-outline-primary mr-2" (click)="goToBack()">
+            {{'BOTONES.CANCELAR' | translate}}
+          </button>
+          <button *ngIf="tipoOperacion === ETiposOperacion.editar" type="button"
+            (click)="abrirModalConfirmarOperacion(true)" class="btn btn-primary mr-2">
+            {{'BOTONES.GUARDAR' | translate}}
+          </button>
+          <button *ngIf="tipoOperacion === ETiposOperacion.crear" type="button" (click)="validarFormulario()"
+            class="btn btn-primary mr-2">
+            {{'BOTONES.SIGUIENTE' | translate}}
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab [disabled]="habilitarTab">
+      <ng-template mat-tab-label>
+        <em class="link-icon cw-text-size-22"><span class="mdi mdi-cube-outline"></span></em>
+        <span class="cw-text-size-16">{{ 'TITULOS.PERFILES' | translate }}</span>
+      </ng-template>
+      <app-perfil formGroupName="formGroupPerfiles"></app-perfil>
+      <div class="footerbtn mb-2">
+        <div *ngIf="tipoOperacion === ETiposOperacion.consultar">
+          <button type="button" class="btn btn-outline-primary mr-2" (click)="editarEmpresa()">
+            {{'BOTONES.EDITAR' | translate}}
+          </button>
+          <button type="button" (click)="goToBack()" class="btn btn-primary mr-2">
+            {{'BOTONES.FINALIZAR_CONSULTA' | translate}}
+          </button>
+        </div>
+        <div *ngIf="tipoOperacion !== ETiposOperacion.consultar">
+
+          <button *ngIf="selectedIndex == 1 && tipoOperacion !== ETiposOperacion.editar" (click)="cambiarTab()" type="button" class="btn btn-outline-primary mr-2">
+            {{'BOTONES.ANTERIOR' | translate}}
+         </button>
+          <button type="button" class="btn btn-outline-primary mr-2" (click)="goToBack()">
+            {{'BOTONES.CANCELAR' | translate}}
+          </button>
+          <button type="button" (click)="abrirModalConfirmarOperacion(true)" class="btn btn-primary mr-2">
+            {{'BOTONES.GUARDAR' | translate}}
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

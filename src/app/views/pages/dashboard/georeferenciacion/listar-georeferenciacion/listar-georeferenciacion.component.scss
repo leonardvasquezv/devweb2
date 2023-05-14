@@ -1,0 +1,6 @@
+//Estilo utilizado para evitar que le salga borde al mapa al hacer un mouseover sobre alguno de sus objetos
+:host ::ng-deep .gm-style iframe + div { border:none!important; }
+
+::ng-deep .gm-ui-hover-effect {
+    display: none !important;
+}

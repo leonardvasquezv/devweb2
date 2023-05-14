@@ -1,0 +1,113 @@
+<div class="row d-flex justify-content-between ml-0px mr-2" mat-dialog-title>
+    <span class="fs-16 cl-azulBoton"><strong>{{'TITULOS.CREAR_SERVICIO' | translate}}</strong></span>
+        <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-6 cw-pr0 cw-pl0 colorGrisIcon">
+    </mat-icon>
+</div>
+<mat-dialog-content>
+    <div class="contenido">
+        <form [formGroup]="formularioParametrizacion" class="cw-forms formulario-servicios" autocomplete="off">
+            <div class="row cabecera-tabla">
+    
+                <mat-form-field class="col-12 col-md-3" appearance="fill">
+                    <!-- CAMPO CODIGO -->
+                    <mat-label>{{'TITULOS.CODIGO' | translate}}</mat-label>
+                    <input matInput class="text-left" required formControlName="nomenclatura" (blur)="validarCodigoParametrizacion()"/>
+                    <mat-error *ngIf="formularioParametrizacion.get('nomenclatura').hasError('required')">
+                        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                    </mat-error>
+                    <mat-error *ngIf="formularioParametrizacion.get('nomenclatura').hasError('repetido')">
+                        {{'FORMULARIOS.VALIDACION_CAMPO_CODIGO_PARAMETRIZACION' | translate}}
+                    </mat-error>
+                </mat-form-field>
+        
+                <!-- CAMPO NOMBRE -->
+                <mat-form-field [ngClass]="estadoEdicionForm ? 'col-12 col-md-4' : 'col-12 col-md-6'" appearance="fill" disabled="true">
+                    <mat-label>{{'TITULOS.NOMBRE' | translate}}</mat-label>
+                    <input matInput class="text-left" required formControlName="nombre" />
+                    <mat-error>
+                        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                    </mat-error>
+                </mat-form-field>
+        
+                <div [ngClass]="estadoEdicionForm ? 'col-12 col-md-5' : 'col-12 col-md-3'" *ngIf="estadoCreacionForm">
+                    <button class="btn btn-primary crear" (click)="guardarServicio()">
+                      {{'TITULOS.CREAR_SERVICIO' | translate}}
+                    </button>
+                </div>
+
+                <div [ngClass]="estadoEdicionForm ? 'd-flex justify-content-end col-12 flex-sm-column col-md-5 pl-md-0 flex-md-row' : 'col-12'">
+                    <button class="btn btn-outline-primary mr-1 mb-1 col-md-5 col-sm-12 mn-wd-45p" (click)="cancelarEdicionServicio()" *ngIf="estadoEdicionForm">
+                        {{ 'BOTONES.CANCELAR' | translate }}
+                    </button>
+                    <button class="btn btn-primary col-md-5 mb-1 col-sm-12 mn-wd-45p" (click)="guardarServicio()" *ngIf="estadoEdicionForm">
+                        {{ 'BOTONES.GUARDAR' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    
+        <div class="row my-filtros">
+            <div class="col-12">
+              <app-filtros [objFiltros]="arrayFiltros" (enviaFiltros)="recibeFiltrosDinamico($event)" [banderaCantidadFilas]="false">
+              </app-filtros>
+            </div>        
+        </div>
+    
+        <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+            <ngx-datatable [rows]="listaServicios" class="bootstrap cw-tabla-servicios" [columnMode]="ColumnMode.force" [externalPaging]="true"
+                [footerHeight]="50" [offset]="pageTable.pageNumber" [limit]="pageTable.size"
+                [count]="pageTable.totalElements" (page)="obtenerServicios(tipoDetallePadre, $event)" [rowHeight]="medidasTabla.alturaFila" [scrollbarH]="true" [virtualization]="false">
+        
+                <ngx-datatable-column name="{{'TITULOS.CODIGO' | translate}}" [headerClass]="'cw-text-center'"
+                    [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                    [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row?.nomenclatura }}
+                    </ng-template>
+                </ngx-datatable-column>
+                    
+                <ngx-datatable-column name="{{'TITULOS.NOMBRE' | translate}}" [headerClass]="'cw-text-center'"
+                    [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                    [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span [ngbTooltip]="row?.nombre | titlecase" tooltipClass="tooltip-textos-tablas">
+                            {{ row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre | titlecase }}
+                        </span>
+                    </ng-template>
+                </ngx-datatable-column>
+        
+                <ngx-datatable-column name="{{'TITULOS.ESTADO' | translate}}" [headerClass]="'cw-text-center'"
+                    [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="110"
+                    [sortable]="false">
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <div class="cw-custom-switches">
+                            <ui-switch [checked]="row.checked" (valueChange)="abrirModalCambiarEstado(row, $event)" [disabled]="estadoFormulario === 'Edicion'">
+                            </ui-switch>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+        
+                <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}" [headerClass]="'cw-text-center'"
+                    [cellClass]="'cw-text-center'" [sortable]="false" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                    [minWidth]="110" [sortable]="false">
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                            <button type="button" mat-menu-item (click)="editarServicioSeleccionado(row)">
+                                <mat-icon svgIcon="31" class="colorBlack"></mat-icon>
+                                <span>{{ 'BOTONES.EDITAR' | translate }}</span>
+                            </button>
+                        </mat-menu>
+                    </ng-template>
+        
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+    
+
+
+
+</mat-dialog-content>

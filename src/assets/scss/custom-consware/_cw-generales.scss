@@ -1,0 +1,282 @@
+.cw-login {
+  max-width: 45rem;
+
+  .cw-title {
+    font-weight: 600;
+    font-family: sans-serif;
+    font-size: 24px;
+    letter-spacing: 0px;
+    color: $black;
+  }
+
+  .cw-EncodeSans.cw-title {
+    .count-down {
+      color: $cwCountdownBlue;
+    }
+  }
+
+  .cw-p {
+    font-weight: 600;
+    font-family: sans-serif;
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: $secundary-black;
+  }
+
+  .cw-container-inputTel {
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+
+  .cw-inputTel {
+    top: 528px;
+    left: 900px;
+    width: 70px;
+    height: 70px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 1px 9px #00000029;
+    border-radius: 10px;
+    opacity: 1;
+    font-size: 55px;
+    color: $primary-dark-green;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 767px) {
+
+    .cw-EncodeSans {
+      font-size: 14px;
+    }
+
+    .cw-title {
+      font-size: 22px;
+    }
+
+    .cw-inputTel {
+      height: 40px;
+      width: 40px;
+      font-size: 32px;
+    }
+
+    .cw-recuperar-contra-textos {
+      font-size: 16px;
+    }
+
+    .contenedor-botones {
+      margin: 0 1px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.campo-codigo {
+  @media screen and (max-width: 767px) {
+    width: 50px;
+    padding: 0 0.5rem;
+    font-size: 16px;
+  }
+}
+
+.cw-backgroup-white {
+  background-color: $primary-white;
+  width: 100%;
+  text-align: right;
+  padding: 15px;
+  text-align: right;
+  margin: 0px;
+  border-radius: 0px 0px 8px 8px; //TODO asegurar que no afecte en los demas
+}
+
+.cw-rounded-img {
+  border-radius: 80%;
+  border: none;
+
+  &.cw-border {
+    border: 2px solid #c8d8e6;
+  }
+}
+
+.cw-info-consulta {
+  background-color: $content-bg;
+  border-radius: 15px;
+  padding: 25px;
+
+  .cw-label-title {
+    color: #96a7b7;
+  }
+
+  .cw-text-value {
+    color: #6a707e;
+    margin-top: 0px;
+  }
+
+  .cw-text-center {
+    text-align: center !important;
+  }
+
+}
+
+.container-perfil {
+  @extend .justify-content-around;
+  min-height: 65vh;
+
+  form {
+    width: inherit;
+    padding-right: 47px;
+  }
+
+  .cw-filtros-tabla .cw-box-input-search {
+    border: none !important;
+  }
+
+  .cw-filtros-tabla .cw-box-input-search.mat-focused {
+    box-shadow: none !important;
+  }
+
+  .cw-filtros-tabla .cw-box-input-search .mat-form-field-wrapper {
+    width: 100% !important;
+  }
+
+  .search-bar {
+    border: 1px solid $border-gray-form;
+    border-radius: 4px;
+
+    &.mat-focused {
+      box-shadow: $input-box-shadow;
+      border: none;
+    }
+  }
+
+  .list {
+    height: 45vh;
+    padding-right: 6px !important;
+    overflow: scroll !important;
+  }
+
+  .list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .list::-webkit-scrollbar-track {
+    color: $terceary-gray-ligth;
+  }
+
+  .list::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 8px 8px 8px 8px;
+  }
+
+
+  .subtitle {
+    font-family: $fontMontserrat !important;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .mat-list-option {
+    margin-top: 5px;
+    border-radius: 8px;
+
+    .mat-icon {
+      color: $disabled-icon-gray;
+    }
+
+    .mat-icon.active {
+      color: $clGreen;
+    }
+
+    span.title {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      font-family: $fontMontserrat !important;
+    }
+
+
+  }
+
+  .mat-list-option[aria-selected="true"] {
+    background: $secundary-ligth-blue;
+
+    .title {
+      font-weight: 500 !important;
+    }
+  }
+
+}
+
+
+.permiso-container {
+
+  .mat-list-base .mat-list-item .mat-list-item-content,
+  .mat-list-base .mat-list-option .mat-list-item-content {
+    display: inline !important;
+  }
+
+  span {
+    display: block;
+  }
+
+  .title {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+  }
+
+  .subtitle {
+    font-size: 14px !important;
+    color: $gray-subtitle;
+    font-weight: 400 !important;
+  }
+
+  .mat-list-base .mat-list-item,
+  .mat-list-base .mat-list-option {
+    margin-bottom: 8px !important;
+    line-height: 16px !important;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    bottom: 1px;
+    background-color: $white;
+    height: 80px;
+  }
+}
+
+.permiso-content {
+  height: 37vh !important;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    color: $terceary-gray-ligth;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $terceary-gray-ligth;
+    border-radius: 8px 8px 8px 8px;
+  }
+
+  &.scroll-no-color {
+    &::-webkit-scrollbar-thumb {
+      background-color: transparent;
+      border-radius: 8px 8px 8px 8px;
+    }
+  }
+
+  .cw-custom-switches .switch small {
+    top: 16% !important;
+  }
+
+}

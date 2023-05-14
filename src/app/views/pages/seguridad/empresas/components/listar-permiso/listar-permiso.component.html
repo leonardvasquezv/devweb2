@@ -1,0 +1,47 @@
+<div class="permiso-container">
+
+  <mat-list class="pb-3">
+    <mat-list-item>
+      <div class="row">
+        <div class="col-10">
+          <span class="title">{{nombrePagina}}</span>
+          <span class="subtitle">{{'MENSAJES.PERMITIR_TODOS'|translate}}</span>
+        </div>
+        <div class="col-2 cw-custom-switches">
+          <ui-switch [checked]="estadoSwitch" (change)="handleChecked($event)" [disabled]="esConsulta"> </ui-switch>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-divider class="mb-2"></mat-divider>
+
+  <mat-list *ngFor="let permiso of arrayPermisos; let i = index">
+    <mat-list-item>
+      <div class="row">
+        <div class="col-10">
+          <span class="title">{{permiso.nombre}}</span>
+          <span class="subtitle">{{permiso.descripcion}}</span>
+        </div>
+        <div class="col-2 cw-custom-switches">
+          <ui-switch [checked]="permiso?.checked === true" (change)="handleCheckedList($event, i)"
+            [disabled]="esConsulta"> </ui-switch>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <div class="row buttons-container" *ngIf="showButtons">
+
+    <div class="col-5 cw-center-all" (click)="eventoEnviarPermisos(false)">
+      <button class="btn btn-outline-secondary w-100">{{'BOTONES.CANCELAR' |
+        translate}}</button>
+    </div>
+
+    <div class="col-5 cw-center-all" (click)="eventoEnviarPermisos(true)">
+      <button class="btn btn-outline-primary w-100">{{'BOTONES.APLICAR' |
+        translate}}</button>
+    </div>
+
+  </div>
+
+</div>

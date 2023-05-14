@@ -1,0 +1,54 @@
+<div class="row container-perfil">
+  <div class="col-2 p-0">
+    <div class="row d-flex justify-content-center">
+      <span class="subtitle">{{'TITULOS.CONFIGURACION_PERFILES' | translate}}</span>
+
+      <div class="col-12 pt-4 cw-center-all">
+        <app-filtros-consulta class="w-100 search-bar" [emitChangeDinamic]="true"
+          (arrayFilter)="obtenerTextoPredictivo($event)">
+        </app-filtros-consulta>
+      </div>
+
+      <div class="col-12 pt-3 cw-center-all">
+        <button [disabled]="!habilitarBoton || listaLimpia || esConsulta" (click)="crearNuevoPerfil()"
+          class="btn btn-primary w-100">{{'BOTONES.NUEVO_PERFIL' |
+          translate}}</button>
+      </div>
+
+      <div class="col-12 list overflow-auto">
+        <mat-selection-list #perfiles [multiple]="false" (selectionChange)="selectList($event)">
+          <mat-list-option *ngFor="let perfil of arrayPerfilesFiltered; let i = index" [value]="perfil.nombre"
+            [selected]="perfil.temporal" (click)="selectList(perfil.nombre)">
+            <div class="row d-flex justify-content-between align-items-center">
+              <mat-icon [matTooltip]="'perfil '+(perfil.estadoRegistro === 'A' ? 'activo' : 'inactivo') "
+                matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below"
+                [class]="'col-1 tx-14 pt-1 ' + (perfil.estadoRegistro === 'A' ? 'active' : '')"
+                matListItemIcon>{{!perfil.nuevo ? 'fiber_manual_record' : ''}}
+              </mat-icon>
+              <span class="col-8 title" #tooltip matTooltip="{{perfil.nombre | titlecase}}"
+                matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                {{perfil.nombre}}
+              </span>
+              <button (click)="eliminarRegistro(perfil.nombre)" mat-icon-button class="col-1" [disableRipple]="true"
+                [disabled]="(!perfil.nuevo || !habilitarBoton) || listaLimpia">
+                <mat-icon matListItemIcon>{{perfil.nuevo && !listaLimpia ? 'close' :
+                  ''}}</mat-icon>
+              </button>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider [vertical]="true"></mat-divider>
+
+  <div class="col-9 p-0">
+    <div *ngIf="!!perfilSeleccionado">
+      <app-formulario-perfil (enviaPerfil)="recibirFormularioPerfil($event)"
+        (enviaUsuariosPerfil)="recibirUsuariosPerfil($event)"
+        [perfilSeleccionado]="perfilSeleccionado"></app-formulario-perfil>
+    </div>
+  </div>
+
+</div>

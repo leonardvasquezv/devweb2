@@ -1,0 +1,141 @@
+<div class="map-container">
+   
+   <div class="boton-desplegable animate__animated animate__fadeIn" id="boton-desplegable" (click)="ocultarSlide()" *ngIf="mapaCargado">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+   </div>
+
+   <div class="barra-lateral-mapa" id="barra-lateral-mapa">
+
+      <app-filtros-consulta class="search-bar" (click)="searchBarSelected = true;"
+         (arrayFilter)="obtenerTextoPredictivo($event)">
+      </app-filtros-consulta>
+      
+
+      <div class="map-sidebar active" *ngIf="searchBarSelected" [@enterAnimation]>
+         <div class="animate__animated animate__fadeIn item-list" *ngIf="mapActiveView == 1">
+            <div class="search-box">
+               <div class="row search-filters">
+                  <div ngbDropdown class="d-inline-block mr-1 contenedor-boton">
+                     <button class="btn cw-button-light w-150p boton-filtro departamento-boton" id="dropdownMenu" [title]="departamentoSeleccionado?.nombre ? (departamentoSeleccionado?.nombre | titlecase) : ('TITULOS.DEPARTAMENTO' | translate)"
+                        ngbDropdownToggle>
+                        {{ !departamentoSeleccionado ? "Departamento": ((departamentoSeleccionado?.nombre.length > 12 ?
+                        departamentoSeleccionado?.nombre.substring(0, 11) + "..." : departamentoSeleccionado?.nombre) | titlecase) }}
+                     </button>
+                     <div ngbDropdownMenu class="dropdownMenu-scroll cw-scroll-y" aria-labelledby="dropdownMenu">
+                        <button ngbDropdownItem *ngIf="departamentos"
+                           (click)="limpiarDepartamentoSeleccionado()">{{'TITULOS.LIMPIAR_FILTROS' |
+                           translate}}</button>
+                        <ng-container *ngFor="let departamento of departamentos">
+                           <button [title]="departamento.nombre" ngbDropdownItem
+                              (click)="obtenerMunicipios(departamento.idDepartamento); filtrarPorDepartamento(departamento);">
+                              {{(departamento.nombre.length > 12 ? departamento.nombre.substring(0, 11) + "..." :
+                              departamento.nombre) | titlecase}}
+                           </button>
+                        </ng-container>
+                     </div>
+                  </div>
+                  <div ngbDropdown class="d-inline-block mb-1 contenedor-boton">
+                     <button class="btn cw-button-light w-150p boton-filtro municipio-boton" id="dropdownMenu" [title]=" municipioSeleccionado?.nombre ? (municipioSeleccionado?.nombre | titlecase) : ('TITULOS.MUNICIPIO' | translate)"
+                        ngbDropdownToggle>
+                        {{ !municipioSeleccionado ? "Municipio": ((municipioSeleccionado?.nombre.length > 12 ?
+                        municipioSeleccionado?.nombre.substring(0, 11) + "...": municipioSeleccionado?.nombre) | titlecase) }}
+                     </button>
+                     <div ngbDropdownMenu class="dropdownMenu-scroll cw-scroll-y" aria-labelledby="dropdownMenu">
+                        <button ngbDropdownItem *ngIf="municipios.length == 0">{{'TITULOS.NO_RESULTADOS' |
+                           translate}}</button>
+                        <ng-container *ngFor="let municipio of municipios">
+                           <button [title]="municipio.nombre" ngbDropdownItem (click)="filtrarPorMunicipio(municipio);">
+                              {{(municipio.nombre.length > 12 ? municipio.nombre.substring(0, 11) + "...":
+                              municipio.nombre) | titlecase}}
+                           </button>
+                        </ng-container>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="location-cards cw-scroll-y">
+               <div class="location-card" *ngFor="let estacionServicio of estacionesServicio">
+                  <div class="desc">
+                     <p class="header">{{ estacionServicio.nombre }}</p>
+                     <p class="text">{{ estacionServicio.direccion }} {{ estacionServicio.ciudadEds.nombre | titlecase }},
+                        {{
+                        estacionServicio.departamentoEds.nombre | titlecase }}</p>
+                     <p class="text">{{ estacionServicio.telefono }}</p>
+                  </div>
+                  <div class="icon">
+                     <img width="60px" height="60px" class="cursor-pointer" src="assets/images/svg/icon-card.svg"
+                        (click)="mapActiveView = 2; seleccionarEDS(estacionServicio)">
+                  </div>
+               </div>
+               <div class="no-locations" *ngIf="estacionesServicio.length < 1">
+                  {{'TITULOS.NO_RESULTADOS' | translate}}
+               </div>
+            </div>
+         </div>
+
+         <div class="animate__animated animate__fadeIn item-details cw-scroll-y" *ngIf="mapActiveView == 2">
+            <div class="position-relative">
+               <div class="location-content">
+                  <i title="Regresar" (click)="mapActiveView = 1;"
+                     class="feather icon-arrow-left text-primary cursor-pointer"></i>
+                  <div class="location-info">
+                     <span class="header">
+                        <div class="info-header">
+                           <span>{{ (edsSeleccionada.nombre.length > 40 ? edsSeleccionada.nombre.substring(0,34) + "..." :
+                           edsSeleccionada.nombre) | titlecase }}</span>
+                           <div *ngIf="edsSeleccionada.direccion.length > 0" [matTooltip]="(edsSeleccionada?.ciudadEds.nombre | titlecase) + ',' + (edsSeleccionada?.departamentoEds.nombre | titlecase) + ' - ' + edsSeleccionada?.direccion"matTooltipClass="tooltip-arrow tooltip-arrow-disabled" #tooltip class="contenedor-info">
+                              <p>{{ edsSeleccionada.ciudadEds.nombre | titlecase }}, {{
+                                 edsSeleccionada.departamentoEds.nombre | titlecase }}</p>
+                              <p>{{ edsSeleccionada.direccion.length > 30 ? edsSeleccionada.direccion.substring(0,30) +
+                                 "...": edsSeleccionada.direccion }}</p>
+                           </div>
+                           <button class="btn btn-primary"
+                              (click)="redireccionarGestionDocumental(edsSeleccionada)">{{'BOTONES.GESTION_DOCUMENTAL' |
+                              translate}}</button>
+                        </div>
+                        <img class="img-header"
+                           [src]="edsSeleccionada.urlLogo === null ? 'assets/images/png/default-eds-img.png' : edsSeleccionada.urlLogo"
+                           alt="">
+                     </span>
+                     <div class="desc">
+                        <h4> {{'TITULOS.SERVICIOS' | translate}}</h4>
+                        <ul>
+                           <li *ngFor="let servicio of edsSeleccionada.serviciosEds"><span>{{servicio.nombre}}</span></li>
+                        </ul>
+                        <h4> {{'TITULOS.CONTACTO' | translate}} </h4>
+                        <p *ngIf="edsSeleccionada.telefono">
+                           <img src="assets/images/svg/phone-icon.svg" alt="">
+                           {{ edsSeleccionada.telefono }}
+                        </p>
+                     </div>
+                     <div class="info-label">
+                        <h4> {{'TITULOS.ESTACIONES_CERCANAS' | translate}} </h4>
+                        <div class="info-row" *ngFor="let eds of estacionesCercanasReducidas.slice(0,6)">
+                           <div class="info-eds" *ngIf="eds.idEds != edsSeleccionada.idEds" (click)="seleccionarEDS(eds)">
+                              <img class="info-icon" src="assets/images/svg/red-marker-info.svg" alt="">
+                              <div class="info-desc">
+                                 {{eds.nombre | titlecase}}    
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+   <google-map [center]="center" [zoom]="zoom" [options]="optionsMap" height="100%" width="100%"
+      (mapClick)="toggleSearchBarSelected()" *ngIf="mapaCargado" #mapa>
+      <map-marker #marker="mapMarker" [position]="ubicacionPredeterminada" [options]="marcadorUsuario" (mapMouseover)="mostrarMensajeMarcador(mensajeUbicacionUsuario,marker)" (mapMouseout)="cerrarNombreEds()"></map-marker>
+      <map-marker #marker="mapMarker" *ngFor="let estacionServicio of estacionesServicioCercanas"
+         [options]="estacionServicio.markerOption"
+         [position]="{ lat: +estacionServicio.latitud, lng: +estacionServicio.longitud}"
+         (mapClick)="seleccionarEDS(estacionServicio); mapActiveView = 2;"
+         (mapMouseover)="mostrarMensajeMarcador(estacionServicio.nombre,marker)" (mapMouseout)="cerrarNombreEds()">
+      </map-marker>
+   </google-map>
+
+</div>

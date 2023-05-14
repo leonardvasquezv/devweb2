@@ -1,0 +1,127 @@
+<fieldset class="card-container p-40px" *ngIf="idPerfil">
+    <legend class="float-none w-auto legend">{{'TITULOS.USUARIOS' | translate}}</legend>
+    <div *ngIf="empresaTieneEdsAsociada; else noTieneEdsAsociada">
+        <div class="row">
+            <div class="col-6">
+                <div class="user-card" [ngClass]="toggleUsuariosActivos ? 'active' : ''"
+                    (click)="filtrarPorEstadoUsuario(true)">
+                    <div class="user-card-wrapper">
+                        <div class="user-card-info">
+                            <mat-icon svgIcon="44" class="icon-xxxl"></mat-icon>
+                            <div class="users-info">
+                                <p class="user-card-label">{{'TITULOS.USUARIOS_ACTIVOS' | translate}}</p>
+                                <p class="user-card-number">{{cantidadActivos}}</p>
+                            </div>
+                        </div>
+                        <mat-icon class="user-card-filter-icon">filter_list</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="user-card" [ngClass]="toggleUsuariosInactivos ? 'active' : ''"
+                    (click)="filtrarPorEstadoUsuario(false)">
+                    <div class="user-card-wrapper">
+                        <div class="user-card-info">
+                            <mat-icon svgIcon="45" class="icon-xxxl"></mat-icon>
+                            <div class="users-info">
+                                <p class="user-card-label">{{'TITULOS.USUARIOS_INACTIVOS' | translate}}</p>
+                                <p class="user-card-number">{{cantidadInactivos}}</p>
+                            </div>
+                        </div>
+                        <mat-icon class="user-card-filter-icon">filter_list</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="row my-filtros">
+                    <div class="col-sm-12 col-md-9 col-xl-9 col-sm-12">
+                        <app-filtros class="my-filtros" [objFiltros]="arrayFiltros"
+                            (enviaFiltros)="recibeFiltrosDinamico($event)" (pageSize)="getAllUsuarios(null, $event)">
+                        </app-filtros>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-xl-3 col-sm-12 boton-cabecera-tabla">
+                        <div class="d-flex justify-content-end">
+                            <button [disabled]="esConsulta" class="my-filtros" color="accent" class="btn btn-primary"
+                                (click)="abrirModalFormularioUsuario(ETiposOperacion.crear)">
+                                <!-- TODO: Poner cuando esten los permisos
+                                    [appCheckPermission]="eAcciones.crear" -->
+                                {{'BOTONES.CREAR_NUEVO' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cw-ngx-datatable pt-3">
+                <ngx-datatable class="bootstrap" [rows]="arrayUsuariosListar" [externalPaging]="true"
+                    [columnMode]="'force'" [footerHeight]="50" [offset]="pageTable.pageNumber" [limit]="pageTable.size"
+                    [count]="pageTable.totalElements" [rowHeight]="50" [externalPaging]="false">
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.USUARIO' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <span #tooltip matTooltip="{{row?.userName | titlecase}}"
+                                matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                {{ row?.userName.length > 19 ? row?.userName.substring(0,19) + '...' : row?.userName }}
+                            </span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.NOMBRE' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span #tooltip matTooltip="{{row?.nombreCompleto | titlecase}}"
+                                matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                {{ (row?.nombreCompleto.length > 40 ? row?.nombreCompleto.substring(0,40) + '...' :
+                                row?.nombreCompleto) | titlecase }}
+                            </span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.ESTADO' | translate}}" [width]="50"
+                        [cellClass]="'cw-text-center'" [headerClass]="'cw-text-center'">
+
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div class="cw-custom-switches">
+                                <ui-switch [checked]="row.checked" [disabled]="!perfilActivo || esConsulta"
+                                    (valueChange)="abrirModalActivarInactivar(row, rowIndex, $event)">
+                                </ui-switch>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.ACCIONES' | translate}}"
+                        [resizeable]="false" [cellClass]="'cw-text-center'" [headerClass]="'cw-text-center'">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <button mat-icon-button [matMenuTriggerFor]="menu_acciones">
+                                <mat-icon>more_horiz</mat-icon>
+                            </button>
+                            <mat-menu #menu_acciones="matMenu" value="line">
+                                <button mat-menu-item
+                                    (click)="abrirModalFormularioUsuario(ETiposOperacion.consultar,row)">
+                                    <!-- TODO: Poner cuando esten los permisos
+                                    [appCheckPermission]="eAcciones.consultar" -->
+                                    <mat-icon>visibility</mat-icon>{{ 'BOTONES.CONSULTAR' | translate}}
+                                </button>
+                                <button mat-menu-item [disabled]="!perfilActivo || esConsulta"
+                                    (click)="abrirModalFormularioUsuario(ETiposOperacion.editar,row)">
+                                    <!-- TODO: Poner cuando esten los permisos
+                                    [appCheckPermission]="eAcciones.editar" -->
+                                    <mat-icon>edit</mat-icon>{{ 'BOTONES.EDITAR' | translate}}
+                                </button>
+                            </mat-menu>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+    <ng-template #noTieneEdsAsociada>
+        <div class="d-flex justify-content-center p-3">
+            <mat-icon svgIcon="43" class="large-icon"></mat-icon>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <p class="tx-18 m-0"><b>{{'TITULOS.NO_RESULTADOS' | translate}}</b></p>
+                <p class="tx-18">{{'TITULOS.VALIDACION_EMPRESA_EDS_CREADA' | translate}}</p>
+            </div>
+        </div>
+    </ng-template>
+</fieldset>

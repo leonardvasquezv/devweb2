@@ -1,0 +1,98 @@
+<div class="row cw-100-h cw-100-w">
+  <div class="col-xl-7 col-md-6 col-sm-12 p-0">
+    <img class="img-fluid cw-100-h" src="assets/images/png/eds-login.jpg" alt="Background login image">
+  </div>
+  <div class="col-xl-5 col-md-6 col-sm-12  cw-background-primary-dark-green cw-center-all">
+    <div class="text-light cw-max-width-400px">
+
+      <div class="row">
+        <div class="col-12">
+          <img src="assets/images/svg/logo-fendipetroleo-mini.svg" alt="logo empresa">
+          <img src="assets/images/png/logo-fendipetroleo.png" alt="logo empresa" class="pl-2">
+        </div>
+      </div>
+
+      <div class="row pt-5">
+        <p class="col-12 cw-size-xs-8 cw-text-weight-semibold">{{ 'TITULOS.BIENVENIDO' | translate }}</p>
+        <p class="col-12 cw-size-xs-4 cw-text-weight-light">{{ 'PARRAFOS.PARA_ACCEDER' | translate }}</p>
+      </div>
+
+      <form [formGroup]="formGroupCambioPass" autocomplete="off" (submit)="guardarUsuario()">
+        <div class="row pt-5">
+
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <mat-form-field class="cw-mat-full-with">
+              <mat-icon matPrefix svgIcon="112" class="cw-size-sm pr-2 mr-2"></mat-icon>
+              <input matInput formControlName="username"
+                placeholder="{{ 'FORMULARIOS.CORREO_ELECTRONICO' | translate }}" maxlength="50">
+              <mat-error *ngIf="formGroupCambioPass.get('username').hasError('required')">
+                {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-3">
+            <mat-form-field class="cw-mat-full-with">
+              <mat-icon matPrefix svgIcon="125" class="cw-size-sm pr-2 mr-2"></mat-icon>
+              <input matInput type="password" formControlName="passwordNew"
+                placeholder="{{ 'FORMULARIOS.PASSWORD' | translate }}" [type]="hideP ? 'password' : 'text'"
+                (keyup)="validarContrasena()">
+              <mat-icon *ngIf="formGroupCambioPass.get('passwordNew').value.length !== 0" matSuffix
+                (click)="hideP = !hideP" class="cursor-pointer cw-secundary-gray">{{hideP ? 'visibility_off' :
+                'visibility'}}</mat-icon>
+              <mat-error *ngIf="formGroupCambioPass.get('passwordNew').hasError('required')">
+                {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              <mat-error *ngIf="formGroupCambioPass.get('passwordNew').touched &&
+                        formGroupCambioPass.get('passwordNew').invalid &&
+                        formGroupCambioPass.get('passwordNew').value !== ''">
+                <span *ngIf="objValidaPass.mayuscula === false">
+                  Minimo una mayuscula
+                  <br>
+                </span>
+                <span *ngIf="objValidaPass.minuscula === false">
+                  Minimo una minuscula
+                  <br>
+                </span>
+                <span *ngIf="objValidaPass.numero === false">
+                  Minimo un número
+                  <br>
+                </span>
+                <span *ngIf="objValidaPass.caracter === false">
+                  Minimo un caracter especial
+                  <br>
+                </span>
+                <span *ngIf="objValidaPass.longitud === false">
+                  Minimo 6 carcateres
+                  <br>
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-3">
+            <mat-form-field class="cw-mat-full-with">
+              <mat-icon matPrefix svgIcon="125" class="cw-size-sm pr-2 mr-2"></mat-icon>
+              <input matInput type="password" formControlName="passwordNewConfirm"
+                placeholder="{{ 'FORMULARIOS.CONFIRMAR_PASSWORND' | translate }}" [type]="hideCP ? 'password' : 'text'"
+                (keyup)="validarConfirmContrasena()">
+              <mat-icon *ngIf="formGroupCambioPass.get('passwordNewConfirm').value.length !== 0" matSuffix
+                (click)="hideCP = !hideCP" class="cursor-pointer cw-secundary-gray">{{hideCP ? 'visibility_off' :
+                'visibility'}}</mat-icon>
+              <mat-error *ngIf="formGroupCambioPass.get('passwordNewConfirm').hasError('required')">
+                {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              <mat-error *ngIf="formGroupCambioPass.get('passwordNewConfirm').hasError('invalidPass')">
+                {{ 'TITULOS.NO_COINCIDE_CONTRASENA' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary mr-2 p-3 pr-5 pl-5 cw-text-weight-semibold">
+              {{ 'BOTONES.GUARDAR' | translate }}
+            </button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

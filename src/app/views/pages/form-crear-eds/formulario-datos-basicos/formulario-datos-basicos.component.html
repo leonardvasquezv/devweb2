@@ -1,0 +1,205 @@
+<fieldset class="mb-0px mt-15px card-border">
+  <legend class="float-none w-auto legend legendPosition">
+    {{ 'TITULOS.DATOS_BASICOS' | translate }}
+  </legend>
+  <form autocomplete="off" class="cw-forms crearEdsForms" [formGroup]="formDatosBasicosEDS">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.NOMBRE_EDS' | translate }}</mat-label>
+      <input matInput formControlName="nombreEds" required (ngModelChange)="onChangeNombreCodigoEds()" />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.NUMERO_NIT' | translate }}</mat-label>
+      <input matInput appRestrictInput="integer" formControlName="numeroNit" required 
+      (blur)="validaExisteNitEds()" />
+      <mat-error *ngIf="formDatosBasicosEDS.get('numeroNit').hasError('required')">
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+      <mat-error *ngIf="formDatosBasicosEDS.get('numeroNit').hasError('repetido')">
+        {{'FORMULARIOS.VALIDACION_CAMPO_CODIGO_PARAMETRIZACION' | translate}}
+      </mat-error>
+
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CODIGO_SICOM' | translate }}</mat-label>
+      <input matInput maxlength="10" appRestrictInput="integer" formControlName="codigoSicom" required
+        (ngModelChange)="validarCodigoSicom()" />
+      <mat-error>
+        {{establecerErrorCampoCodigo()}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.RANGO_TRABAJADORES' | translate }}</mat-label>
+      <mat-select matInput formControlName="idRangoTrabajador">
+        <mat-option *ngFor="let rangoTrabajador of rangoTrabajadores" [value]="rangoTrabajador.idTipoDetalle">
+          <span>{{ rangoTrabajador.nombre }}</span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CANT_TRABAJADORES_DIRECTOS' | translate }}</mat-label>
+      <input matInput appRestrictInput="integer" formControlName="cantTrabajadoresDirectos" required />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CANT_TRABAJADORES_INDIRECTOS' | translate }}</mat-label>
+      <input matInput appRestrictInput="integer" formControlName="cantTrabajadoresIndirectos" required />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.TELEFONO' | translate }}</mat-label>
+      <input matInput maxlength="13" appRestrictInput="integer" formControlName="telefonoResponsable" required />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CORREO_ELECTRONICO' | translate }}</mat-label>
+      <input matInput appRestrictInput="email" formControlName="correoElectronicoResponsable" required />
+      <mat-error *ngIf="formDatosBasicosEDS.get('correoElectronicoResponsable').hasError('pattern')">
+        Correo invalido
+      </mat-error>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'FORMULARIOS.DEP_UBICACION_EDS' | translate }}
+      </mat-label>
+      <mat-select matInput formControlName="depUbicacionEds" *ngIf="arrayDepartamentos" required>
+        <mat-option *ngFor="let departamento of arrayDepartamentos" [value]="departamento.idDepartamento"
+          (click)="obtenerMunicipios(departamento.idDepartamento)">
+          <span>
+            {{departamento.nombre | titlecase}}
+          </span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'FORMULARIOS.CIUDAD_UBICACION_EDS' | translate }}</mat-label>
+      <mat-select matInput formControlName="ciudadesUbicacionEds" required>
+        <mat-option *ngFor="let municipio of arrayMunicipios" [value]="municipio.idMunicipio">
+          <span>{{ municipio.nombre | titlecase}}</span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" (click)="abrirModalDireccion()">
+      <mat-label>{{ 'FORMULARIOS.DIRECCION' | translate }}</mat-label>
+      <input matInput formControlName="direccion" required
+        [ngClass]="validarDepartamentoCiudad ? 'cursor-pointer': ''" />
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'FORMULARIOS.SECTOR_ECONOMICO' | translate }}
+      </mat-label>
+      <mat-select matInput formControlName="sectorEconomico" required>
+        <mat-option *ngFor="let sectorEconomico of sectoresEconomicos" [value]="sectorEconomico.idTipoDetalle
+        ">
+          <span>
+            {{ sectorEconomico.nombre }}
+          </span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'FORMULARIOS.CLASE_RIESGO' | translate }}
+      </mat-label>
+      <mat-select matInput formControlName="claseRiesgo" appRestrictInput="integer" required>
+        <mat-option *ngFor="let claseRiesgo of claseRiesgos" [value]="claseRiesgo.idTipoDetalle">
+          <span>
+            {{ claseRiesgo.nombre }}
+          </span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>
+        {{ 'FORMULARIOS.MAYORISTA' | translate }}
+      </mat-label>
+      <mat-select matInput formControlName="idMayorista" required>
+        <mat-option *ngFor="let mayorista of mayoristas" [value]="mayorista.id">
+          <span>
+            {{ mayorista.nombre }}
+          </span>
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+    <div class="col-12">
+      <ng-container *ngTemplateOutlet="subirArchivo"></ng-container>
+    </div>
+    <ng-template #subirArchivo>
+      <div class="row boton-adjuntar">
+        <div class="col-12"><span class="tx-11 cw-txt-gris-claro">{{'FORMULARIOS.ADJUNTAR_ARCHIVO' | translate}}</span></div>
+
+        <div class="col-9 col-sm-12 mt-5px" *ngIf="!!!fileName">
+          <div class="boton-archivo cw-center-all" (click)="fileUpload.click()">
+            <div class="row justify-content-center">
+              <mat-icon class="cw-size-xs-6" svgIcon="35"></mat-icon> &nbsp; &nbsp;
+              {{ "FORMULARIOS.AÑADIR_ARCHIVO" | translate }}
+            </div>
+          </div>
+          <input #fileUpload hidden type="file" class="file-upload" (change)="cargarArchivo($event)"
+            accept=".jpg, .png, .jpeg" />
+        </div>
+
+        <div class="col-9 col-sm-12 mt-5px" *ngIf="!!fileName">
+          <div class="boton-documento-cargado cw-center-all">
+            <div class="row justify-content-center">
+              <div class="">
+                <span class="tx-10">
+                  {{ fileName?.length > 15 ? (fileName.slice(0, 15) + '...' ) : fileName }}
+                </span>
+                <span class="tx-10 colorGrisIcon">({{tamanoDocumento}} kb)</span>&nbsp;
+                <mat-icon class="cw-size-xs-6" svgIcon="37" (click)="descargarArchivo()"></mat-icon>&nbsp;&nbsp;
+                <mat-icon class="cw-size-xs" svgIcon="36" (click)="borrarArchivo()" *ngIf="!modoConsulta"></mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </ng-template>
+  </form>
+</fieldset>

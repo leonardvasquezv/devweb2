@@ -1,0 +1,178 @@
+<div class="card ">
+  <!-- shadow-none-card -->
+  <div class="card-body">
+    <!--  card-border -->
+    <div class="cw-forms pl-20px " style="display: flex; justify-content: start; "[ngClass]="
+      modoConsulta
+      ? 'button-style-tab'
+      : 'mat-tab-hide-bar diagonal-style-tab border-tab-header-none br-custom-1'">
+      <mat-form-field class="w-25 col-6 col-sm-6 col-md-3 pl-0px" appearance="fill">
+        <mat-label>{{'TITULOS.EDS' | translate}}</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" [formControl]="edsForm"
+          (ngModelChange)="escucharCambiosEdsSeleccion($event)">
+          <mat-icon matSuffix class="cw-color-gray1">arrow_drop_down</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombreEds">
+          <mat-option *ngFor="let eds of OpcionesFiltradoEds | async" [value]="eds">
+            {{eds.nombre}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field *ngIf="edsSeleccionada && edsSeleccionada.nombreRangoTrabajador" class="disabled col-6  col-sm-6 col-md-3"
+        appearance="fill">
+        <mat-label>{{'TITULOS.RANGO_TRABAJADORES' | translate}}</mat-label>
+        <input matInput class="text-left" [disabled]="true" [value]="edsSeleccionada.nombreRangoTrabajador" />
+      </mat-form-field>
+    </div>
+    <div class="pl-20px wt-toolTip" matTooltip="{{'TITULOS.SIN_PERMISOS' | translate}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below" [matTooltipDisabled]="usuarioEsAdministrador">
+      <button class="btn-add-tab button-add-proceso"  (click)="OpenModelCrearProceso()" [disabled]="!usuarioEsAdministrador" >
+        <div class="split-1" matTooltip="{{'TITULOS.CREAR_PROCESO' | translate}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below" [matTooltipDisabled]="!usuarioEsAdministrador" >
+          <mat-icon [svgIcon]="'40'" class="cw-transform-0-8"  >
+          </mat-icon>
+        </div>
+        <div class="split-2">
+          <span>{{'PALABRAS.NUEVO' | translate}}</span>
+        </div>
+      </button>
+    </div>
+    <mat-tab-group #tabGroup [(selectedIndex)]="procesoSeleccionado"  
+      (selectedTabChange)="cambiarTab($event)"    header-less-tabs
+      [class]="'cw-tabs-buttons-material'">
+
+      <mat-tab *ngFor="let proceso of procesos" [tabIndex]="proceso.idProceso">
+        <ng-template mat-tab-label>
+          <span>{{proceso.nombre}}</span>
+        </ng-template>
+
+        <ng-template matTabContent>
+          <div class="card card-border-none mt-mb-18px" [ngClass]="modoConsulta ? 'card-container-2' : 'card-container'">
+            <div *ngIf="edsSeleccionada">
+              <div class="row my-filtros">
+                <div class="col-sm-12 col-md-9 gesion-documental-filtros">
+                  <app-filtros [objFiltros]="arrayFiltros" (enviaFiltros)="recibeFiltrosDinamico($event)"
+                    (pageSize)="escuchaEventoTamanioPagina(null, $event)"
+                    [textoPredictivoSeleccionado]="txtPredictivoDocumentoNotificacion">
+                  </app-filtros>
+                </div>
+                <div class="col-sm-12 col-md-3 d-flex flex-row-reverse h-42px boton-cabecera-tabla">
+                  <button class="btn btn-primary" (click)="botonCrearDocumento()">
+                    {{'TITULOS.CREAR_DOCUMENTO' | translate}}
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table ">
+                    <ngx-datatable [rows]="documentos" 
+                        class="bootstrap cw-scroll-tabla" 
+                        [columnMode]="ColumnMode.force"
+                        [externalPaging]="true" 
+                        [count]="pageTable.totalElements" 
+                        [offset]="pageTable.pageNumber"  
+                        [scrollbarH]="true"
+                        [virtualization]="false" 
+                        [footerHeight]="50" 
+                        (page)="escuchaEventoTamanioPagina($event)" 
+                        [limit]="pageTable.size"
+                        [rowHeight]="medidasTabla.alturaFila">
+                      <ngx-datatable-column name="{{'TITULOS.NOMBRE' | translate}}" [headerClass]="'cw-text-center'"
+                        [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                        [minWidth]="180" [sortable]="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <span #tooltip   matTooltip="{{row?.nombre | FirstLetterUpper}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                            {{ (row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre) | FirstLetterUpper }}
+                          </span>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column *ngIf="tieneTipos === 0 ? false : true"
+                        name="{{'TITULOS.TIPO_DOCUMENTO' | translate}}" [headerClass]="'cw-text-center'"
+                        [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                        [minWidth]="180" [sortable]="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row?.nombreTipoDocumento  }}
+                            </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="{{'TITULOS.ALERTA' | translate}}" [headerClass]="'cw-text-center'"
+                        [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                        [minWidth]="130" [sortable]="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <mat-icon [matTooltip]="!!row.alerta ?
+                            (row.alerta?.diferenciaMeses >= 0 ? ('Vence en '+ (row.alerta?.diferenciaMeses < row.alerta?.tiempoMeses ? '-' : '') + row.alerta?.tiempoMeses + (row.alerta?.tiempoMeses > 1 ? ' meses' : ' mes') ) : 'Vencida'):
+                              'No tiene'" matTooltipClass="tooltip-arrow" matTooltipPosition="below" svgIcon="21"
+                            [ngStyle]="{ stroke: !!row.alerta ?(row.alerta?.diferenciaMeses >= 0 ? row.alerta?.color : '#c9d4d8' ): '#c9d4d8' , transform: 'scale(1.5)' }">
+                          </mat-icon>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="{{'TITULOS.NOTIFICACIONES' | translate}}" [headerClass]="'cw-text-center'"
+                        [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                        [minWidth]="155" [sortable]="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <mat-icon [matTooltip]="traducirEstadoNotificacion(!!row.tieneNotificacion)"
+                            matTooltipClass="tooltip-arrow" matTooltipPosition="below"
+                            svgIcon="{{row.tieneNotificacion ? '19' : '20'}}"></mat-icon>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="{{'TITULOS.FECHA_VENCIMIENTO' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                        [draggable]="false" [flexGrow]="2" [minWidth]="130" [sortable]="false"
+                        [ngStyle]="{'text-align': 'center'}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          {{row?.fechaVencimiento | date: 'dd/MM/yyyy'}}
+                          <mat-icon svgIcon="{{row.fechaVencimiento ? '25' : '26'}}"
+                            [ngStyle]="{transform: 'scale(0.7)', marginRight: '1px'}"></mat-icon>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                      <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}" [headerClass]="'cw-text-center'"
+                        [cellClass]="'cw-text-center'" [sortable]="false" [resizeable]="false" [draggable]="false"
+                        [flexGrow]="2" [minWidth]="130" [sortable]="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                          <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                            <button type="button" mat-menu-item (click)="OpenModalCargarArchivo(row)">
+                              <mat-icon svgIcon="22" class="colorBlack">
+                              </mat-icon>
+                              <span>{{ 'BOTONES.CARGAR_ARCHIVO' | translate }}</span>
+                            </button>
+                            <button *ngIf="row.urlArchivo" type="button" mat-menu-item
+                              (click)="descargarArchivo(row.urlArchivo)">
+                              <mat-icon svgIcon="23" class="colorBlack"></mat-icon>
+                              <span>{{ 'BOTONES.DESCARGAR_ARCHIVO' | translate }}</span>
+                            </button>
+                            <button type="button" mat-menu-item (click)="esEliminarArchivo(row.idDocumento)">
+                              <mat-icon svgIcon="24" class="colorBlack">
+                              </mat-icon>
+                              <span>{{ 'BOTONES.ELIMINAR_ARCHIVO' | translate }}</span>
+                            </button>
+                            <button *ngIf="row?.activarVerResultados" type="button" mat-menu-item
+                              (click)="abrirModalVerResultados(row)">
+                              <mat-icon svgIcon="17" class="colorBlack">
+                              </mat-icon>
+                              <span>{{'BOTONES.VER_RESULTADOS' | translate}}</span>
+                            </button>
+                            <button type="button" mat-menu-item (click)="OpenModalHistorial(row)">
+                              <mat-icon svgIcon="34" class="colorBlack">
+                              </mat-icon>
+                              <span>{{'TITULOS.HISTORIAL' | translate}}</span>
+                            </button>
+                          </mat-menu>
+                        </ng-template>
+                      </ngx-datatable-column>
+
+                    </ngx-datatable>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>  

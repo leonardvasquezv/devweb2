@@ -1,0 +1,49 @@
+<mat-dialog-content>
+  <div class="modal-header d-flex justify-content-between cw-modal-estadoregistro-header pt-0 bd-b-0">
+    <span class="ml-2 pt-5px cw-center-all cw-font-bold titleGrisOscuro">
+      {{ 'TITULOS.HISTORIAL' | translate }}
+    </span>
+    <div class="row d-flex flex-row-reverse pr-3 ml-10px">
+      <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-6 cw-pr0 cw-pl0 colorGrisIcon">
+      </mat-icon>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col">
+      <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+        <ngx-datatable [rows]="archivos" class="bootstrap" [columnMode]="'force'" [headerHeight]="50"
+          [footerHeight]="50" [rowHeight]="medidasTabla.alturaFila" [limit]="limitPage.size" [scrollbarH]="true">
+
+          <ngx-datatable-column name="{{ 'TITULOS.NOMBRE_ARCHIVO' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="150">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span #tooltip   matTooltip="{{row?.nombreArchivo | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                  {{ (row?.nombreArchivo.length > 19 ? row?.nombreArchivo.substring(0,19) + '...' : row?.nombreArchivo) | titlecase }}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="{{ 'TITULOS.ESTADO' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [draggable]="false" [flexGrow]="2"
+            [width]="80" [minWidth]="85">
+            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+              <div class="cw-estado" [ngClass]="estadoClase(row)">
+                <span class="text">
+                  {{obtenerEstado(row.estadoRegistro)|translate}}
+                </span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column *ngIf="!modoConsulta" name="{{ 'BOTONES.DESCARGAR' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false"
+            [width]="80" [minWidth]="80">
+            <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              <button mat-icon-button (click)="descargarArchivo(row)">
+                <mat-icon svgIcon="23" class="colorBlack cw-scale-icon" color="primary"></mat-icon>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,70 @@
+
+<div class="mat-horizontal-stepper-header-container franja-info-crear-editar" id="franja-informativa">
+  <p class="barra-progreso"><ngb-progressbar [value]="progreso"></ngb-progressbar></p>
+  <div class="textos">
+    <span class="mr-5">{{'FORMULARIOS.NOMBRE_EDS' | translate }}: <strong>{{ (nombreEds ? nombreEds : "-----") | titlecase}}</strong></span>
+    <span class="ml-5">{{'FORMULARIOS.CODIGO_SICOM' | translate }}: <strong>{{ codigoSicom ? codigoSicom : " -----" }}</strong></span>
+  </div>
+</div>
+
+<div id="contenedor-hijos" class="clase-contenedor-hijos">
+</div>
+
+<div class="caja-steppers">
+  <mat-horizontal-stepper #stepper #stepperCrearEDS (selectionChange)="onStepChange($event.selectedIndex)"
+  [selectedIndex]="posicionStepper" [class]="'selectedIndex' + stepper.selectedIndex" [formGroup]="formCrearEds"
+  [labelPosition]="'end'" [@.disabled]="true" [linear]="true" id="stepper-horizontal">
+  
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+  
+  
+    <mat-step [stepControl]="formCrearEds.controls.formDatosBasicosEDS">
+    
+      <ng-template matStepLabel> {{ 'TITULOS.INFORMACION_GENERAL' | translate }} </ng-template>
+  
+      <div class="card shadow-none-card">
+        <div class="cw-forms card-body formulario-stepper">
+          <app-formulario-empresa-asociada formGroupName="formEmpresaAsociadaEDS"></app-formulario-empresa-asociada>
+          <app-formulario-datos-basicos formGroupName="formDatosBasicosEDS" (datosEds)="getDatosEds($event)">
+          </app-formulario-datos-basicos>
+          <div class="footerbtn pr-0px pl-0px">
+            <button type="button" *ngIf="modoConsulta==false" class="btn btn-primary"
+              (click)="validarStep1(stepperCrearEDS)">
+              {{'BOTONES.SIGUIENTE' | translate}}
+            </button>
+            <button type="button" *ngIf="modoConsulta==false" class="btn btn-outline-primary mr-2" (click)="goToBack()">
+              {{'BOTONES.CANCELAR' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step> 
+  
+  
+    <mat-step>
+      <ng-template matStepLabel> {{ 'TITULOS.CONFIGURACION_EDS' | translate }} </ng-template>
+      
+      <div class="card shadow-none-card">
+        <div class="cw-forms card-body formulario-stepper">
+          <app-informacion-sg-sst formGroupName="formConfiguracionEds">
+          </app-informacion-sg-sst>
+          <app-servicios-eds formGroupName="formConfiguracionEds">
+          </app-servicios-eds>
+          <div class="footerbtn crear-eds pr-0px pl-0px mb-2">
+            <button type="button" *ngIf="modoConsulta==false" class="btn btn-primary"
+              (click)="validarStep2(stepperCrearEDS)">
+              {{'BOTONES.GUARDAR' | translate}}
+            </button>
+            <button type="button" class="btn btn-outline-primary mr-2" matStepperPrevious>
+              {{'BOTONES.ATRAS' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+  
+  </mat-horizontal-stepper> 
+</div>
+

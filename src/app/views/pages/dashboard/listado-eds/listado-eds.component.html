@@ -1,0 +1,113 @@
+<div class="card shadow-none-card card-mt-custom">
+    <div class="card-body tab-card">
+        <div class="row my-filtros">
+            <div class="col-sm-12 col-md-9">
+                <app-filtros [objFiltros]="arrayFiltros" [pageSizeOptions]="limitOptions"
+                    (enviaFiltros)="recibeFiltros($event)" (pageSize)="actualizarLimiteDePagina($event)"
+                    [placeholderPredictivo]="placeholder">
+                </app-filtros>
+            </div>
+            <div class="col-sm-12 col-md-3 d-flex flex-row-reverse h-42px boton-cabecera-tabla">
+                <button class=" btn btn-primary " (click)="botonCrearEds()">
+                    {{ 'BOTONES.CREAR_EDS' | translate }}
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+                    <ngx-datatable #myTable [rows]="arrayEds" class="bootstrap" [columnMode]="'flex'"
+                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="medidasTabla.alturaFila" [limit]="limitPage" [scrollbarH]="true">
+                        <ngx-datatable-column name="{{'TITULOS.NOMBRE_EDS'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="178">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span #tooltip   matTooltip="{{row?.nombre | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                        {{ (row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre) | titlecase }}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="{{'TITULOS.NIT'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="150">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span #tooltip   matTooltip="{{row?.nit }}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                    {{ row?.nit.length > 11 ? row?.nit.substring(0,11) + '...' : row?.nit  }}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="{{'TITULOS.REPRESENTANTE_LEGAL'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="180">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span #tooltip   matTooltip="{{row?.representanteLegal | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                    {{ (row?.representanteLegal.length > 19 ? row?.representanteLegal.substring(0,19) + '...' : row?.representanteLegal)  | titlecase }}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="{{'TITULOS.UBICACION'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="175">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span #tooltip  matTooltip="{{row?.departamentoMunicipio | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                    {{ (row?.departamentoMunicipio.length > 19 ? row?.departamentoMunicipio.substring(0,19) + '...' : row?.departamentoMunicipio) | titlecase }}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="{{'TITULOS.MAYORISTAS'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="190">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <span #tooltip  matTooltip="{{row?.nombreMayorista | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                        {{ (row?.nombreMayorista.length > 19 ? row?.nombreMayorista.substring(0,19) + '...' : row?.nombreMayorista) | titlecase }}
+                                </span>
+                            </ng-template> 
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="{{'TITULOS.ESTADO'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="1" [minWidth]="100">
+                            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                                <div class="cw-custom-switches">
+                                    <ui-switch [checked]="row.checked"
+                                        (valueChange)="cambiarEstado(row, rowIndex, $event)">
+                                    </ui-switch>
+                                </div>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}" [sortable]="false"
+                            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false"
+                            [draggable]="false" [flexGrow]="2" [minWidth]="100">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                                    <button type="button" mat-menu-item (click)="botonConsultarEds(row?.idEds)">
+                                        <mat-icon svgIcon="4" class="colorBlack"></mat-icon>
+                                        <span class="colorBlack">{{ 'BOTONES.CONSULTAR' |
+                                            translate }}</span>
+                                    </button>
+                                </mat-menu>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-footer *ngIf="metadata?.totalElements > limitPage">
+                            <ng-template ngx-datatable-footer-template>
+                                <p class="footer-page-count m-0">
+                                    {{ metadata.totalElements }} total
+                                </p>
+                                <app-datatable-pager [page]="metadata.pageNumber" [visiblePagesCount]="3"
+                                    [size]="limitPage" [count]="metadata?.totalElements" [hidden]="false"
+                                    (change)="cambiarPagina($event)">
+                                </app-datatable-pager>
+                            </ng-template>
+                        </ngx-datatable-footer>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

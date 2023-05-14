@@ -1,0 +1,45 @@
+<div class="cw-info-consulta" [style]="bgColorStyle">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div [ngClass]="numColumClass + ' align-self-center cw-text-center ' + (item.type === 'imagen' ? ' cw-center-all' : '')"
+          *ngFor="let item of arrayConsultaVisualizacion" [ngSwitch]="item.type">
+          <label class="cw-label-title tx-14" *ngIf="item.label !== '' && item.type !== 'logo'">{{item.label}}</label>
+          <div *ngSwitchCase="'logo'">
+            <div class="row">
+              <div class="col-4">
+                <mat-icon class="wd-75 mat-icon notranslate cw-size-lg-2 mat-icon-no-color"
+                  svgIcon="{{item.options.icon}}"></mat-icon>
+              </div>
+              <div class="col-8">
+                <label class="cw-label-title text-center tx-14">{{item.label}}</label>
+                <p class="cw-text-value cw-text-size-15"><strong>
+                    <div [matTooltip]="item.value?.length > 15 ? item.value : null">{{ item.value | MaxCharapters: 15 }}
+                    </div>
+                  </strong></p>
+              </div>
+            </div>
+          </div>
+          <p *ngSwitchCase="'Date'" class="cw-text-value tx-16">{{item.value | date: objConfigGen.formatDateHtml?
+            objConfigGen.formatDateHtml : 'dd-MM-yyyy'}}</p>
+          <p *ngSwitchCase="'string'" class="cw-text-value cw-text-size-14"><strong>
+              <div [matTooltip]="item.value?.length > 25 ? item.value : null">{{ item.value | MaxCharapters: 25 }}
+              </div>
+            </strong></p>
+          <p *ngSwitchCase="'number'" class="cw-text-value cw-text-size-15"><strong>{{item.value}}</strong></p>
+          <p *ngSwitchCase="'currency'" class="cw-text-value tx-16">{{item.value | currency:
+            objConfigGen.currencyLocate:'symbol':objConfigGen.currencyPrecision }}</p>
+          <div *ngSwitchCase="'imagen'">
+            <img class="{{item.options.className}}" src="{{item.value}}" alt="imagen">
+          </div>
+          <div *ngSwitchCase="'estado'" class="cw-center-all cw-text-value cw-text-size-15">
+            <div class="cw-center-all cw-chip-general cw-border-chip wd-100"
+              [style]="'background-color: '+ item.value?.estado?.color+' !important; color: '+ item.value?.estado?.colorTexto+' !important;'">
+              {{item.value?.estado?.nombre}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="row d-flex justify-content-between titulo-graficas" mat-dialog-title>
+    <span class="fs-18"><strong>{{'BOTONES.VER_RESULTADOS' | translate}}</strong></span>
+
+    <div class="icono-titulo">
+        <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-6 cw-pr0 cw-pl0 colorGrisIcon">
+        </mat-icon>
+    </div>
+</div>
+<mat-dialog-content>
+
+    <div class="slider-resultados">
+        <div class="col-12">
+
+            <ngb-carousel [interval]="0" [showNavigationIndicators]="false" [draggable]="true">
+
+                <ng-template ngbSlide>
+                    <div class="slider">
+                        <app-slider-uno [idDocumento]="data.documento.idDocumento" [archivo]="data.documento.archivo"></app-slider-uno>
+                    </div>
+                </ng-template>
+
+                <ng-template ngbSlide>
+                    <div class="slider">
+                        <app-slider-dos [idDocumento]="data.documento.idDocumento"></app-slider-dos>
+                    </div>
+                </ng-template>
+
+                <ng-template ngbSlide>
+                    <div class="slider">
+                        <app-slider-tres [idDocumento]="data.documento.idDocumento"></app-slider-tres>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+</mat-dialog-content>

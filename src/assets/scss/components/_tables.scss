@@ -1,0 +1,474 @@
+/* Tables */
+
+.table {
+  margin-bottom: 0;
+
+  thead {
+    th {
+      border-top: 0;
+      border-bottom-width: 1px;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: $text-muted;
+
+      i {
+        margin-left: 0.325rem;
+      }
+    }
+  }
+
+  th,
+  td {
+    vertical-align: middle;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  td {
+    font-size: $default-font-size;
+
+    img {
+      width: 36px;
+      height: 36px;
+      border-radius: 100%;
+    }
+
+    .badge {
+      margin-bottom: 0;
+    }
+  }
+
+  &.table-borderless {
+    border: none;
+
+    tr,
+    td,
+    th {
+      border: none;
+    }
+  }
+
+  &.table-bordered {
+    border-top: 1px solid $border-color;
+  }
+
+  &.table-dark {
+    thead {
+      tr {
+        th {
+          color: lighten($text-muted, 30%);
+        }
+      }
+    }
+  }
+}
+
+.cw-ngx-datatable {
+  &.cw-ngx-pointer {
+    datatable-body-row {
+      cursor: pointer;
+    }
+  }
+
+  .ngx-datatable {
+    &.bootstrap {
+      .mdi.mdi-dots-horizontal {
+        font-size: 40px;
+      }
+
+      a {
+        color: #007a4f;
+        text-decoration: underline;
+      }
+
+      .estado {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+
+        .span {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .pendiente {
+        height: 30px;
+        width: 110px;
+        border-radius: 4px;
+        border: 1px solid #e87d0d;
+        background-color: #e87d0d;
+        color: white;
+        padding: 4px;
+      }
+
+      .habilitado,
+      .activo {
+        height: 30px;
+        width: 110px;
+        border-radius: 4px;
+        border: 1px solid #0a9c51;
+        background-color: #0a9c51;
+        color: white;
+        padding: 4px;
+      }
+
+      .conciliado {
+        height: 30px;
+        width: 110px;
+        border-radius: 4px;
+        border: 1px solid #727c77;
+        background-color: #727c77;
+        color: white;
+        padding: 4px;
+      }
+
+      .inactivo {
+        height: 30px;
+        width: 110px;
+        border-radius: 4px;
+        border: 1px solid #cb0c0c;
+        background-color: #cb0c0c;
+        color: white;
+        padding: 4px;
+      }
+
+      .datatable-header {
+        .datatable-header-cell {
+          border-bottom-color: transparent;
+
+          .datatable-header-cell-label {
+            color: $primary-black;
+            opacity: 1px;
+            letter-spacing: 0px;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .datatable-body {
+        .datatable-body-row {
+          background-color: #f3f6f9 !important;
+          border: 0px solid #f3f6f9 !important;
+          border-radius: 8px !important;
+          opacity: 1 !important;
+
+          .datatable-body-cell {
+            display: inline-table;
+            align-self: center !important;
+          }
+
+          &.active {
+            background-color: #eff4ff !important;
+            border: 1px solid $primary-blue  !important;
+            color: $primary-blue  !important;
+          }
+        }
+
+        .datatable-row-wrapper {
+          padding-bottom: 5px !important;
+          padding-top: 5px !important;
+        }
+      }
+
+      .datatable-footer {
+        background: transparent;
+        color: #060418;
+        letter-spacing: 0px;
+        opacity: 1;
+        text-align: left;
+
+        .selected-count .page-count {
+          flex: 0 1 auto;
+        }
+
+        .page-count {
+          padding: 0px;
+          font-size: 12px !important;
+        }
+
+        .datatable-pager {
+          margin: 0px;
+          height: 26px;
+          ul {
+            li {
+              a {
+                font-size: 12px !important;
+                color: #bebace;
+              }
+
+              &:not(.disabled) {
+
+                &.active,
+                &:hover {
+                  a {
+                    background-color: $cwBueColor;
+                    color: #fff;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.cw-ngx-datatable{
+  &.cw-listado-alertas{
+    .ngx-datatable{
+       .datatable-body{
+        .datatable-body-row{
+          @media  (min-width:767px) {
+            min-width: 550px;
+          }
+          .datatable-row-center{
+            @media  (min-width:767px) {
+              min-width: 550px;
+            }
+            .datatable-body-cell{
+              @media  (min-width:767px) {
+                min-width: 279px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.cw-ngx-datatable{
+  &.cw-listado-alertas{
+    .ngx-datatable{
+       .datatable-header{
+          .datatable-row-center{
+            @media  (min-width:767px) {
+              min-width: 550px;
+            }
+            .datatable-header-cell{
+              @media  (min-width:767px) {
+                min-width: 279px;
+              }
+            }
+          }
+      }
+      .datatable-body-cell-label {
+        justify-content: center;
+        display: flex;
+        @media screen and (min-width:991px) {
+          .alineado-justificado {
+            width: 137px;
+            justify-content: left;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.ngx-datatable.material {
+  box-shadow: none;
+}
+
+.ngx-datatable.bootstrap {
+  box-shadow: none;
+  font-size: 13px;
+  border-radius: 6px 6px 0 0;
+  @media  (max-width: 991px) {
+    font-size: 12px !important;
+  }
+}
+
+.ngx-datatable .datatable-row-left,
+.ngx-datatable .datatable-row-center,
+.ngx-datatable .datatable-row-group,
+.ngx-datatable .datatable-row-right {
+  // position: relative;
+}
+
+.ngx-datatable.bootstrap .datatable-header {
+  height: auto !important;
+}
+
+.ngx-datatable.bootstrap .datatable-header .datatable-header-cell {
+  vertical-align: bottom;
+  padding: 0.75rem;
+  border-bottom: 1px solid $clbordesTabla;
+  white-space: normal !important;
+}
+
+.ngx-datatable.scroll-horz .datatable-body {
+  -webkit-overflow-scrolling: touch;
+
+  @media (min-width: 1360px) {
+    overflow-x: hidden; 
+    overflow-y: hidden;
+  }
+}
+
+.ngx-datatable.bootstrap .datatable-header .datatable-header-cell .datatable-header-cell-label {
+  line-height: 24px;
+  color: $clBlack;
+  font-family: $fontMontserrat;
+  font-size: 16px;
+  font-weight: 600;
+
+  @media (min-width: 992px) and (max-width: 1919px) {
+    font-size: 14px;
+  }
+  @media  (max-width: 991px) {
+    font-size: 12px !important;
+  }
+
+}
+
+
+
+@media (min-width: 1024px) {
+  .ngx-datatable.bootstrap.titulos-plan-mejoramiento .datatable-header .datatable-header-cell .datatable-header-cell-label {
+    line-height: 24px;
+    color: $clBlack;
+    font-family: $fontMontserrat;
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+
+
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row {
+  padding: 0;
+  vertical-align: top;
+  border-top: 1px solid $bgGray;
+  border-right: 1px solid $bgGray;
+  border-left: 1px solid $bgGray;
+}
+
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row 
+{
+  @media(max-width: 991px){
+  height: 41px !important;
+  }
+  .datatable-body-cell {
+    text-align: left;
+    vertical-align: top;
+  
+    @media(min-width: 1024px){
+      font-size: 12px;
+    }
+  
+    @media(min-width: 1920px){
+      font-size: 14px;
+    }
+    @media(max-width: 991px){
+      height: 43px !important;
+    }
+  }
+}
+
+.ngx-datatable.bootstrap .datatable-footer {
+  background: $clWhite;
+  color: $clBlack;
+  margin-top: -1px;
+  padding-right: 20px;
+  padding-left: 5px;
+}
+
+.ngx-datatable .datatable-header {
+  display: block;
+  overflow: hidden;
+}
+
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner {
+  white-space: nowrap;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .page-count {
+  line-height: 50px;
+  height: 50px;
+  padding: 0;
+  color: $clBlack;
+  font-family: $fontMontserrat;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager {
+  margin: 0 0px;
+  vertical-align: top;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li {
+  margin: 0px 0px;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a,
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
+  background-color: $clGreen;
+  font-weight: bold;
+  color: $clWhite;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li {
+  margin: 0px 0px;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a,
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
+  background-color: $clGreen;
+  font-weight: bold;
+  color: $clWhite;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li {
+  font-family: $fontMontserrat  !important;
+  font-size: 14px;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
+  height: 20px;
+  min-width: 20px;
+  line-height: 20px;
+  padding: 0;
+  border-radius: 3px;
+  margin: 0 1px;
+  text-align: center;
+  vertical-align: top;
+  text-decoration: none;
+  vertical-align: bottom;
+  color: #ededed;
+}
+
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-left,
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-skip,
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-right,
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-prev {
+  font-size: 18px;
+  line-height: 27px;
+  padding: 0 3px;
+}
+
+.cw-scroll-tabla{
+  .datatable-body{
+    max-height: 295px !important;
+    overflow-y:scroll !important;
+    @media (min-width: 1360px) {
+      overflow-x: hidden!important;
+    }
+  }
+}
+.datatable-scroll{
+  width:100% !important;
+}
+
+.boton-cabecera-tabla{
+  @media screen and (max-width: 767px) {
+    display: block;
+    button {
+      width: 100%;
+    }
+  }
+}

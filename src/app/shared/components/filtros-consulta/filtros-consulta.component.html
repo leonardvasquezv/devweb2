@@ -1,0 +1,40 @@
+<div class="cw-filtros-tabla input-group">
+  <form autocomplete="off" [formGroup]="filtrosForms" (submit)="updateSearch()">
+    <div class="d-flex">
+      <mat-form-field class="cw-box-input-search search-responsive" [floatLabel]="'never'">
+        <input autocomplete="off" matInput type="text" [placeholder]="placeHolder" formControlName="textoPredictivo"
+          (keyup)="resetData($event)" />
+        <a matSuffix [class]="'pr-3 ' + ( !!!filtrosForms.get('textoPredictivo').value? 'hide' : '')"
+          (click)="resetData($event)">
+          <mat-icon class="bg-g" svgIcon="5"></mat-icon>
+        </a>
+      </mat-form-field>
+
+      <div class="filter-category cursor-pointer mr-12px " *ngIf="filtroCategoria">
+        <span mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>filter_list</mat-icon>
+          <p class="filter-category-name">{{'PALABRAS.FILTRAR'|translate}}</p>
+        </span>
+        <mat-menu #menu="matMenu">
+          <mat-radio-group class="example-radio-group" formControlName="categoria">
+            <mat-radio-button class="example-radio-button" [value]="0" [checked]="true" (click)="categoryFilter(0)">
+              {{'PALABRAS.TODAS'|translate}}
+            </mat-radio-button>
+            <mat-radio-button class="example-radio-button" *ngFor="let opcion of categoriasOptions" [value]="opcion.id"
+              (click)="categoryFilter(opcion.id)">
+              {{ opcion.nombre | titlecase }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-menu>
+      </div>
+      <mat-form-field *ngIf="filtroRegistro" class="form-control cw-box-input register-responsive"
+        [floatLabel]="'never'">
+        <mat-select formControlName="pageSize" class="text-center">
+          <mat-option *ngFor="let option of pageSizeOptions" (click)="updateFilterPageSize()" [value]="option">
+            {{ option }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </form>
+</div>

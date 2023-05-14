@@ -1,0 +1,64 @@
+.cw-panel-perfil {
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-header {
+    font-family: $fontMontserrat !important;
+    font-weight: 500;
+
+    &.mat-expanded {
+      background-color: $secundary-ligth-blue;
+      border-radius: 8px;
+      height: 48px;
+      font-size: 16px;
+    }
+  }
+
+  .mat-expansion-panel-spacing {
+    margin: 0px !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px;
+  }
+
+  .mat-expansion-panel-header.mat-expanded:focus,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background-color: $secundary-ligth-blue !important;
+  }
+
+  .mat-list-base {
+    border-radius: 0px 0px 8px 8px !important;
+  }
+
+  .mat-list-option {
+    margin-top: 0px !important;
+  }
+
+  .mat-list-option[aria-selected=true] {
+    background-color: $terceary-ligth-blue;
+  }
+
+  .mat-icon {
+    color: $primary-dark-blue !important;
+  }
+
+  .mat-list-base .mat-list-item .mat-list-item-content-reverse,
+  .mat-list-base .mat-list-option .mat-list-item-content-reverse {
+    padding: 0px 30px !important;
+  }
+
+  .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title,
+  .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-description {
+    color: $primary-black;
+  }
+
+  .mat-expansion-panel-header:focus,
+  .mat-expansion-panel-header:hover {
+    background-color: $hover-gray !important;
+    border-radius: 8px;
+  }
+
+}

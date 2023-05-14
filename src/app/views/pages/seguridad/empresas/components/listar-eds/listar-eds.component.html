@@ -1,0 +1,56 @@
+<div class="row cw-filtros-tabla">
+    <div class="mr-3 ml-3 mb-3 p-0 col-5" *ngIf="!modoConsulta">
+        <mat-form-field class="cw-box-input-search" [floatLabel]="'never'">
+            <input matInput placeholder="Buscar" [formControl]="objEdsBusqueda" [matAutocomplete]="autoEds" />
+            <mat-autocomplete class="cw-100-w" #autoEds="matAutocomplete" [displayWith]="displayFnEds">
+                <mat-option *ngFor="let Eds of filteredEds | async" [value]="Eds">
+                    <div class="row justify-content-between cw-bd-b cw-font-regular">
+                        <div class="col-4">
+                            {{Eds.nombre}}
+                        </div>
+                        <div class="col-4 text-right">
+                            <button (click)="asociarEds(Eds)"
+                                class="{{Eds.agregado ? 'btn btn-link pr-0 cw-primary-green' : 'btn btn-link pr-0 cw-primary-red'}}">{{Eds.agregado
+                                ? 'Agregado' : 'Agregar'}}</button>
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="table-responsive cw-ngx-datatable">
+            <ngx-datatable class="bootstrap" [rows]="arrayUsuariosEds" [columnMode]="ColumnMode.force"
+                [footerHeight]="50" [offset]="pageTableEds.pageNumber" [limit]="pageTableEds.size"
+                [count]="pageTableEds.totalElements" rowHeight="auto">
+                <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.NOMBRE' | translate }}" [minWidth]="330">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ (!!row.nombre ? row.nombre : row.nombreEds) }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.NIT' | translate }}" [minWidth]="330">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.nit }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.MUNICIPIO' | translate }}" [minWidth]="330">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.departamentoMunicipio }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.ACCIONES' | translate}}" [resizeable]="false"
+                    [cellClass]="'cw-text-center'" [headerClass]="'cw-text-center'" [minWidth]="330">
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <button mat-icon-button type="button" (click)="eliminarEdsAsociada(rowIndex, row)"
+                            [disabled]="modoConsulta">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Grupo_13073" data-name="Grupo 13073" transform="translate(-1264 -425)">
+    <g id="Elipse_853" data-name="Elipse 853" transform="translate(1264 425)" fill="#fff" stroke="#e0e0e0" stroke-width="1">
+      <circle cx="14" cy="14" r="14" stroke="none"/>
+      <circle cx="14" cy="14" r="13.5" fill="none"/>
+    </g>
+    <path id="Icon_awesome-arrow-right" data-name="Icon awesome-arrow-right" d="M4.32,3.311l.5-.5a.542.542,0,0,1,.769,0L10,7.213a.542.542,0,0,1,0,.769L5.592,12.39a.542.542,0,0,1-.769,0l-.5-.5a.545.545,0,0,1,.009-.778l2.732-2.6H.544A.543.543,0,0,1,0,7.961V7.236a.543.543,0,0,1,.544-.544H7.061l-2.732-2.6A.541.541,0,0,1,4.32,3.311Z" transform="translate(1272.92 431.401)" fill="#12467e"/>
+  </g>
+</svg>

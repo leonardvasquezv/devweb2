@@ -1,0 +1,36 @@
+<div class="row autocomplete-caja">
+
+  <div class="col-12 col-md-6 border-select">
+    <mat-form-field>
+      <input matInput type="text" [placeholder]="placeholder" [matAutocomplete]="auto" [formControl]="selectControl"
+        [disabled]="modoConsulta" required>
+
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let d of filteredData | async" [disabled]="modoConsulta">
+          <div (click)="optionClicked($event, d)">
+            <mat-checkbox [checked]="d.selected" (change)="toggleSelection(d)" (click)="$event.stopPropagation()">
+              {{ d.nombre }}
+            </mat-checkbox>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error>
+        {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-lg-6 caja-chip">
+    <div class="chip-list">
+      <mat-chip-list #chipList>
+        <ng-container *ngFor="let select of selectData">
+          <mat-chip class="cardinal-colors" >
+            {{ select.nombre }}
+            <mat-icon class="mat-chip-remove" (click)="removeChip(select)" *ngIf="!modoConsulta">cancel</mat-icon>
+          </mat-chip>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+  </div>
+
+</div>

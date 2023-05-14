@@ -1,0 +1,9 @@
+<form [formGroup]="formGroupCodigo" autocomplete="off" class="d-flex">
+
+    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 campo-codigo" *ngFor="let control of formGroupCodigo.controls; index as i">
+        <mat-form-field class="cw-mat-full-with">
+            <input class="cw-inputTel" type="text" autocomplete="off" matInput [formControl]="formGroupCodigo.controls[i]" maxlength="1" (keyup)="onKeyUp($event,i)" #valorElement value="" appRestrictInput="integer">
+        </mat-form-field>
+    </div>
+
+</form>

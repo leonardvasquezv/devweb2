@@ -1,0 +1,182 @@
+<div class="contenedor-pagina">
+  <div class="card shadow-none-card">
+    <div class="card-body">
+      <span class="ml-2 pt-5px cw-font-bold titleGrisOscuro cw-font-size-18px">
+        {{'TITULOS.CREAR_DOCUMENTO' | translate}} - {{obtenerEds?.nombre}} - {{ obtenerProceso?.nombre}}
+      </span>
+      <div class="row ">
+        <div class="col-md-8 col-sm-12">
+          <form autocomplete="off" class="cw-forms crear-documento mt-5" [formGroup]="formCrearDocumento">
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field  class="col-sm-12" [ngClass]="{'col-md-4': tieneTipos, 'col-md-5': !tieneTipos}" appearance="fill">
+                  <mat-label>{{'TITULOS.CODIGO'|translate}}</mat-label>
+                  <input matInput formControlName="codigo" (blur)="codigoDocumentoValido()" required>
+                  <mat-error *ngIf="formCrearDocumento.get('codigo').hasError('required')">{{
+                    'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}</mat-error>
+                  <mat-error *ngIf="formCrearDocumento.get('codigo').hasError('duplicado')">{{
+                    'FORMULARIOS.VALIDACION_CAMPO_CODIGO_PARAMETRIZACION' | translate}}</mat-error>
+                </mat-form-field>
+                <mat-form-field  class="col-sm-12" [ngClass]="{'col-md-4': tieneTipos, 'col-md-5': !tieneTipos}" appearance="fill">
+                  <mat-label>{{'FORMULARIOS.NOMBRE_DOCUMENTO' | translate}}</mat-label>
+                  <input matInput formControlName="nombre" required>
+                  <mat-error>
+                    {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                  </mat-error>
+                </mat-form-field>
+  
+                <mat-form-field class="col-sm-12 col-md-4" *ngIf="tieneTipos" appearance="fill">
+                  <mat-label>
+                    {{ 'FORMULARIOS.TIPO_DOCUMENTO' | translate }}
+                  </mat-label>
+                  <mat-select matInput formControlName="idTipoDocumento" required
+                    (selectionChange)="obtenerNombreTipoDocumento($event)">
+                    <mat-option *ngFor="let tipoDocumento of arrayTiposDocumento" [value]="tipoDocumento.idTipoDetalle">
+                      <span>
+                        {{ tipoDocumento.nombre}}
+                      </span>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <div class="row margin-l-r-12px content-check"> 
+                  <div class="col-6 col-sm-6" [ngClass]="{'col-md-4': tieneTipos, 'col-md-5': !tieneTipos}">
+                    <mat-checkbox matInput appearance="fill" formControlName="aplicaEvaluacion">
+                      {{'FORMULARIOS.APLICA_EVALUACION' | translate}}
+                    </mat-checkbox>
+                  </div>
+                  <div class="col-6 col-sm-6" [ngClass]="{'col-md-4': tieneTipos, 'col-md-5': !tieneTipos}">
+                    <mat-checkbox matInput appearance="fill" formControlName="aplicaVencimiento">
+                      {{'FORMULARIOS.APLICA_VENCIMIENTO' | translate}}
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class=" ag-center col-md-4 col-sm-12">
+          <div class="row">
+            <div class="col-12 options-crear-documento">
+              <button type="button" class="btn btn-outline-primary  mr-2 col-md-5 col-sm-12 mb-2" *ngIf="estadoFormulario=='Edicion'"
+              (click)="cancelarEdicionDocumento()">{{'BOTONES.CANCELAR' |
+              translate}}</button>
+              <button type="button" class="btn btn-primary  col-md-5 col-sm-12 mb-2" *ngIf="estadoFormulario=='Edicion'"
+              (click)="guardarDocumento()">{{'BOTONES.GUARDAR' |
+              translate}}</button>
+              <button type="button" class="btn btn-primary col-md-7 col-sm-12 mb-2" *ngIf="estadoFormulario=='Creacion'"
+              (click)="guardarDocumento()">{{'BOTONES.AGREGAR' |
+              translate}}</button>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+  
+  
+      <div class="row my-filtros">
+        <div class="col-12 col-md-9">
+          <div class="row my-filtros">
+            <div class="col-12 col-md-9">
+              <app-filtros [objFiltros]="arrayFiltros" (enviaFiltros)="recibeFiltrosDinamico($event)"
+                (pageSize)="cambioPaginado($event)" (filtroTextoPredictivo)="filtrarTexto($event)"
+                [banderaTextoPredictivo]="false">
+              </app-filtros>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+            <ngx-datatable #myTable [rows]="arrayDocumentosTemporal" class="bootstrap" [columnMode]="ColumnMode.force"
+              [footerHeight]="50" [offset]="pageTable.pageNumber" [limit]="pageTable.size"
+              [count]="pageTable.totalElements" [rowHeight]=medidasTabla.alturaFila [scrollbarH]="true">
+              <ngx-datatable-column name="{{'TITULOS.CODIGO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="170"
+                [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.codigo }}
+                </ng-template>
+              </ngx-datatable-column>
+  
+              <ngx-datatable-column name="{{'TITULOS.NOMBRE_DOCUMENTO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="180"
+                [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span #tooltip   matTooltip="{{row?.nombre | FirstLetterUpper}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                      {{ (row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre) | FirstLetterUpper }}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+  
+              <ngx-datatable-column *ngIf="tieneTipos" name="{{'TITULOS.TIPO_DOCUMENTO' | translate}}"
+                [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false"
+                [flexGrow]="2" [minWidth]="170" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span #tooltip   matTooltip="{{row?.nombreTipoDocumento | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                      {{ (row?.nombreTipoDocumento?.length > 19 ? row?.nombreTipoDocumento.substring(0,19) + '...' : row?.nombreTipoDocumento) | titlecase }}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+  
+              <ngx-datatable-column name="{{'TITULOS.ESTADO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="100"
+                [sortable]="false">
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div class="cw-custom-switches">
+                    <ui-switch [checked]="row.checked" (valueChange)="cambiarEstadoDocumento(row, $event)" [disabled]="modoEdicion">
+                    </ui-switch>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+  
+              <ngx-datatable-column name="{{'TITULOS.VENCIMIENTO' | translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false" [flexGrow]="2" [minWidth]="130"
+                [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <mat-icon svgIcon="{{row.aplicaVencimiento? '27' : '9'}}"></mat-icon>
+                </ng-template>
+              </ngx-datatable-column>
+  
+              <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}" [headerClass]="'cw-text-center'"
+                [cellClass]="'cw-text-center'" [sortable]="false" [resizeable]="false" [draggable]="false" [flexGrow]="2"
+                [minWidth]="130" [sortable]="false">
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                    <button type="button" mat-menu-item (click)="editarDocumentoSelecionado(row, rowIndex)">
+                      <mat-icon svgIcon="31" class="colorBlack"></mat-icon>
+                      <span>{{ 'BOTONES.EDITAR' | translate }}</span>
+                    </button>
+                  </mat-menu>
+                </ng-template>
+  
+              </ngx-datatable-column>
+  
+            </ngx-datatable>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="footerbtn">
+        <button type="button" class="btn btn-primary" (click)="submitDocumentos()">
+          {{'BOTONES.GUARDAR' | translate}}
+        </button>
+        <button type="button" class="btn btn-outline-primary mr-2" (click)="goToBack()">
+          {{'BOTONES.CANCELAR' | translate}}
+        </button>
+      </div>
+  
+    </div>
+  </div>
+</div>

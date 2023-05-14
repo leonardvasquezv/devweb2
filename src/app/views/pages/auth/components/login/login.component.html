@@ -1,0 +1,69 @@
+<div class="row cw-100-h cw-100-w form-login">
+  <div class="col-xl-7 col-md-6 col-sm-12 p-0 imagen-login">
+    <img class="img-fluid cw-100-h" src="assets/images/png/eds-login.jpg" alt="Background login image">
+  </div>
+  <div class="col-xl-5 col-md-6 col-sm-12  cw-background-primary-dark-green cw-center-all text-md-left text-center">
+    <div class="text-light cw-max-width-400px contenedor-info-derecha">
+
+      <div class="row">
+        <div class="col-12 logos-login">
+          <img src="assets/images/svg/logo-fendipetroleo-mini.svg" alt="logo empresa" class="logo-1">
+          <img src="assets/images/png/logo-fendipetroleo.png" alt="logo empresa" class="pl-2 logo-2">
+        </div>
+      </div>
+
+      <div class="row pt-5">
+        <p class="col-12 cw-size-xs-8 cw-text-weight-semibold textos">{{ 'TITULOS.BIENVENIDO' | translate }}</p>
+        <p class="col-12 cw-size-xs-4 cw-text-weight-light textos">{{ 'PARRAFOS.DESCRIPCION_BIENVENIDA' | translate }}</p>
+      </div>
+
+      <form [formGroup]="formGroupLogin" autocomplete="off" (submit)="login($event)">
+        <div class="row pt-5 formulario">
+          <div class="col-12">
+            <mat-form-field class="cw-mat-full-with">
+              <mat-icon matPrefix svgIcon="112" class="cw-size-sm pr-2 mr-2"></mat-icon>
+              <input matInput formControlName="username" placeholder="{{ 'FORMULARIOS.USUARIO' | translate }}"
+                maxlength="50">
+              <mat-error *ngIf="formGroupLogin.get('username').hasError('required')">
+                {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12">
+            <mat-form-field class="cw-mat-full-with">
+              <mat-icon matPrefix svgIcon="125" class="cw-size-sm pr-2 mr-2"></mat-icon>
+              <input matInput type="password" formControlName="password"
+                placeholder="{{ 'FORMULARIOS.PASSWORD' | translate }}" [type]="hide ? 'password' : 'text'">
+              <mat-icon *ngIf="formGroupLogin.get('password').value.length !== 0" matSuffix (click)="hide = !hide"
+                class="cursor-pointer cw-secundary-gray">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="formGroupLogin.get('password').hasError('required')">
+                {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 mt-3">
+            <button type="button" class="btn btn-link pl-0 text-underline cw-text-size-13 text-light textos"
+              (click)="modalOlvidoContrasena()">{{ 'BOTONES.OLVIDO_CONTRASENA' | translate }}</button>
+          </div>
+
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary mr-2 pr-5 pl-5 cw-text-weight-semibold">
+              {{ 'BOTONES.ENTRAR' | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row pt-5">
+        <p class="col-12 textos">
+          &#169;<span class="pl-1 textos">{{ 'PARRAFOS.DERECHOS_FENDIPETROLEO' | translate }}</span>
+        </p>
+        <p class="col-12 cursor-pointer text-underline">
+          <span class="pr-1 textos">{{'PARRAFOS.POLITICAS' | translate }}</span> |
+          <span class="pl-1 textos">{{'PARRAFOS.TERMINOS' | translate }}</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

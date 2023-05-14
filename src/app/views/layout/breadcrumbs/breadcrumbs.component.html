@@ -1,0 +1,10 @@
+<div class="breadcrumbs pr-10px">
+  <div *ngIf="isAction" class="mt-m1px icono-volver-atras">
+    <mat-icon svgIcon="2" class="cw-size-xs-2 mr-10px cl-azulBoton cursor-pointer" (click)="goToBack()"></mat-icon>
+  </div>
+  <div class="left-breadcrumb">
+    <span class="fs-16 mr-2" *ngIf="!!breadcrumb"><strong>{{breadcrumb.title}}</strong></span>
+    <mat-icon svgIcon="1" class="cw-size-xs-2 mr-10px mt-m1px ocultar" [ngbTooltip]="'TITULOS.TEXTO_BREADCRUMB_ALERT' | translate " placement="right" tooltipClass="tooltip-breadcrumbs"></mat-icon>
+  </div>
+  <lib-breadcrumbs class="ocultar"></lib-breadcrumbs>
+</div>

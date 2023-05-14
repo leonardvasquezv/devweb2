@@ -1,0 +1,33 @@
+<div class="main-wrapper" id="main-wrapper" (touchend)="cerrarSidebarPlegado($event)">
+
+  <!-- partial:sidebar -->
+  <app-sidebar [paginaEntrante]="paginaActual" ></app-sidebar>
+  <!-- partial -->
+
+  <div class="page-wrapper">
+    <!-- partial:navbar -->
+    <app-navbar></app-navbar>
+    <!-- partial -->
+
+    <!-- breadcrumbs -->
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="page-content">
+      <!-- Spinner for lazyload modules -->
+      <div *ngIf="isLoading" class="spinner-wrapper">
+        <div class="spinner">Loading...</div>
+      </div>
+
+      <div contentAnimate *ngIf="!isLoading">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+
+    <!-- partial:footer -->
+    <app-footer></app-footer>
+    <!-- partial -->
+
+  </div>
+
+
+</div>

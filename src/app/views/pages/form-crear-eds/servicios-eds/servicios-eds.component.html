@@ -1,0 +1,25 @@
+<fieldset class="mb-0px mt-15px card-border">
+  <legend class="float-none w-auto legend legendPosition">
+    {{ 'TITULOS.SERVICIOS' | translate }}
+  </legend>
+
+  <form class="formulario-servicios-eds" [formGroup]="formConfiguracionEds" autocomplete="off">
+    <div class="mr-2">
+      <button type="button" class="btn-add-tab agregar-servicio" (click)="abrirModalCrearServicio()" [disabled]="modoConsulta">
+        <mat-icon svgIcon="28" class="cw-transform-0-8"></mat-icon>
+      </button>
+    </div>
+
+    <div class="w-100 contenedor-servicios">
+
+      <multiselect-autocomplete formGroupName="servicios" matInput required
+        placeholder="{{ 'FORMULARIOS.SERVICIOS_EDS' | translate }}" key="servicio.nombre" [data]="servicios" [selectData]="serviciosCargados"
+        (result)="selectChange($event)" [modoConsulta]="modoConsulta">
+      </multiselect-autocomplete>
+  
+
+    </div>
+
+    
+  </form>
+</fieldset>

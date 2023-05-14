@@ -1,0 +1,588 @@
+//TODO: maurela - Revisar
+.cw-Filtros {
+  margin-left: 0px;
+  margin-right: 0px;
+  border-top: 1px solid $clbordesTabla;
+  border-radius: 5px;
+  border-left: 1px solid $clbordesTabla;
+  border-right: 1px solid $clbordesTabla;
+  padding-bottom: 9px;
+  padding-top: 6px;
+  margin-top: 10px;
+
+  @media (min-width: 992px) {
+    height: 45px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+  }
+
+  .list-inline>li {
+    padding-left: 0px;
+
+    &:last-child {
+      @media (min-width: 992px) {
+        padding-left: 10px;
+      }
+
+      @media (min-width: 768px) {
+        padding-left: 0px;
+      }
+
+      @media (max-width: 768px) {
+        padding-left: 0px;
+      }
+
+      @media (max-width: 430px) {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .cw-InputBuscar .mat-form-field-appearance-legacy .mat-form-field-label {
+    top: 33px !important;
+    left: 42px !important;
+  }
+
+  .cw-InputBuscar .mat-form-field-infix {
+    background-position: 12px 16px !important;
+    font-size: 12px !important;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -1.2em !important;
+  }
+
+  .cw-InputBuscar {
+    margin-top: -9px;
+  }
+
+  .cw-InputBuscar input {
+    height: 32px !important;
+    font-size: 14px;
+  }
+
+  .mat-button,
+  .mat-flat-button,
+  .mat-icon-button,
+  .mat-stroked-button {
+    min-width: 30px !important;
+    padding: 7px 0px 0 0px !important;
+    outline: 0;
+    min-height: 26px;
+    height: 26px;
+    padding-bottom: 4px !important;
+  }
+
+  .mat-chip-list-wrapper {
+    margin-top: -5px;
+  }
+
+  .mat-standard-chip.mat-chip-with-trailing-icon {
+    font-size: 12px;
+    color: #74708d;
+  }
+
+  .mat-chip.mat-standard-chip {
+    background-color: $bgGray !important;
+    max-width: 30%;
+  }
+
+  .mat-form-field-infix {
+    border-top: 0 solid transparent !important;
+  }
+
+  .mat-form-field-prefix {
+    border-top: 0 solid transparent !important;
+  }
+
+  .cw-Icons {
+    padding-right: 2px;
+    margin-top: -13px;
+  }
+
+  .mat-chip .mat-chip-trailing-icon.mat-icon,
+  .mat-chip .mat-chip-remove.mat-icon {
+    font-size: 20px;
+  }
+
+  .mat-form-field {
+    padding-top: 0px !important;
+  }
+}
+
+.mat-menu-panel .mat-checkbox {
+  line-height: 35px;
+  border-bottom-style: inset !important;
+  border-bottom-width: 1px;
+}
+
+.mat-menu-content {
+  color: #060418;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.mat-menu-panel {
+  border-radius: 4px;
+  background: $colorWhite !important;
+  box-shadow: 0 2px 6px 0 #e0e2e6;
+
+  .mat-icon {
+    transform: scale(0.7)
+  }
+
+  button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    max-height: 35px;
+    font-size: 14px;
+  }
+}
+
+.mat-menu-content:not(:empty) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  max-height: 210px;
+  max-width: 220px;
+}
+
+.mat-menu-item.mat-menu-item-submenu-trigger.ng-star-inserted.mat-menu-item-highlighted {
+  border-radius: 4px !important;
+  background: $colorWhite !important;
+  box-shadow: 0 2px 6px 0 #e0e2e6;
+  color: #060418;
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 18px;
+  outline: 0;
+  font-family: $fontMontserrat;
+}
+
+.mat-elevation-z5 {
+  padding: 10px !important;
+  max-width: 220px !important;
+  max-height: 130px !important;
+  margin-top: 10px !important;
+}
+
+button {
+  font-family: $fontMontserrat !important;
+}
+
+.cw-text-Filter {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cw-numberFilter {
+  color: $clGraydark;
+  font-family: $fontMontserrat;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.w-filtro {
+  width: 416px !important;
+}
+
+@media (max-width: 1120px) {
+  .w-filtro {
+    width: 380px !important;
+  }
+}
+
+//TODO: maurela - Revisar
+.cw-filtros-tabla {
+  .cw-box-input-search {
+    margin-right: 12px !important;
+    height: 42px;
+    width: 100%;
+
+    padding-bottom: 3px;
+    border-radius: $input-border-radius !important;
+    border: 1px solid #cecece;
+
+    &.mat-focused {
+      box-shadow: $input-box-shadow;
+      border: none;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-wrapper {
+      margin-left: 40px;
+      margin-top: 4px;
+      padding: 0px 2px !important;
+    }
+
+    .mat-form-field-infix {
+      font-family: $fontMontserrat;
+      color: #bdc1c2 !important;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 5px;
+      border: none;
+      margin-right: 10px;
+      position: relative !important;
+
+      &::before {
+        content: "";
+        display: block;
+        height: 12px;
+        width: 12px;
+        background-size: 12px 12px;
+        background-image: url("../images/svg/lupa.svg");
+        background-repeat: no-repeat;
+        position: absolute;
+        margin-top: 1px;
+        margin-left: -20px;
+      }
+    }
+  }
+
+  .mat-menu-trigger {
+    height: 42px !important;
+    background-color: transparent;
+    border-color: transparent;
+    padding: 10px !important;
+    color: #464a53;
+
+    .mat-icon {
+      color: #7D7A86;
+    }
+  }
+
+  .mat-select-trigger {
+    margin-top: 6px;
+    width: 40px;
+    color: #464a53;
+  }
+
+  .cw-box-input {
+    height: 42px;
+    padding-top: 0px;
+    padding-bottom: 3px;
+    border-radius: $input-border-radius !important;
+    border: 1px solid #cecece;
+
+    &:focus {
+      box-shadow: $input-box-shadow;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0px;
+    }
+
+    .mat-form-field-infix {
+      border: none;
+      margin-top: 1px;
+    }
+  }
+
+  .filter-category {
+    border: 1px solid #cecece !important;
+    border-radius: 4px !important;
+    height: 42px !important;
+    text-align: center !important;
+
+    .mat-menu-trigger {
+      display: flex !important;
+      margin: 0 !important;
+      justify-content: center !important;
+
+      .material-icons {
+        line-height: 20px !important;
+      }
+    }
+  }
+
+
+  .filter-category-name {
+    margin-left: 2px !important;
+
+    @media (max-width: 540px) {
+      display: none;
+      padding-right: 0px !important;
+    }
+  }
+
+  .mat-chip .mat-chip-trailing-icon.mat-icon,
+  .mat-chip .mat-chip-remove.mat-icon {
+    font-size: 20px;
+  }
+
+  .mat-standard-chip.mat-chip-with-trailing-icon {
+    font-size: 12px;
+    color: #74708d;
+  }
+
+  .mat-chip.mat-standard-chip {
+    background-color: $bgGray !important;
+    max-width: 30%;
+  }
+
+  .cw-text-Filter {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cw-numberFilter {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+  }
+
+}
+
+.cw-input-350 {
+  .cw-filtros-tabla .cw-box-input-search {
+    width: 350px;
+  }
+}
+
+.cw-subItem-filter {
+  margin: 0px 15px 0px 15px;
+}
+
+.border-filter {
+  border: 1px solid #cecece;
+}
+
+.search-responsive {
+
+  @media (max-width: 1200px) {
+    width: 100% !important;
+  }
+
+  @media screen and (max-width: 767px) {
+    //cambiado
+    width: 85% !important;
+  }
+
+
+}
+
+.register-responsive {
+  width: 80px;
+
+  @media (max-width: 640px) {
+    width: 50px;
+    padding: 0px 5px;
+  }
+}
+
+.search-consolidado {
+  @media (max-width: 479px) {
+    .cw-filtros-tabla .cw-box-input-search {
+      margin-right: 8px !important;
+      width: 71% !important;
+    }
+  }
+}
+
+.search-w-100 {
+  .cw-filtros-tabla .cw-box-input-search {
+    margin-right: 0px !important;
+    width: 100% !important;
+  }
+}
+
+.filtro-detalle-venta {
+  .cw-filtros-tabla .cw-box-input-search {
+    width: 100% !important;
+  }
+}
+
+.filtro-outline {
+  .mat-form-field-wrapper {
+    margin-bottom: 0px;
+  }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding: 6px 0px;
+  }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
+    padding: 0 0.75rem 0 0.75rem;
+  }
+
+  .mat-form-field-prefix {
+    color: #00be72;
+    position: relative;
+    top: 3px;
+  }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-suffix {
+    top: 0.25em !important;
+    color: #bdc1c2;
+  }
+
+  .mat-form-field-suffix .mat-icon-button .mat-icon {
+    color: #bdc1c2;
+    box-shadow: none;
+  }
+
+  .mat-select-arrow {
+    opacity: 1;
+    border: 0px solid transparent !important;
+    max-width: 0px;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #c9d4d8;
+    border-radius: 4px;
+    height: 42px;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+  .mat-form-field-appearance-outline.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label {
+    transform: translateY(-20px) scale(0.75);
+    width: 133.3333333333%;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -17px;
+    padding-top: 0.84375em;
+  }
+
+  .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+  .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.chip-datepicker {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    height: 42px;
+  }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix {
+    padding: 6px 0px;
+  }
+
+  .mat-form-field-outline {
+    color: #deecf2;
+    background: #deecf2 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+  }
+
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
+    padding: 0 0.75rem 0 0.75rem;
+  }
+
+  .mat-form-field-disabled .mat-form-field-wrapper .mat-form-field-flex {
+    background-color: transparent;
+  }
+
+  .mat-form-field-prefix {
+    color: #00be72 !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-suffix {
+    .close-8-top {
+      top: 8px !important;
+    }
+  }
+
+  .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+  .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.filtro-outline,
+.chip-datepicker {
+  .mat-date-range-input-container {
+    font-family: $fontMontserrat;
+    color: #bdc1c2 !important;
+    font-size: 14px;
+    font-weight: 500;
+
+    input,
+    .mat-select,
+    .mat-select-trigger span {
+      font-family: $fontMontserrat !important;
+      font-size: 14px !important;
+      font-weight: 500;
+      color: $clBlack !important;
+    }
+  }
+}
+
+.column-gap-conciliaciones {
+  column-gap: 10px;
+}
+
+.column-gap-condicional {
+  column-gap: 10px;
+}
+
+@media (max-width: 645px) {
+  .chip-datepicker.responsive-grafica {
+    position: absolute;
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .column-gap-condicional {
+    column-gap: 0px;
+  }
+
+  .justify-content-540px {
+    justify-content: space-between;
+  }
+
+  .filtro-outline {
+    margin-right: 0px;
+  }
+
+  .wd-148-48 {
+    width: 48%;
+  }
+
+  .filtro-outline .mat-input-element {
+    font-size: 12px;
+  }
+}
+
+.filtro-outline .mat-select-min-line {
+  font-size: 14px;
+
+  @media (max-width: 540px) {
+    font-size: 12px;
+  }
+}
+
+.display-conciliaciones {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  column-gap: 10px;
+
+  .chip-datepicker {
+    .chip-datepicker-responsive-conciliaciones {
+      width: 250px;
+
+      @media (max-width: 740px) {
+        display: none;
+      }
+    }
+  }
+}

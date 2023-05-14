@@ -1,0 +1,237 @@
+<div class="card shadow-none border-0">
+  <fieldset class="card-container">
+    <legend class="float-none w-auto legend">{{'TITULOS.INFORMACION_EMPRESA' | translate}}</legend>
+    <form class="cw-forms" [formGroup]="formGroupInformacionEmpresa">
+      <div class="row p-20px">
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.TIPO_IDENTIFICACION' | translate}}</mat-label>
+            <mat-select formControlName="idTipoIdentificacion">
+              <mat-option [value]="''">--</mat-option>
+              <mat-option *ngFor="let item of tiposIdentificacion" [value]="item.idTipoDetalle">
+                {{item.nombre}}</mat-option>
+            </mat-select>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.N_IDENTIFICACION' | translate }}</mat-label>
+            <input matInput formControlName="identificacion" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.NOMBRE_EMPRESA' | translate }}</mat-label>
+            <input matInput formControlName="nombre" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.CODIGO_SICOM' | translate }}</mat-label>
+            <input matInput formControlName="codigoSicom" (blur)="validarCodigoSicom()" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.ESTADO' | translate}}</mat-label>
+            <mat-select formControlName="estadoRegistro" [value]="'A'">
+              <mat-option [value]="''">--</mat-option>
+              <mat-option [value]="'A'">{{'PALABRAS.ACTIVO' | translate}}</mat-option>
+              <mat-option [value]="'I'">{{'PALABRAS.INACTIVO' | translate}}</mat-option>
+            </mat-select>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+
+  <fieldset class="card-container">
+    <legend class="float-none w-auto legend">{{'TITULOS.INFORMACION_CONTACTO'| translate}}</legend>
+    <form class="cw-forms" [formGroup]="formGroupInformacionContacto">
+      <div class="row p-20px">
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.TIPO_IDENTIFICACION' | translate}}</mat-label>
+            <mat-select formControlName="idTipoDocumento">
+              <mat-option [value]="''">--</mat-option>
+              <mat-option *ngFor="let item of tiposIdentificacion" [value]="item.idTipoDetalle">
+                {{item.nombre}}</mat-option>
+            </mat-select>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.N_IDENTIFICACION' | translate }}</mat-label>
+            <input matInput formControlName="numeroDocumento" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.NOMBRE' | translate }}</mat-label>
+            <input matInput formControlName="nombreCompleto" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.CORREO_ELECTRONICO' | translate }}</mat-label>
+            <input matInput formControlName="correoElectronico" />
+            <mat-error *ngIf="formGroupInformacionContacto.get('correoElectronico').hasError('required')">
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+            <mat-error *ngIf="formGroupInformacionContacto.get('correoElectronico').hasError('pattern')">
+              {{ 'TITULOS.CORREO_INVALIDO' | translate }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <div class="row cw-input-union">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 cw-input-union-one">
+              <mat-form-field appearance="fill" class="cw-mat-full-with">
+                <mat-label> {{ 'FORMULARIOS.INDICATIVO_CELULAR' | translate }}</mat-label>
+                <mat-select formControlName="indicativoCelular">
+                  <mat-option [value]="''">--</mat-option>
+                  <mat-option *ngFor="let item of paises" [value]="item.indicativo">
+                    <span class="flag-icon flag-icon-{{ item.flagIcono | lowercase}}"></span>
+                    +{{item.indicativo}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 cw-input-union-two">
+              <mat-form-field appearance="fill" class="cw-mat-full-with">
+                <mat-label> {{ 'FORMULARIOS.CELULAR' | translate }}</mat-label>
+                <input matInput formControlName="celular" maxlength="10" appRestrictInput="integer">
+                <mat-error>
+                  {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <div class="row cw-input-union">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 cw-input-union-one">
+              <mat-form-field appearance="fill" class="cw-mat-full-with">
+                <mat-label> {{ 'FORMULARIOS.INDICATIVO_CELULAR' | translate }}</mat-label>
+                <mat-select formControlName="indicativoTelefono">
+                  <mat-option [value]="''">--</mat-option>
+                  <mat-option *ngFor="let item of paises" [value]="item.indicativo">
+                    <span class="flag-icon flag-icon-{{ item.flagIcono | lowercase}}"></span>
+                    +{{item.indicativo}}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 cw-input-union-two">
+              <mat-form-field appearance="fill" class="cw-mat-full-with">
+                <mat-label> {{ 'FORMULARIOS.TELEFONO' | translate }}</mat-label>
+                <input matInput formControlName="telefono" maxlength="10" appRestrictInput="integer">
+                <mat-error>
+                  {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.PAIS' | translate}}</mat-label>
+            <input matInput formControlName="paisAutoComplete" [matAutocomplete]="autoPaises" />
+            <mat-autocomplete autoActiveFirstOption #autoPaises="matAutocomplete" (optionSelected)="changePais($event)">
+              <mat-option *ngFor="let pais of filtrarOpcionesPaises | async" [value]="pais.nombre">
+                {{pais.nombre}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.DEPARTAMENTO' | translate}}</mat-label>
+            <input matInput formControlName="departamentoAutoComplete" [matAutocomplete]="autoDepartamentos" />
+            <mat-autocomplete autoActiveFirstOption #autoDepartamentos="matAutocomplete"
+              (optionSelected)="changeDepartamento($event)">
+              <mat-option *ngFor="let departamento of filtrarOpcionesDepartamentos | async"
+                [value]="departamento.nombre">
+                {{departamento.nombre}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{'FORMULARIOS.CIUDAD' | translate}}</mat-label>
+            <input matInput formControlName="municipioAutoComplete" [matAutocomplete]="autoCiudades" />
+            <mat-autocomplete autoActiveFirstOption #autoCiudades="matAutocomplete"
+              (optionSelected)="changeMunicipio($event)">
+              <mat-option *ngFor="let ciudad of filtrarOpcionesCiudades | async" [value]="ciudad.nombre">
+                {{ciudad.nombre}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+          <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.DIRECCION' | translate }}</mat-label>
+            <input matInput formControlName="direccion" />
+            <mat-error>
+              {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+    </form>
+  </fieldset>
+
+</div>

@@ -1,0 +1,40 @@
+<fieldset class="mb-0px mt-15px card-border">
+    <legend class="float-none w-auto legend legendPosition">
+        {{ 'TITULOS.INFO_SG_SST' | translate }}
+    </legend>
+
+    <form class="cw-forms crearEdsForms" [formGroup]="formConfiguracionEds" autocomplete="off">
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.FECHA_EVALUACION' | translate }}</mat-label>
+            <input matInput formControlName="fechaEvaluacion" />
+            <mat-error>
+                {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.RESPONSABLE_EJECUCION_SGSST' | translate }}</mat-label>
+            <input matInput formControlName="responsableEjecucionSGSST" required />
+            <mat-error>
+                {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.EVALUACION_REALIZADA_POR' | translate }}</mat-label>
+            <input matInput formControlName="evaluacionRealizadaPor" />
+            <mat-error>
+                {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>{{ 'FORMULARIOS.CARGO' | translate }}</mat-label>
+            <input matInput formControlName="cargo" />
+            <mat-error>
+                {{'FORMULARIOS.VALIDACION_CAMPO_REQUERIDO' | translate}}
+            </mat-error>
+        </mat-form-field>
+
+    </form>
+</fieldset>

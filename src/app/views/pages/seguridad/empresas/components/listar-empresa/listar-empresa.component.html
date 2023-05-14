@@ -1,0 +1,84 @@
+<div class="contenedor-pagina">
+    <div class="card">
+        <div class="card-container card-border-none">
+            <div class="row my-filtros">
+                <div class="col-sm-12 col-md-9">
+                    <app-filtros [objFiltros]="arrayFiltros" (enviaFiltros)="recibeFiltrosDinamico($event)"
+                        (pageSize)="getAllEmpresas(null , $event)"></app-filtros>
+                </div>
+                <div class="col-sm-12 col-md-3 d-flex flex-row-reverse h-42px boton-cabecera-tabla">
+                    <button class="btn btn-primary" (click)="crearEmpresa()" [appCheckPermission]="eAcciones.editar">
+                        {{ 'BOTONES.CREAR_EMPRESA' | translate }}
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="table-responsive cw-ngx-datatable font-text-table">
+                <ngx-datatable class="bootstrap" [rows]="arrayEmpresas" [columnMode]="ColumnMode.force"
+                    [footerHeight]="50" [externalPaging]="true" [offset]="pageTable.pageNumber" [limit]="pageTable.size"
+                    [count]="pageTable.totalElements" [rowHeight]="medidasTabla.alturaFila"
+                    (page)="getAllEmpresas($event)" [scrollbarH]="true" [virtualization]="false">
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.NOMBRE' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [minWidth]="150">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <span #tooltip matTooltip="{{row?.nombre | titlecase}}"
+                                matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                                {{ (row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre) |
+                                titlecase
+                                }}
+                            </span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'FORMULARIOS.TELEFONO' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [minWidth]="130">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.contactoEmpresa.telefono }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'FORMULARIOS.NUMERO_DOCUMENTO' | translate}}"
+                        [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [minWidth]="130">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{ row.identificacion }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.ESTADO' | translate}}" [width]="50"
+                        [cellClass]="'cw-text-center'" [headerClass]="'cw-text-center'" [minWidth]="100">
+                        <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                            <div class="cw-custom-switches">
+                                <ui-switch [checked]="row.checked"
+                                    (valueChange)="abrirModalActivarInactivar(row, rowIndex, $event)">
+                                </ui-switch>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'TITULOS.ACCIONES' | translate}}"
+                        [resizeable]="false" [cellClass]="'cw-text-center'" [headerClass]="'cw-text-center'"
+                        [minWidth]="130">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <button mat-icon-button [matMenuTriggerFor]="menu_acciones">
+                                <mat-icon>more_horiz</mat-icon>
+                            </button>
+                            <mat-menu #menu_acciones="matMenu" value="line">
+                                <button mat-menu-item (click)="consultarEmpresa(row.id)"
+                                    [appCheckPermission]="eAcciones.editar">
+                                    <mat-icon>visibility</mat-icon>{{ 'BOTONES.CONSULTAR' |
+                                    translate}}
+                                </button>
+                                <button mat-menu-item (click)="editarEmpresa(row.id)"
+                                    [appCheckPermission]="eAcciones.editar">
+                                    <mat-icon>edit</mat-icon>{{ 'BOTONES.EDITAR' |
+                                    translate}}
+                                </button>
+                            </mat-menu>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+</div>

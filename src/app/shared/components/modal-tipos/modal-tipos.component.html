@@ -1,0 +1,51 @@
+<mat-dialog-content>
+  <div *ngIf="activarFormulario"
+    class="modal-header d-flex justify-content-between cw-modal-estadoregistro-header pt-0 bd-b-0">
+    <span class="ml-2 pt-5px cw-center-all cw-font-bold titleGrisOscuro">
+      {{titulo}}
+    </span>
+  </div>
+
+  <div class="text-center p-2 pb-0px">
+    <mat-icon class="wd-52 ht-52" *ngIf="icono!==''" [svgIcon]="icono">
+    </mat-icon>
+    <p *ngIf="descripcion !==''" class=" titleGrisOscuro cw-font-600 mt-4 fs-16 px-1_5rem">
+      {{descripcion}}
+      <span *ngIf="descripcion2 !==''">
+        <br>
+        {{descripcion2}}
+      </span>
+    </p>
+  </div>
+
+
+  <div *ngIf="activarFormulario">
+    <form [formGroup]="modalForm">
+      <mat-form-field class="w-80 text-black">
+        <mat-label>
+          Valor
+        </mat-label>
+        <input matInput currencyMask formControlName="valorInput" class="text-align-r" />
+      </mat-form-field>
+    </form>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="center" class="pr-3 pl-3 d-flex pt-0px">
+
+  <button type="submit" [disabled]="modalForm.invalid" *ngIf="activarFormulario"
+    class="btn cw-btn-blue mr-2px mr-none mb-bm" [mat-dialog-close]="modalForm.value.valorInput"
+    cdkFocusInitial>{{txtBoton1}}
+  </button>
+
+
+  <button *ngIf="activarBtn2" class="btn cw-btn-outline-cancel mr-3 ml-3 mb-0" mat-dialog-close>
+    {{txtBoton2}}
+  </button>
+
+  <button *ngIf="activarBtn1 && !activarFormulario" class="btn cw-btn-blue text-center mr-3 ml-3 mr-none mb-ab mb-0"
+    [mat-dialog-close]="true" cdkFocusInitial>
+    {{txtBoton1}}
+  </button>
+</mat-dialog-actions>

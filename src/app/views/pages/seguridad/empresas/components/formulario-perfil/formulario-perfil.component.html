@@ -1,0 +1,64 @@
+<fieldset class="card-border">
+
+  <legend class="float-none w-auto legend legendPosition">
+    {{ 'TITULOS.INFORMACION_PERFIL' | translate }}
+  </legend>
+
+  <form [formGroup]="formGroupPerfil" autocomplete="off" class="pt-3 pb-3 pr-5 pl-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <mat-form-field class="cw-mat-full-with">
+          <input matInput placeholder="{{ 'TITULOS.NOMBRE' | translate }}" formControlName="nombre" maxlength="250">
+          <mat-error *ngIf="formGroupPerfil.get('nombre').hasError('required')">
+            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <mat-form-field class="cw-mat-full-with">
+          <mat-select placeholder="{{ 'TITULOS.ESTADO' | translate }}" formControlName="estadoRegistro">
+            <mat-option [value]="'A'">{{ 'TITULOS.ACTIVO' | translate}}</mat-option>
+            <mat-option [value]="'I'">{{ 'TITULOS.INACTIVO' | translate}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroupPerfil.get('estadoRegistro').hasError('required')">
+            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <mat-form-field class="cw-mat-full-with">
+          <input matInput placeholder="{{ 'TITULOS.DESCRIPCION' | translate }}" formControlName="descripcion"
+            maxlength="500">
+          <mat-error *ngIf="formGroupPerfil.get('descripcion').hasError('required')">
+            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+</fieldset>
+
+<fieldset class="card-border mt-4 cw-45vh">
+
+  <legend class="float-none w-auto legend legendPosition">
+    {{ 'TITULOS.PERMISOS' | translate }}
+  </legend>
+
+  <div class="pt-3 pb-3 pr-5 pl-5">
+    <app-permiso [perfilSeleccionado]="perfilSeleccionado"></app-permiso>
+  </div>
+
+</fieldset>
+
+<div class="row mt-4 d-flex flex-row-reverse" *ngIf="formGroupPerfil.dirty || formGroupPerfil.get('temporal').value">
+
+  <div class="col-2 cw-center-all" (click)="eventoEnviarFormulario(true)">
+    <button class="btn btn-primary w-100">{{'BOTONES.GUARDAR' |
+      translate}}</button>
+  </div>
+
+  <div class="col-2 cw-center-all" (click)="eventoEnviarFormulario(false)"
+    *ngIf="!!formGroupEmpresa?.get('perfiles')?.value && formGroupEmpresa?.get('perfiles')?.value?.length > 0">
+    <button class="btn btn-outline-primary w-100">{{'BOTONES.CANCELAR' |
+      translate}}</button>
+  </div>
+
+</div>

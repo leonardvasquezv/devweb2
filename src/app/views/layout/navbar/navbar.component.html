@@ -1,0 +1,86 @@
+<nav class="navbar">
+  <a href="" class="sidebar-toggler" (click)="toggleSidebar($event)">
+    <em class="feather icon-menu"></em>
+  </a>
+  <div class="navbar-content">
+    <ul class="navbar-nav">
+      <li class="nav-item nav-notifications" ngbDropdown (openChange)="escucharDropdownAbiertoCerrado($event)">
+        <a class="nav-link" ngbDropdownToggle id="notificationDropdown" (click)="abrirNotificaciones()">
+          <em class="link-icon mr-2 icono-bell cw-text-size-25"><span
+              class="mdi mdi-bell-outline cw-primary-blue"></span>
+          </em>
+          <div class="number-indicator" *ngIf="notificacionPendiente && notificacionesNoLeidas.length != 0 ">
+            {{ notificacionesNoLeidas.length < 9 ? notificacionesNoLeidas.length : '9+' }}
+          </div>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="notificationDropdown"  >
+          <div class="dropdown-header d-flex align-items-center justify-content-between dropdown-notifications">
+            <p class="mb-0 font-weight-medium tx-12" *ngIf="notificaciones.length > 0">{{ notificaciones.length }} {{'TITULOS.NOTIFICACIONES' | translate}}</p>
+            <p class="mb-0 font-weight-medium tx-12" *ngIf="notificaciones.length === 0">{{'TITULOS.NO_NOTIFICACIONES' | translate}}</p>
+            <a (click)="confirmarLecturaTodasNotificacion()" class="text-muted">
+              {{'TITULOS.MARCAR_LEIDAS' | translate}}
+              <mat-icon class="cw-size-xs-5" svgIcon="17"></mat-icon>
+              <div>
+              </div>
+            </a>
+
+          </div>
+          <div class="dropdown-body cw-overflow-y-auto">
+            <a (click)="redireccionNotificacion(item)" class="dropdown-item"
+              *ngFor="let item of notificaciones; let i=index">
+              <div class="icon cw-position-absolute">
+                <mat-icon class="bg-g" svgIcon="16" *ngIf="!item.leido"></mat-icon>
+              </div>
+              <div class="content">
+                <p [ngClass]="{'strong': !item.leido}">{{item.detalleContenido.mensaje}} </p>
+                <p class="sub-text text-muted">{{item.fechaEnvio | date}}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item nav-profile cw-nav-profile pr-5 mr-5" ngbDropdown>
+        <a class="nav-link drop-profile" ngbDropdownToggle id="profileDropdown">
+          <img src="{{!!userIdentity?.rutaAvatar ? userIdentity?.rutaAvatar : 'assets/images/svg/10.svg'}}"
+            alt="profile">
+          <div class="row pl-3 m-0 mr-3 cw-userIdentity">
+            <p class="col-12 m-0 p-0"><strong>{{!!userIdentity?.nombreCompleto ? userIdentity?.nombreCompleto
+                :'Nombre Apellido'}}</strong> </p>
+            <p class="col-12 m-0 p-0">{{!!userIdentity?.email ? userIdentity?.email
+              :'Nombre Apellido'}}</p>
+          </div>
+          <em class="feather icon-chevron-down"></em>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="profileDropdown">
+          <div class="dropdown-header d-flex flex-column align-items-center">
+            <div class="figure mb-3">
+              <img src="{{!!userIdentity?.rutaAvatar ? userIdentity?.rutaAvatar : 'assets/images/svg/10.svg'}}" alt="">
+            </div>
+            <div class="info text-center">
+              <p class="name font-weight-bold mb-0">{{!!userIdentity?.username ? userIdentity?.username :'username'}}
+              </p>
+              <p class="email text-muted mb-3">{{userIdentity?.nombreCompleto ? userIdentity?.nombreCompleto : 'Nombre
+                Apellido'}}</p>
+            </div>
+          </div>
+          <div class="dropdown-body">
+            <ul class="profile-nav p-0 pt-3">
+              <li class="nav-item" *ngIf="userRole == 32">
+                <a href="" (click)="false" class="nav-link" (click)="redireccionHeadOffice()">
+                  <i class="mdi mdi-cog"></i>
+                  <span>Administrador</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a (click)="abrirModalConfirmarOperacion()" class="nav-link">
+                  <em class="feather icon-log-out"></em>
+                  <span class="pl-2">Cerrar Sesión</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

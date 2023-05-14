@@ -1,0 +1,31 @@
+<mat-dialog-content class="mat-typography">
+  <div class="modal-header">
+    <span class="cw-text-size-20 cw-text-weight-semibold">{{labelModal}}</span>
+    <div class="row d-flex flex-row-reverse pr-3">
+      <mat-icon mat-dialog-close svgIcon="148" class="cw-size-xs-6"></mat-icon>
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="formGroupEstadoRegistro" autocomplete="off" (submit)="guardar()" class="form-outline">
+      <div class="modal-body cw-modal-estadoregistro-body">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="cw-mat-full-with p-0">
+            <mat-label>{{ 'TITULOS.OBSERVACION' | translate}}</mat-label>
+            <textarea matInput class="form-control cw-textarea-estado-registro" formControlName="observacionEstado"
+              [maxlength]="500" rows="6"></textarea>
+            <mat-error *ngIf="formGroupEstadoRegistro.get('observacionEstado').hasError('required')">Campo requerido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row d-flex flex-row-reverse">
+        <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 mr-3">
+          <button type="submit" class="btn btn-primary cw-size-lg w-100">Guardar</button>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+          <button type="button" class="btn btn-outline-primary cw-size-lg w-100" mat-dialog-close>Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

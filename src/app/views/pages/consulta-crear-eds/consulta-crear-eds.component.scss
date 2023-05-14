@@ -1,0 +1,29 @@
+.selectedIndex0 {}
+
+@for $i from 1 through 10 {
+    .selectedIndex#{$i} {
+        @extend .selectedIndex#{$i - 1};
+
+        ::ng-deep .mat-stepper-horizontal-line:nth-child(#{$i * 2}) {
+            border-top-width: 2px !important;
+            border-top-color: #00ADC6 !important;
+        }
+
+        @extend .selectedIndex#{$i};
+
+        ::ng-deep .mat-horizontal-stepper-header:nth-of-type(#{$i})::after,
+        ::ng-deep .mat-horizontal-stepper-header:nth-of-type(#{$i+1})::before {
+            border-top-width: 2px !important;
+            border-top-color: #00ADC6 !important;
+        }
+    }
+}
+
+.progress{
+    height: 5px;
+}
+
+::ng-deep .progress-bar{
+    background-color: #00ADC6 !important;
+}
+

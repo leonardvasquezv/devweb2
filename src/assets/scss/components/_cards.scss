@@ -1,0 +1,263 @@
+/* Cards */
+
+.card {
+  box-shadow: $card-box-shadow;
+  -webkit-box-shadow: $card-box-shadow;
+  -moz-box-shadow: $card-box-shadow;
+  -ms-box-shadow: $card-box-shadow;
+
+  .card-body {
+    padding: $card-padding-y $card-padding-x;
+
+    +.card-body {
+      padding-top: 0.5rem;
+    }
+
+  }
+
+  .card-title {
+    color: $card-title-color;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    font-size: .875rem;
+    font-weight: 600;
+  }
+
+  .card-subtitle {
+    @extend .text-gray;
+    font-weight: 400;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .card-description {
+    margin-bottom: .875rem;
+    font-weight: 400;
+    color: $card-description-color;
+  }
+
+  &.card-outline-success {
+    border: 1px solid theme-color("success");
+  }
+
+  &.card-outline-primary {
+    border: 1px solid theme-color("primary");
+  }
+
+  &.card-outline-warning {
+    border: 1px solid theme-color("warning");
+  }
+
+  &.card-outline-danger {
+    border: 1px solid theme-color("danger");
+  }
+
+  &.card-rounded {
+    @include border-radius(5px);
+  }
+
+  &.card-faded {
+    background: #b5b0b2;
+    border-color: #b5b0b2;
+  }
+
+  &.card-circle-progress {
+    color: $white;
+    text-align: center;
+  }
+
+  &.card-img-holder {
+    position: relative;
+
+    .card-img-absolute {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  }
+
+  &.card-weather {
+    .weather-daily {
+      .weather-day {
+        opacity: .5;
+        font-weight: 900;
+      }
+
+      i {
+        font-size: 20px;
+      }
+
+      .weather-temp {
+        margin-top: .5rem;
+        margin-bottom: 0;
+        opacity: .5;
+        font-size: .75rem;
+      }
+    }
+  }
+}
+
+.card-group {
+  box-shadow: $card-box-shadow;
+
+  .card {
+    box-shadow: none;
+  }
+}
+
+@each $color,
+$value in $theme-colors {
+  .card-inverse-#{$color} {
+    @include card-inverse-variant(rgba(theme-color($color), .2), theme-color-level($color, 1), theme-color-level($color, 3));
+  }
+}
+
+.shadow-none-card {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.card-container {
+  box-shadow: none;
+  border-radius: 8px;
+  border: 1px solid #c9d4d8;
+  margin: 0 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+
+  .subtitle {
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #1D2045;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+}
+
+.card-container-no-border {
+  @extend .card-container;
+  border: none !important;
+}
+
+.legend {
+  word-wrap: break-word;
+  color: #003087;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Montserrat;
+}
+
+.card-border {
+  box-shadow: none;
+  border-radius: 8px;
+  border: 1px solid #c9d4d8;
+
+  &-none {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
+//Personalizaciones
+.card-mt-custom {
+  margin-top: 34px;
+}
+
+.cardbox {
+  margin: 0px 20px 18px;
+  padding: 0px 38px;
+  width: auto;
+  height: 100%;
+  border: #c9d4d8 solid 1px;
+  border-radius: 4px;
+
+  &__tittle {
+    width: 250px;
+    height: 18px;
+    padding: 0px;
+    font-family: $fontMontserrat;
+    letter-spacing: 0px;
+    font-size: 14px;
+    line-height: normal;
+
+    background-color: white;
+    text-align: center;
+
+    position: relative;
+    top: -9px;
+    left: 30px;
+  }
+}
+
+.user-card {
+  box-shadow: none;
+  border-radius: 8px;
+  border: 1px solid $secundary-gray;
+  padding: 20px;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $cwBlueBorder;
+    background-color: $cwLighterBlueBackground;
+  }
+
+  &.active {
+    border: 1px solid $cwBlueBorder !important;
+    background-color: $cwLightBlueBackground !important;
+
+    .mat-icon,
+    .user-card-label {
+      color: $cwBlueBorder !important;
+    }
+  }
+
+  .user-card-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .user-card-info {
+      display: flex;
+      justify-content: center;
+
+      .mat-icon {
+        width: 70px !important;
+        height: 70px !important;
+      }
+
+      .users-info {
+        flex-direction: column;
+        margin-left: 1rem !important;
+
+        .user-card-label {
+          margin: 0 !important;
+          font-size: 17px;
+          font-weight: 500;
+          color: $clGraydark;
+        }
+
+        .user-card-number {
+          margin: 0 !important;
+          font-size: 35px;
+          font-weight: 600;
+        }
+
+      }
+
+    }
+
+    .user-card-filter-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px 0px 0px;
+      transform: scale(1.75);
+      color: $clGraydark;
+    }
+  }
+}

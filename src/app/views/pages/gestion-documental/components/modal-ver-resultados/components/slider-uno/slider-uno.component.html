@@ -1,0 +1,77 @@
+<div class="d-flex contenedor-slider1">
+    <div class="d-flex flex-column align-items-center subseccion-slider">
+        <div id="container" class="grafico-indicador"></div>
+
+        <button class="btn cw-btn-valoracion" (click)="mostrarValoracion()">
+            {{textoBoton}}
+        </button>
+    </div>
+
+    <div class="tabla-plan-mejoramiento">
+        <p class="titulo-plan-mejoramiento">
+            {{'TITULOS.PLAN_DE_MEJORAMIENTO' | translate}}
+            <br>
+            {{'TITULOS.SG_SST' | translate}}
+        </p>
+        <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+            <ngx-datatable [rows]="criteriosNoCumplidos" [scrollbarH]="true" class="bootstrap titulos-plan-mejoramiento"
+                [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5"
+                [scrollbarH]="true">
+
+                <ngx-datatable-column name="N°" [headerClass]="'cw-titles-plan-mejoramiento'"
+                    [cellClass]="'cw-font-plan-mejoramiento'" [resizeable]="false" [draggable]="false" [flexGrow]="1"
+                    [minWidth]="100" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.numeral }}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Item" [headerClass]="'cw-titles-plan-mejoramiento'"
+                    [cellClass]="'cw-font-plan-mejoramiento'" [resizeable]="false" [draggable]="false" [flexGrow]="5"
+                    [minWidth]="80" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.item }}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Criterio" [headerClass]="'cw-titles-plan-mejoramiento'"
+                    [cellClass]="'cw-font-plan-mejoramiento'" [resizeable]="false" [draggable]="false" [flexGrow]="5"
+                    [minWidth]="100" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.descripcionCriterio }}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Actividad propuesta" [headerClass]="'cw-titles-plan-mejoramiento'"
+                    [cellClass]="'cw-font-plan-mejoramiento'" [resizeable]="false" [draggable]="false" [flexGrow]="5"
+                    [minWidth]="100" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{ row.actividad }}
+                    </ng-template>
+                </ngx-datatable-column>
+
+
+
+                <ngx-datatable-column name="{{'TITULOS.ACCIONES'|translate}}"
+                    [headerClass]="'cw-font-plan-mejoramiento'" [cellClass]="'cw-titles-plan-mejoramiento'"
+                    [sortable]="false" [resizeable]="false" [draggable]="false" [flexGrow]="1" [minWidth]="100"
+                    [maxWidth]="100" [sortable]="false">
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                            <button type="button" mat-menu-item
+                                (click)="abrirModalRegistrarPlanMejoramiento(row.idEvaluacionCriterio)">
+                                <mat-icon class="colorBlack">mode_edit_outline</mat-icon>
+                                <span>{{ 'BOTONES.REGISTRAR' | translate }}</span>
+                            </button>
+                        </mat-menu>
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

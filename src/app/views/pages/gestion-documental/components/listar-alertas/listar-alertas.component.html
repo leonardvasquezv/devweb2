@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col">
+    <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table cw-listado-alertas" #tableWrapper>
+      <ngx-datatable [rows]="arrayAlertas" class="bootstrap cw-lista-alertas" [columnMode]="ColumnMode.force" [footerHeight]="50"
+        [offset]="pageTable.pageNumber" [limit]="pageTable.size" [count]="pageTable.totalElements" rowHeight="auto" [scrollbarH]="true" [virtualization]="false" 
+        [rowHeight]="medidasTabla.alturaFila">
+        <ngx-datatable-column name="{{ 'TITULOS.ALERTAS' | translate }}" [sortable]="false" [resizeable]="false"
+          [draggable]="false" [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'">
+          <ng-template let-row="row" ngx-datatable-cell-template >
+            <div class="alineado-justificado">
+              <div class="cw-center-v " #tooltip   matTooltip="Vence en {{ row?.tiempoMeses }} {{row?.tiempoMeses === 1 ? 'mes' : 'meses'}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                <div class="wd-35 ht-35 cw-border-radius-50 cw-background-color-white cw-center-all font-size-24px" >
+                  <i class="feather icon-alert-triangle" [style.color]="row.color"></i>
+                </div> &nbsp; &nbsp;
+                <span class="cw-ocultar-responsive">
+                  Vence en {{ row?.tiempoMeses }} {{row?.tiempoMeses === 1 ? 'mes' : 'meses'}}
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="{{ 'TITULOS.ACCIONES' | translate }}" [sortable]="false"
+          [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [resizeable]="false" [draggable]="false">
+          <ng-template let-row="row" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <button mat-icon-button [matMenuTriggerFor]="menu" [disabled]="esConsulta">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+              <button type="button" mat-menu-item (click)="esEditar(row, rowIndex)">
+                <mat-icon svgIcon="31" class="colorBlack" color="primary"></mat-icon>
+                <span>{{ "BOTONES.EDITAR" | translate }}</span>
+              </button>
+              <button type="button" mat-menu-item (click)="esEliminar(row)">
+                <mat-icon svgIcon="24" class="colorBlack"></mat-icon>
+                <span>{{ "BOTONES.ELIMINAR" | translate }}</span>
+              </button>
+            </mat-menu>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

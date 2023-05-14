@@ -1,0 +1,111 @@
+<div class="modal-header d-flex justify-content-between cw-modal-estadoregistro-header pt-0 bd-b-0 m-0px" mat-dialog-title>
+
+  <span class="ml-2 pt-5px cw-center-all cw-font-bold titleGrisOscuro cw-font-size-18px">
+    {{ 'TITULOS.CREAR' | translate }} {{ 'TITULOS.PROCESO' | translate }}
+  </span>
+  <div class="row d-flex flex-row-reverse pr-3 ml-10px">
+    <mat-icon mat-dialog-close svgIcon="14" class="cw-size-xs-6 cw-pr0 cw-pl0 colorGrisIcon">
+    </mat-icon>
+  </div>
+</div>
+<mat-dialog-content class="modal-crear-proceso">
+
+  <div class="row justify-content-around mt-9px contentForm">
+    <div class="ag-center col-12 col-sm-11 col-md-8" [ngClass]="{'col-md-9': estadoFormularioCreacion,'col-md-8': estadoFormularioEdicion }" >
+      <form [formGroup]="modalForm">
+        <mat-form-field class="col-sm-12 col-md-4" >
+          <mat-label>{{ 'TITULOS.CODIGO' | translate }}</mat-label>
+          <input matInput formControlName="codigo" (keyup.enter)="existeCodigoProceso()" />
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col-md-4">
+          <mat-label>{{ 'TITULOS.NOMBRE' | translate }}
+            {{ 'TITULOS.PROCESO' | translate }}</mat-label>
+          <input matInput formControlName="nombre" />
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col-md-4 cw-padding-left-perfil" appearance="fill">
+          <mat-label>{{ 'TITULOS.PERFIL' | translate}}</mat-label>
+          <mat-select formControlName="idPerfil">
+            <mat-option matInput *ngFor="let perfil of perfiles" [value]="perfil.id">{{ perfil.nombre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <input matInput hidden formControlName="estado" />
+      </form>
+    </div>
+    <div class="ag-center col-11 " [ngClass]="{'col-md-3': estadoFormularioCreacion,'col-md-4': estadoFormularioEdicion }">
+      <div class="row justify-content-around content-buttons">
+
+        <button *ngIf="estadoFormulario == 'Edicion'" class="btn btn-outline-primary  col-11 col-md-5" (click)="cancelarEdicionProceso()">
+          {{ 'BOTONES.CANCELAR' | translate }}
+        </button>
+        <button *ngIf="estadoFormulario == 'Edicion'" class="btn btn-primary ml-5px col-11 col-md-5" (click)="guardarProceso()">
+          {{ 'BOTONES.GUARDAR' | translate }}
+        </button>
+        
+        <button *ngIf="estadoFormulario == 'Creacion'" class="btn btn-primary col-11" (click)="guardarProceso()">
+          {{ 'TITULOS.CREAR_PROCESO' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-11 justify-content-center">
+      <div class="table-responsive select-row cw-ngx-datatable m-footer font-text-table">
+        <ngx-datatable [rows]="procesosMostrar" class="bootstrap" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50"
+          [rowHeight]="medidasTabla.alturaFila" [limit]="limitPage" [scrollbarH]="true">
+          <ngx-datatable-column name="{{ 'TITULOS.CODIGO' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [draggable]="false" [flexGrow]="2" [minWidth]="100">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row?.codigo }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="{{ 'TITULOS.NOMBRE' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [draggable]="false" [flexGrow]="2" [minWidth]="160">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span #tooltip   matTooltip="{{row?.nombre | titlecase}}"  matTooltipClass="tooltip-arrow tooltip-arrow-disabled" matTooltipPosition="below">
+                  {{ (row?.nombre.length > 19 ? row?.nombre.substring(0,19) + '...' : row?.nombre) | titlecase }}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="{{ 'TITULOS.ESTADO' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [draggable]="false" [flexGrow]="2" [minWidth]="100">
+            <ng-template let-row="row" ngx-datatable-cell-template let-rowIndex="rowIndex">
+              <div class="cw-custom-switches">
+                <ui-switch [checked]="row.checked" (valueChange)="abrirModalCambiarEstado(row, rowIndex, $event)"
+                  [disabled]="modoEdicion">
+                </ui-switch>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="{{ 'TITULOS.ACCIONES' | translate }}" [sortable]="false"
+            [headerClass]="'cw-text-center'" [cellClass]="'cw-text-center'" [draggable]="false" [flexGrow]="2" [minWidth]="100">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before" class="mat-menu-panel">
+                <button type="button" mat-menu-item (click)="editarProcesoSelecionado(row)">
+                  <mat-icon svgIcon="31" class="colorBlack"></mat-icon>
+                  <span class="colorBlack">{{
+                    'BOTONES.EDITAR' | translate
+                    }}</span>
+                </button>
+              </mat-menu>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-footer >
+            <ng-template ngx-datatable-footer-template>
+                <p class="footer-page-count m-0">
+                    {{ metadata.totalElements }} total
+                </p>
+                <app-datatable-pager [page]="metadata.pageNumber" [visiblePagesCount]="3"
+                    [size]="limitPage" [count]="metadata?.totalElements" [hidden]="false"
+                    (change)="cambiarPagina($event)"
+                    >
+                  </app-datatable-pager>
+                </ng-template>
+              </ngx-datatable-footer>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

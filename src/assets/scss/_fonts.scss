@@ -1,0 +1,69 @@
+.cw-font-bold {
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: bold !important;
+}
+
+.cw-font-600 {
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: 600 !important;
+}
+
+.cw-font-500{
+    font-family: $fontMontserrat;
+    font-weight: 500 !important;
+}
+
+.cw-font-bold-italic {
+    font-family: "Montserrat", sans-serif !important;
+    font-style: italic !important;
+    font-weight: bold !important;
+}
+
+.cw-font-italic {
+    font-family: "Montserrat", sans-serif !important;
+    font-style: italic !important;
+}
+
+.cw-font-regular {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.cw-font-semi-bold {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.cw-text-center {
+    text-align: center !important;
+}
+
+.cw-text-right {
+    text-align: right !important;
+}
+
+.cw-text-left {
+    text-align: left !important;
+
+    .datatable-body-cell-label {
+        line-height: initial;
+    }
+}
+.cw-font-size-18px {
+    font-size: 18px;    
+}
+
+.cw-titles-plan-mejoramiento{
+    font-family: $fontMontserrat;
+    font-size: 12px !important;
+    text-align: center !important;
+}
+
+.cw-font-plan-mejoramiento{
+    font-family: $fontMontserrat;
+    font-size: 10px !important;
+    text-align: center !important;
+}
+
+.text-center{
+    text-align: center;
+    margin: 0;
+}

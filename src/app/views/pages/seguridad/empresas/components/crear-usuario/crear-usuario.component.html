@@ -1,0 +1,285 @@
+<form [formGroup]="formGroupUsuario" autocomplete="off" class="cw-forms" (submit)="abrirModalConfirmarOperacion(true)">
+    <div class="pl-5 pr-5 pt-4">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="cw-section mt-3">
+                    <label class="cw-label-section cw-primary-blue cw-text-size-16">{{ 'TITULOS.INFORMACION_CUENTA' |
+                        translate }}</label>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.TIPO_IDENTIFICACION' | translate }}</mat-label>
+                                        <mat-select formControlName="idTipoIdentificacion">
+                                            <mat-option [value]="''">--</mat-option>
+                                            <mat-option *ngFor="let item of tiposIdentificacion"
+                                                [value]="item.idTipoDetalle">
+                                                {{item.nombre}}</mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="formGroupUsuario.get('idTipoIdentificacion').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.IDENTIFICACION' | translate }}</mat-label>
+                                        <input matInput formControlName="identificacion" maxlength="15"  (blur)="validarCampos(CamposValidar.IdentificacionBack,CamposValidar.IdentificacionForm)"
+                                            appRestrictInput="identification">
+                                        <mat-error *ngIf="formGroupUsuario.get('identificacion').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.PRIMER_NOMBRE' | translate }}</mat-label>
+                                        <input matInput formControlName="primerNombre" maxlength="50">
+                                        <mat-error *ngIf="formGroupUsuario.get('primerNombre').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.SEGUNDO_NOMBRE' | translate }}</mat-label>
+                                        <input matInput formControlName="segundoNombre" maxlength="50">
+                                        <mat-error *ngIf="formGroupUsuario.get('segundoNombre').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.PRIMER_APELLIDO' | translate }}</mat-label>
+                                        <input matInput formControlName="primerApellido" maxlength="50">
+                                        <mat-error *ngIf="formGroupUsuario.get('primerApellido').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.SEGUNDO_APELLIDO' | translate }}</mat-label>
+                                        <input matInput formControlName="segundoApellido" maxlength="50">
+                                        <mat-error *ngIf="formGroupUsuario.get('segundoApellido').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.CARGO' | translate }}</mat-label>
+                                        <input matInput formControlName="cargo" maxlength="70">
+                                        <mat-error *ngIf="formGroupUsuario.get('cargo').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.ESTADO' | translate }}</mat-label>
+                                        <mat-select formControlName="estadoRegistro">
+                                            <mat-option [value]="'A'">{{ 'TITULOS.ACTIVO' | translate}}</mat-option>
+                                            <mat-option [value]="'I'">{{ 'TITULOS.INACTIVO' | translate}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="formGroupUsuario.get('estadoRegistro').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="cw-section mt-3 cw-100-h">
+                    <label class="cw-label-section cw-primary-blue cw-text-size-16">{{
+                        'TITULOS.INFORMACION_CONTACTO' | translate }}</label>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <div class="row cw-input-union">
+                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 cw-input-union-one">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.CELULAR' | translate }}</mat-label>
+                                        <mat-select formControlName="indicativoCelular">
+                                            <mat-option [value]="''">--</mat-option>
+                                            <mat-option *ngFor="let item of paises" [value]="item.indicativo">
+                                                <span
+                                                    class="flag-icon flag-icon-{{ item.flagIcono | lowercase}}"></span>
+                                                +{{item.indicativo}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="formGroupUsuario.get('indicativoCelular').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 cw-input-union-two">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <input matInput formControlName="celular" maxlength="10"
+                                            appRestrictInput="integer">
+                                        <mat-error *ngIf="formGroupUsuario.get('celular').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <div class="row cw-input-union">
+                                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 cw-input-union-one">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <mat-label>{{ 'FORMULARIOS.TELEFONO' | translate }}</mat-label>
+                                        <mat-select formControlName="indicativoTelefono">
+                                            <mat-option [value]="''">--</mat-option>
+                                            <mat-option *ngFor="let item of paises" [value]="item.indicativo">
+                                                <span
+                                                    class="flag-icon flag-icon-{{ item.flagIcono | lowercase}}"></span>
+                                                +{{item.indicativo}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="formGroupUsuario.get('indicativoTelefono').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 cw-input-union-two">
+                                    <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                        <input matInput formControlName="telefono" maxlength="10"
+                                            appRestrictInput="integer">
+                                        <mat-error *ngIf="formGroupUsuario.get('telefono').hasError('required')">
+                                            {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.PAIS' | translate }}</mat-label>
+                                <mat-select formControlName="idPais">
+                                    <mat-option [value]="">--</mat-option>
+                                    <mat-option *ngFor="let item of paises" [value]="item.id">
+                                        <span class="flag-icon flag-icon-{{ item.flagIcono | lowercase}}"></span>
+                                        {{item.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroupUsuario.get('idPais').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.DEPARTAMENTO' | translate }}</mat-label>
+                                <mat-select formControlName="idDepartamento">
+                                    <mat-option [value]="">--</mat-option>
+                                    <mat-option *ngFor="let item of departamentos" [value]="item.idDepartamento">
+                                        {{item.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroupUsuario.get('idDepartamento').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.MUNICIPIO' | translate }}</mat-label>
+                                <mat-select formControlName="idMunicipio">
+                                    <mat-option [value]="">--</mat-option>
+                                    <mat-option *ngFor="let item of municipios"
+                                        [value]="item.idMunicipio">{{item.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroupUsuario.get('idMunicipio').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.DIRECCION' | translate }}</mat-label>
+                                <input matInput formControlName="direccion" maxlength="150">
+                                <mat-error *ngIf="formGroupUsuario.get('direccion').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="cw-section mt-3 cw-100-h">
+                    <label class="cw-label-section cw-text-size-16">{{ 'TITULOS.CONFIGURACION_PERFIL' |
+                        translate }}</label>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'TITULOS.USUARIO' | translate }}</mat-label>
+                                <input matInput formControlName="userName" maxlength="150" (blur)="validarCampos(CamposValidar.UserNameBack,CamposValidar.UserNameForm)">
+                                <mat-error *ngIf="formGroupUsuario.get('userName').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.CORREO_ELECTRONICO' | translate }}</mat-label>
+                                <input matInput formControlName="email" maxlength="150" (blur)="validarCampos(CamposValidar.EmailBack,CamposValidar.EmailForm)">
+                                <mat-error *ngIf="formGroupUsuario.get('email').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                                <mat-error *ngIf="formGroupUsuario.get('email').hasError('pattern')">
+                                    {{ 'TITULOS.CORREO_INVALIDO' | translate }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <mat-form-field class="cw-mat-full-with" appearance="fill">
+                                <mat-label>{{ 'FORMULARIOS.TIPO_USUARIO' | translate }}</mat-label>
+                                <mat-select formControlName="idTipoUsuario">
+                                    <mat-option [value]="">--</mat-option>
+                                    <mat-option *ngFor="let item of tiposUsuarios" [value]="item.idTipoDetalle">
+                                        {{item.nombre}}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroupUsuario.get('idTipoUsuario').hasError('required')">
+                                    {{ 'TITULOS.CAMPO_REQUERIDO' | translate}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3">
+                            <button type="button" class="btn btn-outline-primary" (click)="modalChangePass()"
+                                *ngIf="data.usuario && data.usuario.id !=0 && habilitarEditar">{{
+                                'BOTONES.CAMBIAR_CONTRASENA' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="cw-section mt-3">
+                    <label class="cw-label-section cw-primary-blue cw-text-size-16">{{ 'TITULOS.CONFIGURACION_EDS' |
+                        translate }}</label>
+                    <app-listar-eds [idUsuario]="idUsuario"
+                        [consultaUsuariosEds]="formGroupUsuario.get('usuariosEds').value"
+                        [idEmpresa]="this.data.empresa" [modoConsulta]="!habilitarEditar"
+                        (usuariosEdsEmit)="recibeUsuariosEds($event)">
+                    </app-listar-eds>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row cw-backgroup-white p-4 mr-4">
+        <!-- Botones para cuando estoy editando-->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <button type="button" class="btn btn-outline-primary mr-2" (click)="abrirModalConfirmarOperacion(false)">{{
+                'BOTONES.CANCELAR' | translate}}
+            </button>
+            <ng-container *ngIf="!habilitarEditar; else elseTemplate">
+                <button type="button" class="btn btn btn-primary" (click)="habilitarEdicion()">{{
+                    'BOTONES.EDITAR' | translate}}</button>
+            </ng-container>
+            <ng-template #elseTemplate>
+                <button type="submit" class="btn btn-primary">
+                    {{ 'BOTONES.GUARDAR' | translate }}
+                </button>
+            </ng-template>
+        </div>
+    </div>
+</form>

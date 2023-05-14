@@ -1,0 +1,29 @@
+::ng-deep .carousel-control-prev {
+    width: 2%;
+}
+
+::ng-deep .carousel-control-next {
+    width: 2%;
+}
+
+:ng-deep .carousel-indicators{
+    margin-bottom: 0 !important;
+}
+
+:ng-deep .carousel-control-prev-icon {
+    background-image: none;
+}
+
+::ng-deep .carousel-control-next-icon{
+    background-image: url("https://stgcolconswareit.blob.core.windows.net/edsoft-qas/Imagenes/right-arrow-slider.svg") !important;
+    transform: scale(1.5);
+    position: relative;
+    left: 50% !important
+}
+
+::ng-deep .carousel-control-prev-icon{
+    background-image: url("https://stgcolconswareit.blob.core.windows.net/edsoft-qas/Imagenes/left-arrow-slider.svg") !important;
+    transform: scale(1.5);
+    position: relative;
+    right: 50% !important
+}
